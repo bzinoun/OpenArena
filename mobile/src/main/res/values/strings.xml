@@ -1,3 +1,4 @@
 <resources>
 	<string name="app_name">Open arena</string>
+	<string name="splashscreen_title">Welcome</string>
 </resources>
