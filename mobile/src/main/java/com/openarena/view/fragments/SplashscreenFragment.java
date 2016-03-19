@@ -1,4 +1,4 @@
-package com.openarena.fragments;
+package com.openarena.view.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,10 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.openarena.R;
 
 public class SplashscreenFragment extends Fragment {
+
+	private ProgressBar mProgressBar;
 
 	public static SplashscreenFragment getInstance(Bundle data) {
 		SplashscreenFragment fragment = new SplashscreenFragment();
@@ -26,7 +29,12 @@ public class SplashscreenFragment extends Fragment {
 	}
 
 	private void setupUI(View view) {
-
+		mProgressBar = (ProgressBar) view.findViewById(R.id.splashscreen_progress_bar);
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (mProgressBar != null) mProgressBar = null;
+	}
 }

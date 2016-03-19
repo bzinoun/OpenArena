@@ -10,7 +10,7 @@ public class L {
 	}
 
 	public static void i(Object object, String message) {
-		Log.i(object.getClass().getSimpleName(), message);
+		Log.i(TAG, "{" + object.getClass().getSimpleName() + "} : " + message);
 	}
 
 	public static void e(String message) {
@@ -18,6 +18,6 @@ public class L {
 	}
 
 	public static void e(Object object, String message) {
-		Log.e(object.getClass().getSimpleName(), message);
+		Log.e(TAG, "{" + object.getClass().getSimpleName() + "} : " + message);
 	}
 }

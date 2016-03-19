@@ -44,11 +44,11 @@ public class Connection {
 				buffer.append(line);
 			}
 			String response = buffer.toString();
-			L.i("{NetworkClient.response}(Success)request->" + request);
-			L.i("{NetworkClient.response}(Success)response->" + response);
+			L.i(this, "(Success)request->" + request);
+			L.i(this, "(Success)response->" + response);
 			return response;
 		} catch (IOException e) {
-			L.e("");
+			L.e(this, "(Exception->)" + e);
 			e.printStackTrace();
 		} finally {
 			if (connection != null) {
@@ -62,7 +62,7 @@ public class Connection {
 				e.printStackTrace();
 			}
 		}
-		L.e("{NetworkClient.response}(Error)request->" + request);
+		L.e(this, "(Error)request->" + request);
 		return null;
 	}
 

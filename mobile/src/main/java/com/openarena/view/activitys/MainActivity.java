@@ -1,11 +1,10 @@
-package com.openarena.activitys;
+package com.openarena.view.activitys;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.openarena.R;
-import com.openarena.fragments.SplashscreenFragment;
+import com.openarena.view.fragments.SplashscreenFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,9 +14,8 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		mFragmentManager = getFragmentManager();
 		setupUI();
-		if (mFragmentManager == null) mFragmentManager = getFragmentManager();
-
 		mFragmentManager.beginTransaction()
 				.replace(R.id.main_container, SplashscreenFragment.getInstance(null))
 				.commit();

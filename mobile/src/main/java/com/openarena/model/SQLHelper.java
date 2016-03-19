@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.openarena.interfaces.Cleanable;
+import com.openarena.model.interfaces.Cleanable;
 import com.openarena.util.DBConst;
 
 public class SQLHelper extends SQLiteOpenHelper implements Cleanable {
@@ -14,9 +14,9 @@ public class SQLHelper extends SQLiteOpenHelper implements Cleanable {
 	private static final String DB_NAME = "openarena.ApplicationDB";
 	private static final int DB_VERSION = 1;
 
-	private static SQLHelper sInstance;
+	private static volatile SQLHelper sInstance;
 
-	public static SQLHelper getInstance(Context context) {
+	public static synchronized SQLHelper getInstance(Context context) {
 		if (sInstance == null) synchronized (SQLHelper.class) {
 			if (sInstance == null) sInstance = new SQLHelper(context);
 		}
@@ -30,10 +30,17 @@ public class SQLHelper extends SQLiteOpenHelper implements Cleanable {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		StringBuilder params1 = new StringBuilder()
-				.append(DBConst.TABLE_TEAMS).append(" INTEGER NOT NULL,")
-				.append(DBConst.TABLE_TEAMS).append(" INTEGER");
+				.append(DBConst.ID).append(" INTEGER NOT NULL,")
+				.append(DBConst.CAPTION).append(" TEXT,")
+				.append(DBConst.LEAGUE).append(" TEXT,")
+				.append(DBConst.YEAR).append(" INTEGER,")
+				.append(DBConst.CURRENT_MATCHDAY).append(" INTEGER,")
+				.append(DBConst.NUMBER_OF_MATCHDAYS).append(" INTEGER,")
+				.append(DBConst.NUMBER_OF_TEAMS).append(" INTEGER,")
+				.append(DBConst.NUMBER_OF_GAMES).append(" INTEGER,")
+				.append(DBConst.LAST_UPDATED).append(" INTEGER");
 
-		createTable(db, DBConst.TABLE_TEAMS, params1.toString());
+		createTable(db, DBConst.TABLE_LEAGUES, params1.toString());
 	}
 
 	@Override

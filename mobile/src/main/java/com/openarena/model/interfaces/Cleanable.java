@@ -1,4 +1,4 @@
-package com.openarena.interfaces;
+package com.openarena.model.interfaces;
 
 public interface Cleanable {
 	void clean();

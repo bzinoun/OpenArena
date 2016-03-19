@@ -16,6 +16,7 @@
 		android:textStyle="bold|italic"
 		android:textSize="@dimen/splashscreen_title_size"/>
 	<ProgressBar
+		android:id="@+id/splashscreen_progress_bar"
 		android:layout_marginTop="10dp"
 		android:layout_width="@dimen/splashscreen_progressbar_size"
 		android:layout_height="@dimen/splashscreen_progressbar_size"
