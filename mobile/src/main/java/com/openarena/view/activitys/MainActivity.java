@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
 				R.string.drawer_close);
 		mDrawer.addDrawerListener(toggle);
 		toggle.syncState();
-		mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-		mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+		//mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+		//mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 		//NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
 	}
 }
