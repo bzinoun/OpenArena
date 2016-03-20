@@ -1,8 +1,13 @@
 <resources>
 	<string name="app_name">Open arena</string>
+	<string name="drawer_open">Open drawer</string>
+	<string name="drawer_close">Close drawer</string>
 	<string name="splashscreen_title">Welcome</string>
+	<string name="menu_action_settings">Settings</string>
 
+	<!-- API resources -->
 	<string name="api_default_request">http://api.football-data.org/v1/soccerseasons</string>
 	<string name="api_token">16c130d43d5543bfac04ffef8b3da068</string>
 	<string name="api_response_control_mini">minified</string>
+	<string name="api_response_control_full">full</string>
 </resources>

@@ -9,13 +9,13 @@ public class Api {
 
 	public String getLeaguesList(Context context) {
 		Connection connection = getConnection(context);
-		return connection.request(getBaseUri() + "soccerseasons?season=2016");
+		return connection.request(getBaseUri() + "soccerseasons");
 	}
 
 	private Connection getConnection(Context context) {
 		return new Connection.Builder()
 				.putHeader("X-Auth-Token", context.getString(R.string.api_token))
-				.putHeader("X-Response-Control", context.getString(R.string.api_response_control_mini))
+				.putHeader("X-Response-Control", context.getString(R.string.api_response_control_full))
 				.build();
 	}
 
