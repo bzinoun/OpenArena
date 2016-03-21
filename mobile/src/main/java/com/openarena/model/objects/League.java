@@ -3,6 +3,15 @@ package com.openarena.model.objects;
 import android.database.Cursor;
 
 import com.openarena.util.DBConst;
+import com.openarena.util.L;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class League {
 	private int mID;
@@ -14,6 +23,8 @@ public class League {
 	private int mNumberOfTeams;
 	private int mNumberOfGames;
 	private long mLastUpdated;
+
+	protected League() {}
 
 	public League(
 			int id,
@@ -57,6 +68,39 @@ public class League {
 					leagueCursor.getInt(col_numberOfTeams),
 					leagueCursor.getInt(col_numberOfGames),
 					leagueCursor.getLong(col_lastUpdated));
+		}
+		return null;
+	}
+
+	public static League parse(JSONObject o) {
+		League league = new League();
+		try {
+			if (!o.isNull("id")) league.mID = o.getInt("id");
+			if (!o.isNull("caption")) league.mCaption = o.getString("caption");
+			if (!o.isNull("league")) league.mLeague = o.getString("league");
+			if (!o.isNull("year")) league.mYear = Integer.valueOf(o.getString("year"));
+			if (!o.isNull("currentMatchday")) league.mCurrentMatchday = o.getInt("currentMatchday");
+			if (!o.isNull("numberOfMatchdays")) league.mNumberOfMatchdays = o.getInt("numberOfMatchdays");
+			if (!o.isNull("numberOfTeams")) league.mNumberOfTeams = o.getInt("numberOfTeams");
+			if (!o.isNull("numberOfGames")) league.mNumberOfTeams = o.getInt("numberOfGames");
+			if (!o.isNull("lastUpdated")) {
+				String dateStr = o.getString("lastUpdated");
+				int index = dateStr.indexOf("T");
+				String date = dateStr.substring(0, index);
+				String time = dateStr.substring(index + 1, dateStr.length() - 1);
+				dateStr = date + " " + time;
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+				Date parsedDate = dateFormat.parse(dateStr);
+				league.mLastUpdated = parsedDate.getTime();
+			}
+			return league;
+
+		} catch (JSONException e) {
+			L.e(League.class, e.toString());
+			e.printStackTrace();
+		} catch (ParseException e) {
+			L.e(League.class, e.toString());
+			e.printStackTrace();
 		}
 		return null;
 	}

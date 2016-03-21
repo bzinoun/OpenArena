@@ -7,19 +7,19 @@ import com.openarena.controllers.Connection;
 
 public class Api {
 
-	public String getLeaguesList(Context context) {
+	public static String getLeaguesList(Context context, int year) {
 		Connection connection = getConnection(context);
-		return connection.request(getBaseUri() + "soccerseasons");
+		return connection.request(getBaseUri() + "soccerseasons?season=" + String.valueOf(year));
 	}
 
-	private Connection getConnection(Context context) {
+	private static Connection getConnection(Context context) {
 		return new Connection.Builder()
 				.putHeader("X-Auth-Token", context.getString(R.string.api_token))
-				.putHeader("X-Response-Control", context.getString(R.string.api_response_control_full))
+				.putHeader("X-Response-Control", context.getString(R.string.api_response_control_mini))
 				.build();
 	}
 
-	private String getBaseUri() {
+	private static String getBaseUri() {
 		return "http://api.football-data.org/v1/";
 	}
 }

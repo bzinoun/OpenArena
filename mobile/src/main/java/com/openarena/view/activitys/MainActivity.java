@@ -36,6 +36,29 @@ public class MainActivity extends AppCompatActivity {
 		mFragmentManager = getFragmentManager();
 		PreferencesManager.getInstance(this).setBoolean(Const.PREF_FIRST_ENTER, true).commit();
 		setupUI();
+		mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+		Controller.getListOfLeagues(this, new Controller.OnGetLeagues() {
+			@Override
+			public void onError() {
+				L.e("Error");
+			}
+
+			@Override
+			public void onSuccess(ArrayList<League> data) {
+				NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
+				if (navigation != null) {
+					RecyclerView recyclerView = (RecyclerView) navigation.findViewById(R.id.navigation_list);
+					recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
+					recyclerView.setAdapter(new LeaguesAdapter(data));
+				}
+				else {
+					L.e(this, "RuntimeException");
+					throw new RuntimeException("NavigationView have not find");
+				}
+				mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+			}
+		});
 
 		if (Controller.isFirstEnter()) {
 			PreferencesManager.getInstance(this)
@@ -82,22 +105,6 @@ public class MainActivity extends AppCompatActivity {
 				R.string.drawer_close);
 		mDrawer.addDrawerListener(toggle);
 		toggle.syncState();
-		//mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-		//mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-		NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
-		if (navigation != null) {
-			RecyclerView recyclerView = (RecyclerView) navigation.findViewById(R.id.navigation_list);
-			recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-			ArrayList<League> list = new ArrayList<>();
-			for (int i = 0; i < 13; i++) {
-				list.add(new League(1, "Some league " + i, "", 0, 0, 0, 0, 0, 0));
-			}
-			recyclerView.setAdapter(new LeaguesAdapter(list));
-		}
-		else {
-			L.e(this, "RuntimeException");
-			throw new RuntimeException("NavigationView have not find");
-		}
-
 	}
+
 }

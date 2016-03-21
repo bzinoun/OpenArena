@@ -48,7 +48,7 @@ public class Connection {
 			L.i(this, "(Success)response->" + response);
 			return response;
 		} catch (IOException e) {
-			L.e(this, "(Exception->)" + e);
+			L.e(this, e.toString());
 			e.printStackTrace();
 		} finally {
 			if (connection != null) {
