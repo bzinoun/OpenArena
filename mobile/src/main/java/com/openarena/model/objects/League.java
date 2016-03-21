@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class League {
@@ -85,13 +84,8 @@ public class League {
 			if (!o.isNull("numberOfGames")) league.mNumberOfTeams = o.getInt("numberOfGames");
 			if (!o.isNull("lastUpdated")) {
 				String dateStr = o.getString("lastUpdated");
-				int index = dateStr.indexOf("T");
-				String date = dateStr.substring(0, index);
-				String time = dateStr.substring(index + 1, dateStr.length() - 1);
-				dateStr = date + " " + time;
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-				Date parsedDate = dateFormat.parse(dateStr);
-				league.mLastUpdated = parsedDate.getTime();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
+				league.mLastUpdated = dateFormat.parse(dateStr).getTime();
 			}
 			return league;
 

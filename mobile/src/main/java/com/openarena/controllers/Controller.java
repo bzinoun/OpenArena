@@ -47,34 +47,42 @@ public class Controller {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				String resultCurrent = Api.getLeaguesList(context, year);
 				String resultLast = Api.getLeaguesList(context, year - 1);
-				ArrayList<League> list = null;
-				try {
-					JSONArray currentArray = new JSONArray(resultCurrent);
-					JSONArray lastArray = new JSONArray(resultLast);
-					list = parseLeagues(currentArray);
-					list.addAll(parseLeagues(lastArray));
+				if (resultCurrent != null && resultLast != null) {
+					ArrayList<League> list = null;
+					try {
+						JSONArray currentArray = new JSONArray(resultCurrent);
+						JSONArray lastArray = new JSONArray(resultLast);
+						list = parseLeagues(currentArray);
+						list.addAll(parseLeagues(lastArray));
 
-				} catch (JSONException e) {
-					L.e(Controller.class, e.toString());
-					e.printStackTrace();
+					} catch (JSONException e) {
+						L.e(Controller.class, e.toString());
+						e.printStackTrace();
+					}
+					if (list != null) {
+						final ArrayList<League> finalList = list;
+						sHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onSuccess(finalList);
+							}
+						});
+					}
+					else {
+						sHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError();
+							}
+						});
+					}
 				}
-				if (list != null) {
-					final ArrayList<League> finalList = list;
-					sHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.onSuccess(finalList);
-						}
-					});
-				}
-				else {
-					sHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.onError();
-						}
-					});
-				}
+				else sHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onError();
+					}
+				});
 			}
 		});
 	}
