@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.openarena.model.interfaces.Cleanable;
 import com.openarena.util.DBConst;
 
-public class SQLHelper extends SQLiteOpenHelper implements Cleanable {
+public class SQLHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "openarena.ApplicationDB";
 	private static final int DB_VERSION = 1;
@@ -140,11 +139,6 @@ public class SQLHelper extends SQLiteOpenHelper implements Cleanable {
 
 	public void dropData(SQLiteDatabase db) {
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_TEAMS);
-	}
-
-	@Override
-	public void clean() {
-		if (sInstance != null) sInstance = null;
 	}
 
 }

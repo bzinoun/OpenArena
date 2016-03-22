@@ -19,6 +19,7 @@ import com.openarena.model.adapters.LeaguesAdapter;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.L;
+import com.openarena.util.UI;
 import com.openarena.view.fragments.SplashscreenFragment;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 	private DrawerLayout mDrawer;
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
+	private RecyclerView mRecyclerView;
+	private LeaguesAdapter mAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,21 +44,25 @@ public class MainActivity extends AppCompatActivity {
 		Controller.getListOfLeagues(this, new Controller.OnGetLeagues() {
 			@Override
 			public void onError() {
-				L.e("Error");
+				L.e(MainActivity.class, "Error");
 			}
 
 			@Override
 			public void onSuccess(ArrayList<League> data) {
 				NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
 				if (navigation != null) {
-					RecyclerView recyclerView = (RecyclerView) navigation.findViewById(R.id.navigation_list);
-					recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
-					recyclerView.setAdapter(new LeaguesAdapter(data));
+					mRecyclerView = (RecyclerView) navigation.findViewById(R.id.navigation_list);
+					mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
+					mAdapter = new LeaguesAdapter(data);
+					mRecyclerView.setAdapter(mAdapter);
 				}
 				else {
-					L.e(this, "RuntimeException");
+					L.e(MainActivity.class, "RuntimeException");
 					throw new RuntimeException("NavigationView have not find");
 				}
+
+				UI.show(mToolbar);
+
 				mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 			}
 		});
@@ -88,9 +95,12 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mFragmentManager != null) mFragmentManager = null;
-		if (mToolbar != null) mToolbar = null;
-		if (mDrawer != null) mDrawer = null;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				System.gc();
+			}
+		}).start();
 	}
 
 	private void setupUI() {
@@ -105,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 				R.string.drawer_close);
 		mDrawer.addDrawerListener(toggle);
 		toggle.syncState();
+		UI.hide(mToolbar);
 	}
 
 }

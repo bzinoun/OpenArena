@@ -28,13 +28,13 @@ public class SplashscreenFragment extends Fragment {
 		return view;
 	}
 
-	private void setupUI(View view) {
-		mProgressBar = (ProgressBar) view.findViewById(R.id.splashscreen_progress_bar);
-	}
-
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (mProgressBar != null) mProgressBar = null;
+	}
+
+	private void setupUI(View view) {
+		mProgressBar = (ProgressBar) view.findViewById(R.id.splashscreen_progress_bar);
 	}
 }

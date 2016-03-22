@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class League {
+
 	private int mID;
 	private String mCaption;
 	private String mLeague;
@@ -25,7 +26,7 @@ public class League {
 
 	protected League() {}
 
-	public League(
+	protected League(
 			int id,
 			String caption,
 			String league,
@@ -47,6 +48,7 @@ public class League {
 	}
 
 	public static League parse(Cursor leagueCursor) {
+		League league = null;
 		if (leagueCursor.moveToFirst()) {
 			int col_id = leagueCursor.getColumnIndex(DBConst.ID);
 			int col_caption = leagueCursor.getColumnIndex(DBConst.CAPTION);
@@ -57,18 +59,19 @@ public class League {
 			int col_numberOfTeams = leagueCursor.getColumnIndex(DBConst.NUMBER_OF_TEAMS);
 			int col_numberOfGames = leagueCursor.getColumnIndex(DBConst.NUMBER_OF_GAMES);
 			int col_lastUpdated = leagueCursor.getColumnIndex(DBConst.LAST_UPDATED);
-			return new League(
-					leagueCursor.getInt(col_id),
-					leagueCursor.getString(col_caption),
-					leagueCursor.getString(col_league),
-					leagueCursor.getInt(col_year),
-					leagueCursor.getInt(col_currentMatchday),
-					leagueCursor.getInt(col_numberOfMatchdays),
-					leagueCursor.getInt(col_numberOfTeams),
-					leagueCursor.getInt(col_numberOfGames),
-					leagueCursor.getLong(col_lastUpdated));
+			league = new League();
+			league.setID(leagueCursor.getInt(col_id));
+			league.setCaption(leagueCursor.getString(col_caption));
+			league.setLeague(leagueCursor.getString(col_league));
+			league.setYear(leagueCursor.getInt(col_year));
+			league.setCurrentMatchday(leagueCursor.getInt(col_currentMatchday));
+			league.setNumberOfMatchdays(leagueCursor.getInt(col_numberOfMatchdays));
+			league.setNumberOfTeams(leagueCursor.getInt(col_numberOfTeams));
+			league.setNumberOfGames(leagueCursor.getInt(col_numberOfGames));
+			league.setLastUpdated(leagueCursor.getLong(col_lastUpdated));
 		}
-		return null;
+		leagueCursor.close();
+		return league;
 	}
 
 	public static League parse(JSONObject o) {
@@ -83,9 +86,8 @@ public class League {
 			if (!o.isNull("numberOfTeams")) league.mNumberOfTeams = o.getInt("numberOfTeams");
 			if (!o.isNull("numberOfGames")) league.mNumberOfTeams = o.getInt("numberOfGames");
 			if (!o.isNull("lastUpdated")) {
-				String dateStr = o.getString("lastUpdated");
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
-				league.mLastUpdated = dateFormat.parse(dateStr).getTime();
+				league.mLastUpdated = dateFormat.parse(o.getString("lastUpdated")).getTime();
 			}
 			return league;
 
@@ -133,6 +135,42 @@ public class League {
 
 	public long getLastUpdated() {
 		return mLastUpdated;
+	}
+
+	protected void setID(int id) {
+		this.mID = id;
+	}
+
+	protected void setCaption(String caption) {
+		this.mCaption = caption;
+	}
+
+	protected void setLeague(String league) {
+		this.mLeague = league;
+	}
+
+	protected void setYear(int year) {
+		this.mYear = year;
+	}
+
+	protected void setCurrentMatchday(int currentMatchday) {
+		this.mCurrentMatchday = currentMatchday;
+	}
+
+	protected void setNumberOfMatchdays(int numberOfMatchdays) {
+		this.mNumberOfMatchdays = numberOfMatchdays;
+	}
+
+	protected void setNumberOfTeams(int numberOfTeams) {
+		this.mNumberOfTeams = numberOfTeams;
+	}
+
+	protected void setNumberOfGames(int numberOfGames) {
+		this.mNumberOfGames = numberOfGames;
+	}
+
+	protected void setLastUpdated(long lastUpdated) {
+		this.mLastUpdated = lastUpdated;
 	}
 
 }

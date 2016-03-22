@@ -48,6 +48,9 @@ public class Controller {
 				String resultCurrent = Api.getLeaguesList(context, year);
 				String resultLast = Api.getLeaguesList(context, year - 1);
 				if (resultCurrent != null && resultLast != null) {
+					/*Gson gson = new Gson();
+					ArrayList<LeagueG> list1 = gson.fromJson(resultCurrent, new TypeToken<ArrayList<LeagueG>>() {}.getType());
+					ArrayList<LeagueG> list2 = gson.fromJson(resultLast, new TypeToken<ArrayList<LeagueG>>() {}.getType());*/
 					ArrayList<League> list = null;
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
@@ -76,6 +79,13 @@ public class Controller {
 							}
 						});
 					}
+					final ArrayList<League> finalList1 = list;
+					sHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onSuccess(finalList1);
+						}
+					});
 				}
 				else sHandler.post(new Runnable() {
 					@Override

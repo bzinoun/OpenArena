@@ -30,7 +30,7 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 	public int getItemCount() {
 		if (mList != null) return mList.size();
 		else {
-			L.e(this, "mList == null");
+			L.e(AbstractRecyclerAdapter.class, "mList == null");
 			return 0;
 		}
 	}
@@ -39,6 +39,13 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 		if (mList != null) {
 			mList.add(index, item);
 			notifyItemInserted(index);
+		}
+	}
+
+	public void replaceItem(int index, OL item) {
+		if (mList != null) {
+			mList.set(index, item);
+			notifyItemChanged(index);
 		}
 	}
 

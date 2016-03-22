@@ -4,12 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.openarena.model.interfaces.Cleanable;
 import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.League;
 import com.openarena.util.DBConst;
 
-public class DBManager implements Cleanable {
+public class DBManager {
 
 	private static SQLHelper sSQLHelper;
 
@@ -53,16 +52,8 @@ public class DBManager implements Cleanable {
 				new String[] {DBConst.ID},
 				new String[] {String.valueOf(id)});
 		League league = League.parse(cursor);
-		cursor.close();
+		if (cursor != null) cursor.close();
 		return league;
-	}
-
-	@Override
-	public void clean() {
-		if (sSQLHelper != null) {
-			sSQLHelper.clean();
-			sSQLHelper = null;
-		}
 	}
 
 }
