@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/timeline_item_list_height"
+	android:gravity="center"
+	android:orientation="horizontal"
+	android:background="@drawable/timeline_list_item">
+
+	<TextView
+		android:id="@+id/home_team_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="@dimen/timeline_item_horizontal_padding"
+		android:paddingRight="@dimen/timeline_item_horizontal_padding"
+		android:textColor="@color/timeline_text"
+		android:textSize="@dimen/timeline_item_team_size"
+		tools:text="Name"/>
+
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/home_team_icon"
+		android:layout_width="@dimen/timeline_item_icon_size"
+		android:layout_height="@dimen/timeline_item_icon_size"
+		android:src="#000"/>
+
+	<TextView
+		android:id="@+id/goals_home_team"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="@dimen/timeline_item_horizontal_padding"
+		android:paddingRight="@dimen/timeline_item_horizontal_padding"
+		android:textColor="@color/timeline_text"
+		android:textSize="@dimen/timeline_item_goal_size"
+		tools:text="3"/>
+
+	<FrameLayout
+		android:layout_width="2dp"
+		android:layout_height="match_parent"
+		android:background="@color/timeline_background_separator"/>
+
+	<TextView
+		android:id="@+id/goals_away_team"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="@dimen/timeline_item_horizontal_padding"
+		android:paddingRight="@dimen/timeline_item_horizontal_padding"
+		android:textColor="@color/timeline_text"
+		android:textSize="@dimen/timeline_item_goal_size"
+		tools:text="3"/>
+
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/away_team_icon"
+		android:layout_width="@dimen/timeline_item_icon_size"
+		android:layout_height="@dimen/timeline_item_icon_size"
+		android:src="#000"/>
+
+	<TextView
+		android:id="@+id/away_team_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="@dimen/timeline_item_horizontal_padding"
+		android:paddingRight="@dimen/timeline_item_horizontal_padding"
+		android:textColor="@color/timeline_text"
+		android:textSize="@dimen/timeline_item_team_size"
+		tools:text="Name"/>
+
+</LinearLayout>
