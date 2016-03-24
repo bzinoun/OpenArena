@@ -37,4 +37,5 @@ public class SplashscreenFragment extends Fragment {
 	private void setupUI(View view) {
 		mProgressBar = (ProgressBar) view.findViewById(R.id.splashscreen_progress_bar);
 	}
+
 }

@@ -6,7 +6,14 @@
 	<dimen name="navigation_text_size">16sp</dimen>
 	<dimen name="empty_content_icon_size">48dp</dimen>
 	<dimen name="empty_content_text_size">18sp</dimen>
+	<dimen name="timeline_day">24sp</dimen>
+	<dimen name="timeline_count">16sp</dimen>
+	<dimen name="timeline_item_list_height">48dp</dimen>
+	<dimen name="timeline_item_icon_size">40dp</dimen>
+	<dimen name="timeline_item_team_size">16sp</dimen>
+	<dimen name="timeline_item_goal_size">20sp</dimen>
+	<dimen name="timeline_item_horizontal_padding">8dp</dimen>
 	<dimen name="splashscreen_title_size">38sp</dimen>
 	<dimen name="splashscreen_progressbar_size">40dp</dimen>
-	<dimen name="timeline_list_vertical_padding">8dp</dimen>
+	<dimen name="timeline_list_vertical_padding">4dp</dimen>
 </resources>

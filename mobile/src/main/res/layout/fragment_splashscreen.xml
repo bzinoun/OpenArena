@@ -21,7 +21,6 @@
 		android:layout_marginTop="10dp"
 		android:layout_width="@dimen/splashscreen_progressbar_size"
 		android:layout_height="@dimen/splashscreen_progressbar_size"
-		android:indeterminate="true"
-		android:visibility="gone"/>
+		android:indeterminate="true"/>
 
 </LinearLayout>

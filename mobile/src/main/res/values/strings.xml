@@ -4,12 +4,15 @@
 	<string name="drawer_close">Close drawer</string>
 	<string name="splashscreen_title">Welcome</string>
 	<string name="empty_content_text">No matches</string>
+	<string name="timeline_today">Today</string>
+	<string name="timeline_yesterday">Yesterday</string>
+	<string name="timeline_tomorrow">Tomorrow</string>
 	<string name="navigation_settings">Settings</string>
 	<string name="navigation_search">Search</string>
+	<string name="option_sort">Sort</string>
 
 	<!-- API resources -->
-	<string name="api_default_request">http://api.football-data.org/v1/soccerseasons</string>
-	<string name="api_token">16c130d43d5543bfac04ffef8b3da068</string>
+	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>
 	<string name="api_response_control_mini">minified</string>
 	<string name="api_response_control_full">full</string>
 </resources>

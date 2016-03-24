@@ -23,24 +23,34 @@ import java.util.concurrent.TimeUnit;
 public class Controller {
 
 	private static final int NUMBERS_OF_CORES = Runtime.getRuntime().availableProcessors();
-	private static ThreadPoolExecutor sExecutor;
-	private static Handler sHandler;
-	private static Context sContext;
+	private static Controller mInstance;
+	private ThreadPoolExecutor sExecutor;
+	private Handler sHandler;
+	private Context sContext;
 
-	public static void init(Context context) {
-		if (Controller.sContext == null) Controller.sContext = context;
-		if (sHandler == null) sHandler = new Handler();
-		if (sExecutor == null || sExecutor.isShutdown()) {
-			sExecutor = new ThreadPoolExecutor(
-					1,
-					NUMBERS_OF_CORES,
-					5000,
-					TimeUnit.MILLISECONDS,
-					new LinkedBlockingQueue<Runnable>());
+	public static synchronized void init(Context context) {
+		if (mInstance == null) synchronized (Controller.class) {
+			if (mInstance == null) {
+				mInstance = new Controller();
+				mInstance.sContext = context;
+				mInstance.sHandler = new Handler();
+				mInstance.sExecutor = new ThreadPoolExecutor(
+						1,
+						NUMBERS_OF_CORES,
+						5000,
+						TimeUnit.MILLISECONDS,
+						new LinkedBlockingQueue<Runnable>());
+			}
 		}
 	}
 
-	public static void getListOfLeagues(final Context context, final OnGetLeagues callback) {
+	public static synchronized Controller getInstance() {
+		return mInstance;
+	}
+
+	protected Controller() {}
+
+	public void getListOfLeagues(final Context context, final OnGetLeagues callback) {
 		sExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -49,8 +59,12 @@ public class Controller {
 				String resultLast = Api.getLeaguesList(context, year - 1);
 				if (resultCurrent != null && resultLast != null) {
 					/*Gson gson = new Gson();
-					ArrayList<LeagueG> list1 = gson.fromJson(resultCurrent, new TypeToken<ArrayList<LeagueG>>() {}.getType());
-					ArrayList<LeagueG> list2 = gson.fromJson(resultLast, new TypeToken<ArrayList<LeagueG>>() {}.getType());*/
+					ArrayList<LeagueG> list1 = gson.fromJson(
+							resultCurrent,
+							new TypeToken<ArrayList<LeagueG>>() {}.getType());
+					ArrayList<LeagueG> list2 = gson.fromJson(
+							resultLast,
+							new TypeToken<ArrayList<LeagueG>>() {}.getType());*/
 					ArrayList<League> list = null;
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
@@ -97,12 +111,12 @@ public class Controller {
 		});
 	}
 
-	public static boolean isFirstEnter() {
+	public boolean isFirstEnter() {
 		return PreferencesManager.getInstance(sContext).getBoolean(Const.PREF_FIRST_ENTER, true);
 	}
 
 	@NonNull
-	private static ArrayList<League> parseLeagues(JSONArray array) {
+	private ArrayList<League> parseLeagues(JSONArray array) {
 		ArrayList<League> list = new ArrayList<>();
 		if (array != null) {
 			int count = array.length();

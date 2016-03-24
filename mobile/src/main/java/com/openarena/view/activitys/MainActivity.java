@@ -31,17 +31,19 @@ public class MainActivity extends AppCompatActivity {
 	private FragmentManager mFragmentManager;
 	private RecyclerView mRecyclerView;
 	private LeaguesAdapter mAdapter;
+	private Controller mController;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mFragmentManager = getFragmentManager();
+		mController = Controller.getInstance();
 		PreferencesManager.getInstance(this).setBoolean(Const.PREF_FIRST_ENTER, true).commit();
 		setupUI();
 		mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-		Controller.getListOfLeagues(this, new Controller.OnGetLeagues() {
+		mController.getListOfLeagues(this, new Controller.OnGetLeagues() {
 			@Override
 			public void onError() {
 				L.e(MainActivity.class, "Error");
@@ -55,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
 					mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
 					mAdapter = new LeaguesAdapter(data);
 					mRecyclerView.setAdapter(mAdapter);
-				}
-				else {
+				} else {
 					L.e(MainActivity.class, "RuntimeException");
 					throw new RuntimeException("NavigationView have not find");
 				}
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		if (Controller.isFirstEnter()) {
+		if (mController.isFirstEnter()) {
 			PreferencesManager.getInstance(this)
 					.setBoolean(Const.PREF_FIRST_ENTER, false)
 					.commit();
@@ -98,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				if (mDrawer != null) mDrawer = null;
+				if (mToolbar != null) mToolbar = null;
+				if (mFragmentManager != null) mFragmentManager = null;
+				if (mRecyclerView != null) mRecyclerView = null;
+				if (mAdapter != null) mAdapter = null;
+				if (mController != null) mController = null;
 				System.gc();
 			}
 		}).start();
