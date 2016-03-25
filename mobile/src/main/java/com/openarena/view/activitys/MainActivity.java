@@ -13,14 +13,17 @@ import android.widget.LinearLayout;
 
 import com.openarena.R;
 import com.openarena.controllers.Controller;
+import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.LeaguesAdapter;
+import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.League;
 import com.openarena.util.L;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Controller.OnGetLeagues {
+public class MainActivity extends AppCompatActivity
+		implements Controller.OnGetLeagues, OnItemClickListener {
 
 	private Toolbar mToolbar;
 	private RecyclerView mRecyclerView;
@@ -83,6 +86,21 @@ public class MainActivity extends AppCompatActivity implements Controller.OnGetL
 		}
 	}
 
+	@Override
+	public void onItemClick(View view, int position) {
+		if (mAdapter != null) {
+			League item = mAdapter.getItem(position);
+			/*Intent intent = new Intent(this, this.getClass());
+			intent.putExtra("id", item.getID());
+			startActivity(intent);*/
+		}
+	}
+
+	@Override
+	public void onItemLongClick(View view, int position) {
+
+	}
+
 	private void setupUI() {
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(mToolbar);
@@ -93,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements Controller.OnGetL
 				MainActivity.this,
 				LinearLayoutManager.VERTICAL,
 				false));
+		mRecyclerView.addOnItemTouchListener(
+				new RecyclerViewItemTouchListener(this, mRecyclerView, this));
 		UI.hide(mRecyclerView, mErrorContent);
 		UI.show(mProgress);
 	}
