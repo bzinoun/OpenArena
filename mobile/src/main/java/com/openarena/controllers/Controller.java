@@ -14,6 +14,7 @@ import com.openarena.util.L;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -114,7 +115,7 @@ public class Controller {
 				String result = Api.getFixturesBySeasonId(context, soccerseasonId);
 				if (result != null) {
 					try {
-						JSONArray array = new JSONArray(result);
+						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
 						final ArrayList<Fixture> list = parseFixtures(array);
 						if (!list.isEmpty()) {
 							sHandler.post(new Runnable() {

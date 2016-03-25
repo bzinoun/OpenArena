@@ -4,7 +4,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	tools:context=".view.activitys.TimeLineActivity">
 
 	<FrameLayout
 		android:layout_width="match_parent"
@@ -33,7 +34,7 @@
 	</FrameLayout>
 
 	<android.support.v7.widget.RecyclerView
-		android:id="@+id/list"
+		android:id="@+id/timeline_recycler_view"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/horizontal_padding"

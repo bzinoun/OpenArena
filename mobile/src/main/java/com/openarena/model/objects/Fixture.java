@@ -14,9 +14,8 @@ import java.util.Locale;
 
 public class Fixture {
 
+	public static final int FINISHED = 0;
 	public static final int TIMED = 1;
-	//public static final int ? = 2;
-	public static final int FINISHED = 3;
 
 	private int mID;
 	private int mSoccerSeasonID;
@@ -72,14 +71,21 @@ public class Fixture {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
 				fixture.mDate = dateFormat.parse(o.getString("date")).getTime();
 			}
+			if (!o.isNull("status")) {
+				String status = o.getString("status");
+				L.e(status);
+				if (status.equals("FINISHED")) fixture.mStatus = FINISHED;
+				else if (status.equals("TIMED")) fixture.mStatus = TIMED;
+			}
 			if (!o.isNull("matchday")) fixture.mMatchday = o.getInt("matchday");
 			if (!o.isNull("homeTeamId")) fixture.mHomeTeamID = o.getInt("homeTeamId");
 			if (!o.isNull("homeTeamName")) fixture.mHomeTeamName = o.getString("homeTeamName");
 			if (!o.isNull("awayTeamId")) fixture.mAwayTeamID = o.getInt("awayTeamId");
 			if (!o.isNull("awayTeamName")) fixture.mAwayTeamName = o.getString("awayTeamName");
 			if (!o.isNull("result")) {
-				if (!o.isNull("goalsHomeTeam")) fixture.mGoalsHomeTeam = o.getInt("goalsHomeTeam");
-				if (!o.isNull("goalsAwayTeam")) fixture.mGoalsAwayTeam = o.getInt("goalsAwayTeam");
+				JSONObject result = o.getJSONObject("result");
+				if (!result.isNull("goalsHomeTeam")) fixture.mGoalsHomeTeam = result.getInt("goalsHomeTeam");
+				if (!result.isNull("goalsAwayTeam")) fixture.mGoalsAwayTeam = result.getInt("goalsAwayTeam");
 			}
 			return fixture;
 

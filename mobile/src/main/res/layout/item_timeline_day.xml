@@ -6,6 +6,7 @@
 	android:layout_height="@dimen/timeline_item_list_height"
 	android:background="@drawable/timeline_list_item"
 	android:gravity="center"
+	android:clickable="true"
 	android:orientation="horizontal">
 
 	<TextView

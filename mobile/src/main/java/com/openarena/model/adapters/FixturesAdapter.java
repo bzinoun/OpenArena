@@ -35,10 +35,11 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 		holder.mHomeTeamName.setText(item.getHomeTeamName());
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
 		if (item.getStatus() == Fixture.FINISHED) {
+
 			UI.hide(holder.mDate);
 			UI.show(holder.mGoalsHomeTeam, holder.mGoalsAwayTeam);
-			holder.mGoalsHomeTeam.setText(item.getGoalsHomeTeam());
-			holder.mGoalsAwayTeam.setText(item.getGoalsAwayTeam());
+			holder.mGoalsHomeTeam.setText(String.valueOf(item.getGoalsHomeTeam()));
+			holder.mGoalsAwayTeam.setText(String.valueOf(item.getGoalsAwayTeam()));
 		}
 		else {
 			UI.show(holder.mDate);

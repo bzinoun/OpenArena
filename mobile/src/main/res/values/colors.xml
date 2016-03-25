@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="accent">#FFD740</color>
-	<color name="primary">#4CAF50</color>
-	<color name="primary_dark">#388E3C</color>
-	<color name="toolbar_title">#000</color>
-	<color name="toolbar_subtitle">#333</color>
+	<color name="primary">#0F9D58</color>
+	<color name="primary_dark">#0B8043</color>
+	<color name="toolbar_title">#FFF</color>
+	<color name="toolbar_subtitle">#AAA</color>
 	<color name="leagues_list_text">#000</color>
 	<color name="league_list_background">#FAFAFA</color>
 	<color name="league_list_background_pressed">#E0E0E0</color>

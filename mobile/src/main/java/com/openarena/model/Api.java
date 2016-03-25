@@ -29,7 +29,7 @@ public class Api {
 				.append("/fixtures");
 		if (timeFrame != null) request.append("?timeFrame=")
 				.append(timeFrame);
-		else request.append("?timeFrame=n1");
+		else request.append("?timeFrame=n7");
 		return connection.request(request.toString());
 	}
 
