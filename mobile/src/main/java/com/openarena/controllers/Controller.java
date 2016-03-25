@@ -6,7 +6,8 @@ import android.support.annotation.NonNull;
 
 import com.openarena.model.Api;
 import com.openarena.model.PreferencesManager;
-import com.openarena.model.interfaces.OnResult;
+import com.openarena.model.interfaces.OnNetworkResponse;
+import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.L;
@@ -55,8 +56,8 @@ public class Controller {
 			@Override
 			public void run() {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
-				String resultCurrent = Api.getLeaguesList(context, year);
-				String resultLast = Api.getLeaguesList(context, year - 1);
+				String resultCurrent = Api.getLeagueByYear(context, year);
+				String resultLast = Api.getLeagueByYear(context, year - 1);
 				if (resultCurrent != null && resultLast != null) {
 					/*Gson gson = new Gson();
 					ArrayList<LeagueG> list1 = gson.fromJson(
@@ -65,27 +66,29 @@ public class Controller {
 					ArrayList<LeagueG> list2 = gson.fromJson(
 							resultLast,
 							new TypeToken<ArrayList<LeagueG>>() {}.getType());*/
-					ArrayList<League> list = null;
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
 						JSONArray lastArray = new JSONArray(resultLast);
-						list = parseLeagues(currentArray);
+						final ArrayList<League> list = parseLeagues(currentArray);
 						list.addAll(parseLeagues(lastArray));
+						if (!list.isEmpty()) {
+							sHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									callback.onSuccess(list);
+								}
+							});
+						}
+						else sHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError();
+							}
+						});
 
 					} catch (JSONException e) {
 						L.e(Controller.class, e.toString());
 						e.printStackTrace();
-					}
-					if (list != null) {
-						final ArrayList<League> finalList = list;
-						sHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								callback.onSuccess(finalList);
-							}
-						});
-					}
-					else {
 						sHandler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -93,13 +96,50 @@ public class Controller {
 							}
 						});
 					}
-					final ArrayList<League> finalList1 = list;
-					sHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.onSuccess(finalList1);
+				}
+				else sHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onError();
+					}
+				});
+			}
+		});
+	}
+
+	public void getListOfFixtures(final Context context, final int soccerseasonId, final OnGetFixtures callback) {
+		sExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				String result = Api.getFixturesBySeasonId(context, soccerseasonId);
+				if (result != null) {
+					try {
+						JSONArray array = new JSONArray(result);
+						final ArrayList<Fixture> list = parseFixtures(array);
+						if (!list.isEmpty()) {
+							sHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									callback.onSuccess(list);
+								}
+							});
 						}
-					});
+						else sHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError();
+							}
+						});
+					} catch (JSONException e) {
+						L.e(Controller.class, e.toString());
+						e.printStackTrace();
+						sHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError();
+							}
+						});
+					}
 				}
 				else sHandler.post(new Runnable() {
 					@Override
@@ -128,13 +168,29 @@ public class Controller {
 					e.printStackTrace();
 				}
 			}
-			return list;
 		}
-		else return list;
+		return list;
 	}
 
-	public interface OnGetLeagues extends OnResult<ArrayList<League>> {
-		void onError();
+	@NonNull
+	private ArrayList<Fixture> parseFixtures(JSONArray array) {
+		ArrayList<Fixture> list = new ArrayList<>();
+		if (array != null) {
+			int count = array.length();
+			for (int i = 0; i < count; i++) {
+				try {
+					list.add(Fixture.parse(array.getJSONObject(i)));
+				} catch (JSONException e) {
+					L.e(Controller.class, e.toString());
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
 	}
+
+	public interface OnGetLeagues extends OnNetworkResponse<ArrayList<League>> {}
+
+	public interface OnGetFixtures extends OnNetworkResponse<ArrayList<Fixture>> {}
 
 }

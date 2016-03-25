@@ -21,7 +21,7 @@ public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapt
 
 	@Override
 	public LeagueViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_navigation, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_league, parent, false);
 		return new LeagueViewHolder(view);
 	}
 
