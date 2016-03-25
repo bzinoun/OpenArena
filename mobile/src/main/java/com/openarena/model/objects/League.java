@@ -26,27 +26,6 @@ public class League {
 
 	protected League() {}
 
-	protected League(
-			int id,
-			String caption,
-			String league,
-			int year,
-			int currentMatchday,
-			int numberOfMatchdays,
-			int numberOfTeams,
-			int numberOfGames,
-			long lastUpdated) {
-		this.mID = id;
-		this.mCaption = caption;
-		this.mLeague = league;
-		this.mYear = year;
-		this.mCurrentMatchday = currentMatchday;
-		this.mNumberOfMatchdays = numberOfMatchdays;
-		this.mNumberOfTeams = numberOfTeams;
-		this.mNumberOfGames = numberOfGames;
-		this.mLastUpdated = lastUpdated;
-	}
-
 	public static League parse(Cursor leagueCursor) {
 		League league = null;
 		if (leagueCursor.moveToFirst()) {
@@ -60,15 +39,15 @@ public class League {
 			int col_numberOfGames = leagueCursor.getColumnIndex(DBConst.NUMBER_OF_GAMES);
 			int col_lastUpdated = leagueCursor.getColumnIndex(DBConst.LAST_UPDATED);
 			league = new League();
-			league.setID(leagueCursor.getInt(col_id));
-			league.setCaption(leagueCursor.getString(col_caption));
-			league.setLeague(leagueCursor.getString(col_league));
-			league.setYear(leagueCursor.getInt(col_year));
-			league.setCurrentMatchday(leagueCursor.getInt(col_currentMatchday));
-			league.setNumberOfMatchdays(leagueCursor.getInt(col_numberOfMatchdays));
-			league.setNumberOfTeams(leagueCursor.getInt(col_numberOfTeams));
-			league.setNumberOfGames(leagueCursor.getInt(col_numberOfGames));
-			league.setLastUpdated(leagueCursor.getLong(col_lastUpdated));
+			league.mID = leagueCursor.getInt(col_id);
+			league.mCaption = leagueCursor.getString(col_caption);
+			league.mLeague = leagueCursor.getString(col_league);
+			league.mYear = leagueCursor.getInt(col_year);
+			league.mCurrentMatchday = leagueCursor.getInt(col_currentMatchday);
+			league.mNumberOfMatchdays = leagueCursor.getInt(col_numberOfMatchdays);
+			league.mNumberOfTeams = leagueCursor.getInt(col_numberOfTeams);
+			league.mNumberOfGames = leagueCursor.getInt(col_numberOfGames);
+			league.mLastUpdated = leagueCursor.getLong(col_lastUpdated);
 		}
 		leagueCursor.close();
 		return league;
@@ -135,42 +114,6 @@ public class League {
 
 	public long getLastUpdated() {
 		return mLastUpdated;
-	}
-
-	protected void setID(int id) {
-		this.mID = id;
-	}
-
-	protected void setCaption(String caption) {
-		this.mCaption = caption;
-	}
-
-	protected void setLeague(String league) {
-		this.mLeague = league;
-	}
-
-	protected void setYear(int year) {
-		this.mYear = year;
-	}
-
-	protected void setCurrentMatchday(int currentMatchday) {
-		this.mCurrentMatchday = currentMatchday;
-	}
-
-	protected void setNumberOfMatchdays(int numberOfMatchdays) {
-		this.mNumberOfMatchdays = numberOfMatchdays;
-	}
-
-	protected void setNumberOfTeams(int numberOfTeams) {
-		this.mNumberOfTeams = numberOfTeams;
-	}
-
-	protected void setNumberOfGames(int numberOfGames) {
-		this.mNumberOfGames = numberOfGames;
-	}
-
-	protected void setLastUpdated(long lastUpdated) {
-		this.mLastUpdated = lastUpdated;
 	}
 
 }

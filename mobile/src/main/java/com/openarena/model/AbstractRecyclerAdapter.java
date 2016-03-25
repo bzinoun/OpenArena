@@ -35,6 +35,17 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 		}
 	}
 
+	public OL getItem(int position) {
+		if (mList != null) {
+			if (position > 0 && position < mList.size()) {
+				return mList.get(position);
+			}
+			L.e(AbstractRecyclerAdapter.class, "no item[" + position + "]");
+		}
+		L.e(AbstractRecyclerAdapter.class, "error to get item");
+		return null;
+	}
+
 	public void addItem(int index, OL item) {
 		if (mList != null) {
 			mList.add(index, item);

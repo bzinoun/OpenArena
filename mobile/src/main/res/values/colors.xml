@@ -10,10 +10,11 @@
 	<color name="navigation_background_pressed">#344</color>
 	<color name="navigation_text_color">#ccc</color>
 	<color name="timeline_header">#444</color>
-	<color name="timeline_background_separator">#A5D6A7</color>
-	<color name="timeline_background_title">#C8E6C9</color>
-	<color name="timeline_background_list">#FAFAFA</color>
-	<color name="timeline_background_list_pressed">#BDBDBD</color>
+	<color name="timeline_separator_background">#A5D6A7</color>
+	<color name="timeline_separator_text">#000</color>
+	<color name="timeline_title_background">#C8E6C9</color>
+	<color name="timeline_list_background">#FAFAFA</color>
+	<color name="timeline_list_background_pressed">#BDBDBD</color>
 	<color name="timeline_text">#555</color>
 	<color name="empty_content_text">#BDBDBD</color>
 	<color name="empty_content_background">#FAFAFA</color>

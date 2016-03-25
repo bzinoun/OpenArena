@@ -28,18 +28,30 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		StringBuilder params1 = new StringBuilder()
-				.append(DBConst.ID).append(" INTEGER NOT NULL,")
-				.append(DBConst.CAPTION).append(" TEXT,")
-				.append(DBConst.LEAGUE).append(" TEXT,")
-				.append(DBConst.YEAR).append(" INTEGER,")
-				.append(DBConst.CURRENT_MATCHDAY).append(" INTEGER,")
-				.append(DBConst.NUMBER_OF_MATCHDAYS).append(" INTEGER,")
-				.append(DBConst.NUMBER_OF_TEAMS).append(" INTEGER,")
-				.append(DBConst.NUMBER_OF_GAMES).append(" INTEGER,")
-				.append(DBConst.LAST_UPDATED).append(" INTEGER");
+		String params1 = DBConst.ID + " INTEGER NOT NULL," +
+				DBConst.CAPTION + " TEXT," +
+				DBConst.LEAGUE + " TEXT," +
+				DBConst.YEAR + " INTEGER," +
+				DBConst.CURRENT_MATCHDAY + " INTEGER," +
+				DBConst.NUMBER_OF_MATCHDAYS + " INTEGER," +
+				DBConst.NUMBER_OF_TEAMS + " INTEGER," +
+				DBConst.NUMBER_OF_GAMES + " INTEGER," +
+				DBConst.LAST_UPDATED + " INTEGER";
 
-		createTable(db, DBConst.TABLE_LEAGUES, params1.toString());
+		String params2 = DBConst.ID + " INTEGER NOT NULL," +
+				DBConst.SOCCER_SEASON_ID + " INTEGER," +
+				DBConst.DATE + " INTEGER," +
+				DBConst.STATUS + " INTEGER," +
+				DBConst.MATCHDAY + " INTEGER," +
+				DBConst.HOME_TEAM_ID + " INTEGER NOT NULL," +
+				DBConst.HOME_TEAM_NAME + " TEXT," +
+				DBConst.AWAY_TEAM_ID + " INTEGER NOT NULL," +
+				DBConst.AWAY_TEAM_NAME + " TEXT," +
+				DBConst.GOALS_HOME_TEAM + " INTEGER," +
+				DBConst.GOALS_AWAY_TEAM + " INTEGER";
+
+		createTable(db, DBConst.TABLE_LEAGUES, params1);
+		createTable(db, DBConst.TABLE_FIXTURES, params2);
 	}
 
 	@Override
@@ -138,7 +150,8 @@ public class SQLHelper extends SQLiteOpenHelper {
 	}
 
 	public void dropData(SQLiteDatabase db) {
-		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_TEAMS);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_LEAGUES);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_FIXTURES);
 	}
 
 }

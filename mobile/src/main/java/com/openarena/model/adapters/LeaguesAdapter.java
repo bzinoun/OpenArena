@@ -29,8 +29,8 @@ public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapt
 	public void onBindViewHolder(LeagueViewHolder holder, int position) {
 		League item = mList.get(position);
 		//temp image
-		holder.getIcon().setImageResource(R.drawable.ic_alert_circle_outline);
-		holder.getName().setText(item.getCaption());
+		holder.mIcon.setImageResource(R.drawable.ic_alert_circle_outline);
+		holder.mName.setText(item.getCaption());
 	}
 
 	public static class LeagueViewHolder extends RecyclerView.ViewHolder {
@@ -42,14 +42,6 @@ public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapt
 			super(itemView);
 			mIcon = (ImageView) itemView.findViewById(R.id.icon);
 			mName = (TextView) itemView.findViewById(R.id.name);
-		}
-
-		public ImageView getIcon() {
-			return mIcon;
-		}
-
-		public TextView getName() {
-			return mName;
 		}
 	}
 

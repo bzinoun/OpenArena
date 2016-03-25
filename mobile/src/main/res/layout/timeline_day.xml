@@ -10,12 +10,12 @@
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="4dp"
-		android:background="@color/timeline_background_separator"/>
+		android:background="@color/timeline_separator_background"/>
 
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/timeline_background_title"
+		android:background="@color/timeline_title_background"
 		android:padding="@dimen/horizontal_padding">
 
 		<TextView
@@ -53,6 +53,6 @@
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="4dp"
-		android:background="@color/timeline_background_separator"/>
+		android:background="@color/timeline_separator_background"/>
 
 </LinearLayout>
