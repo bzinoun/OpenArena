@@ -19,7 +19,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
 		android:text="@string/empty_content_text"
-		android:textColor="@color/empty_content_text"
+		android:textColor="@color/empty_content"
 		android:textSize="@dimen/empty_content_text_size"/>
 
 </LinearLayout>

@@ -5,10 +5,10 @@
 	<color name="primary_dark">#388E3C</color>
 	<color name="toolbar_title">#000</color>
 	<color name="toolbar_subtitle">#333</color>
-	<color name="navigation_background">#233</color>
-	<color name="navigation_background_separator">#444</color>
-	<color name="navigation_background_pressed">#344</color>
-	<color name="navigation_text_color">#ccc</color>
+	<color name="leagues_list_text">#000</color>
+	<color name="league_list_background">#FAFAFA</color>
+	<color name="league_list_background_pressed">#E0E0E0</color>
+	<color name="error_content">#BDBDBD</color>
 	<color name="timeline_header">#444</color>
 	<color name="timeline_separator_background">#A5D6A7</color>
 	<color name="timeline_separator_text">#000</color>
@@ -16,8 +16,6 @@
 	<color name="timeline_list_background">#FAFAFA</color>
 	<color name="timeline_list_background_pressed">#BDBDBD</color>
 	<color name="timeline_text">#555</color>
-	<color name="empty_content_text">#BDBDBD</color>
-	<color name="empty_content_background">#FAFAFA</color>
-	<color name="splashscreen_title">#FFF</color>
-	<color name="window_background">#E8F5E9</color>
+	<color name="empty_content">#BDBDBD</color>
+	<color name="window_background">#EEEEEE</color>
 </resources>
