@@ -77,12 +77,12 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	@Override
-	public void onError() {
+	public void onError(int code) {
 		L.e(MainActivity.class, "Error loading list");
 		UI.hide(mRecyclerView, mProgress);
 		UI.show(mErrorContent);
-		Snackbar.make(mErrorContent, R.string.snackbar_no_internet_title, Snackbar.LENGTH_INDEFINITE)
-				.setAction(R.string.snackbar_no_internet_action, new View.OnClickListener() {
+		Snackbar.make(mErrorContent, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
+				.setAction(R.string.snackbar_result_null_action, new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						mController.getListOfLeagues(MainActivity.this, MainActivity.this);
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public void onItemClick(View view, int position) {
 		if (mAdapter != null) {
-			//Toast.makeText(this, "item[" + (position + 1) + "]", Toast.LENGTH_SHORT).show();
 			League item = mAdapter.getItem(position);
 			Intent intent = new Intent(this, TimeLineActivity.class);
 			intent.putExtra("id", item.getID());

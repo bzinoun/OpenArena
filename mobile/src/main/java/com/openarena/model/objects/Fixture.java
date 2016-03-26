@@ -73,7 +73,6 @@ public class Fixture {
 			}
 			if (!o.isNull("status")) {
 				String status = o.getString("status");
-				L.e(status);
 				if (status.equals("FINISHED")) fixture.mStatus = FINISHED;
 				else if (status.equals("TIMED")) fixture.mStatus = TIMED;
 			}

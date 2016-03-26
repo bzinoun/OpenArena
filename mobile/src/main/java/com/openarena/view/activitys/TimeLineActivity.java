@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.openarena.R;
 import com.openarena.controllers.Controller;
@@ -19,10 +19,9 @@ import java.util.ArrayList;
 
 public class TimeLineActivity extends AppCompatActivity implements Controller.OnGetFixtures {
 
+	private Toolbar mToolbar;
 	private RecyclerView mRecyclerView;
 	private LinearLayout mEmptyContent;
-	private TextView mDay;
-	private TextView mCount;
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private int mSoccerSeasonId;
@@ -34,8 +33,8 @@ public class TimeLineActivity extends AppCompatActivity implements Controller.On
 		setupUI();
 		mSoccerSeasonId = getIntent().getIntExtra("id", 0);
 		mController = Controller.getInstance();
-		mDay.setText(R.string.timeline_today);
 		mController.getListOfFixtures(this, mSoccerSeasonId, this);
+		mToolbar.setTitle(R.string.timeline_this_week);
 	}
 
 	@Override
@@ -61,6 +60,7 @@ public class TimeLineActivity extends AppCompatActivity implements Controller.On
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (mToolbar != null) mToolbar = null;
 		if (mRecyclerView != null) mRecyclerView = null;
 		if (mAdapter != null) mAdapter = null;
 		if (mController != null) mController = null;
@@ -70,14 +70,14 @@ public class TimeLineActivity extends AppCompatActivity implements Controller.On
 	}
 
 	@Override
-	public void onError() {
+	public void onError(int code) {
 		UI.hide(mRecyclerView);
 		UI.show(mEmptyContent);
 	}
 
 	@Override
 	public void onSuccess(ArrayList<Fixture> data) {
-		mCount.setText(String.valueOf(data.size()));
+		mToolbar.setSubtitle(String.valueOf(data.size()));
 		UI.hide(mEmptyContent);
 		UI.show(mRecyclerView);
 		if (mAdapter == null) {
@@ -88,13 +88,13 @@ public class TimeLineActivity extends AppCompatActivity implements Controller.On
 	}
 
 	private void setupUI() {
+		mToolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(mToolbar);
 		mRecyclerView = (RecyclerView) findViewById(R.id.timeline_recycler_view);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(
 				TimeLineActivity.this,
 				LinearLayoutManager.VERTICAL,
 				false));
 		mEmptyContent = (LinearLayout) findViewById(R.id.empty_content);
-		mDay = (TextView) findViewById(R.id.day);
-		mCount = (TextView) findViewById(R.id.count);
 	}
 }

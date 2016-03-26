@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.openarena.model.Api;
 import com.openarena.model.PreferencesManager;
-import com.openarena.model.interfaces.OnNetworkResponse;
+import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
@@ -60,30 +60,21 @@ public class Controller {
 				String resultCurrent = Api.getLeagueByYear(context, year);
 				String resultLast = Api.getLeagueByYear(context, year - 1);
 				if (resultCurrent != null && resultLast != null) {
-					/*Gson gson = new Gson();
-					ArrayList<LeagueG> list1 = gson.fromJson(
-							resultCurrent,
-							new TypeToken<ArrayList<LeagueG>>() {}.getType());
-					ArrayList<LeagueG> list2 = gson.fromJson(
-							resultLast,
-							new TypeToken<ArrayList<LeagueG>>() {}.getType());*/
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
 						JSONArray lastArray = new JSONArray(resultLast);
 						final ArrayList<League> list = parseLeagues(currentArray);
 						list.addAll(parseLeagues(lastArray));
-						if (!list.isEmpty()) {
-							sHandler.post(new Runnable() {
+						if (!list.isEmpty()) sHandler.post(new Runnable() {
 								@Override
 								public void run() {
 									callback.onSuccess(list);
 								}
 							});
-						}
 						else sHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								callback.onError();
+								callback.onError(Const.ERROR_CODE_RESULT_EMPTY);
 							}
 						});
 
@@ -93,7 +84,7 @@ public class Controller {
 						sHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								callback.onError();
+								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
 							}
 						});
 					}
@@ -101,7 +92,7 @@ public class Controller {
 				else sHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						callback.onError();
+						callback.onError(Const.ERROR_CODE_RESULT_NULL);
 					}
 				});
 			}
@@ -117,18 +108,16 @@ public class Controller {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
 						final ArrayList<Fixture> list = parseFixtures(array);
-						if (!list.isEmpty()) {
-							sHandler.post(new Runnable() {
+						if (!list.isEmpty()) sHandler.post(new Runnable() {
 								@Override
 								public void run() {
 									callback.onSuccess(list);
 								}
 							});
-						}
 						else sHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								callback.onError();
+								callback.onError(Const.ERROR_CODE_RESULT_EMPTY);
 							}
 						});
 					} catch (JSONException e) {
@@ -137,7 +126,7 @@ public class Controller {
 						sHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								callback.onError();
+								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
 							}
 						});
 					}
@@ -145,7 +134,7 @@ public class Controller {
 				else sHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						callback.onError();
+						callback.onError(Const.ERROR_CODE_RESULT_NULL);
 					}
 				});
 			}
@@ -190,8 +179,8 @@ public class Controller {
 		return list;
 	}
 
-	public interface OnGetLeagues extends OnNetworkResponse<ArrayList<League>> {}
+	public interface OnGetLeagues extends OnResultListener<ArrayList<League>> {}
 
-	public interface OnGetFixtures extends OnNetworkResponse<ArrayList<Fixture>> {}
+	public interface OnGetFixtures extends OnResultListener<ArrayList<Fixture>> {}
 
 }

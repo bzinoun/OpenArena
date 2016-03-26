@@ -2,11 +2,12 @@
 	<string name="app_name">Open arena</string>
 	<string name="drawer_open">Open drawer</string>
 	<string name="drawer_close">Close drawer</string>
-	<string name="snackbar_no_internet_title">No internet connection</string>
-	<string name="snackbar_no_internet_action">update</string>
+	<string name="snackbar_result_null_text">No internet connection</string>
+	<string name="snackbar_result_null_action">refresh</string>
 	<string name="error_content_text">Something wrong</string>
 	<string name="empty_content_text">Nothing</string>
 	<string name="timeline_today">Today</string>
+	<string name="timeline_this_week">This week</string>
 	<string name="timeline_yesterday">Yesterday</string>
 	<string name="timeline_tomorrow">Tomorrow</string>
 	<string name="navigation_settings">Settings</string>
