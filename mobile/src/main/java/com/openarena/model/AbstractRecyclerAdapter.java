@@ -37,7 +37,7 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 
 	public OL getItem(int position) {
 		if (mList != null) {
-			if (position > 0 && position < mList.size()) {
+			if (position >= 0 && position < mList.size()) {
 				return mList.get(position);
 			}
 			L.e(AbstractRecyclerAdapter.class, "no item[" + position + "]");
