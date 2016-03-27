@@ -25,7 +25,7 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 
 	@Override
 	public FixturesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timeline_day, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timeline, parent, false);
 		return new FixturesViewHolder(view);
 	}
 
@@ -56,8 +56,6 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 				mGoalsHomeTeam,
 				mGoalsAwayTeam,
 				mDate;
-		/*private CircleImageView mHomeTeamIcon,
-				mAwayTeamIcon;*/
 
 		public FixturesViewHolder(View itemView) {
 			super(itemView);
@@ -66,8 +64,6 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 			mGoalsHomeTeam = (TextView) itemView.findViewById(R.id.goals_home_team);
 			mGoalsAwayTeam = (TextView) itemView.findViewById(R.id.goals_away_team);
 			mDate = (TextView) itemView.findViewById(R.id.date);
-			//mHomeTeamIcon = (CircleImageView) itemView.findViewById(R.id.home_team_icon);
-			//mAwayTeamIcon = (CircleImageView) itemView.findViewById(R.id.away_team_icon);
 		}
 	}
 }

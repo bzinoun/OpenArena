@@ -18,7 +18,7 @@ public class Api {
 
 	/**
 	 *
-	 * @param timeFrame <b><i>//p|n[1-9]{1,2}//</i></b> of <b>null</b> for example "n1"
+	 * @param timeFrame <b>//p|n[1-9]{1,2}//</b> of <b>null</b> for example "n1"
 	 */
 	public static String getFixturesBySeasonId(Context context, int id, String timeFrame) {
 		Connection connection = getConnection(context);
