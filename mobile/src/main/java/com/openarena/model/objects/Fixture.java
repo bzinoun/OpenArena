@@ -1,6 +1,8 @@
 package com.openarena.model.objects;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
@@ -12,7 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class Fixture {
+public class Fixture implements Parcelable {
 
 	public static final int FINISHED = 0;
 	public static final int TIMED = 1;
@@ -30,6 +32,32 @@ public class Fixture {
 	private int mGoalsAwayTeam = -1;
 
 	protected Fixture() {}
+
+	protected Fixture(Parcel in) {
+		mID = in.readInt();
+		mSoccerSeasonID = in.readInt();
+		mDate = in.readLong();
+		mStatus = in.readInt();
+		mMatchday = in.readInt();
+		mHomeTeamID = in.readInt();
+		mAwayTeamID = in.readInt();
+		mHomeTeamName = in.readString();
+		mAwayTeamName = in.readString();
+		mGoalsHomeTeam = in.readInt();
+		mGoalsAwayTeam = in.readInt();
+	}
+
+	public static final Creator<Fixture> CREATOR = new Creator<Fixture>() {
+		@Override
+		public Fixture createFromParcel(Parcel in) {
+			return new Fixture(in);
+		}
+
+		@Override
+		public Fixture[] newArray(int size) {
+			return new Fixture[size];
+		}
+	};
 
 	public static Fixture parse(Cursor fixtureCursor) {
 		Fixture fixture = null;
@@ -140,5 +168,26 @@ public class Fixture {
 
 	public Integer getGoalsAwayTeam() {
 		return mGoalsAwayTeam;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+
+		dest.writeInt(mID);
+		dest.writeInt(mSoccerSeasonID);
+		dest.writeLong(mDate);
+		dest.writeInt(mStatus);
+		dest.writeInt(mMatchday);
+		dest.writeInt(mHomeTeamID);
+		dest.writeInt(mAwayTeamID);
+		dest.writeString(mHomeTeamName);
+		dest.writeString(mAwayTeamName);
+		dest.writeInt(mGoalsHomeTeam);
+		dest.writeInt(mGoalsAwayTeam);
 	}
 }

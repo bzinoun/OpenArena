@@ -5,19 +5,19 @@
 	android:layout_width="match_parent"
 	android:layout_height="@dimen/timeline_item_list_height"
 	android:background="@drawable/timeline_list_item"
-	android:gravity="center"
 	android:clickable="true"
+	android:gravity="center"
 	android:orientation="horizontal">
 
 	<TextView
 		android:id="@+id/home_team_name"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_weight="1"
 		android:paddingLeft="@dimen/horizontal_padding"
 		android:textColor="@color/timeline_text"
 		android:textSize="@dimen/timeline_item_team_size"
-		tools:text="Home team name"
-		android:layout_weight="1"/>
+		tools:text="Home team name"/>
 
 	<de.hdodenhof.circleimageview.CircleImageView
 		android:id="@+id/home_team_icon"
@@ -36,23 +36,23 @@
 		tools:text="3"/>
 
 	<FrameLayout
-		android:clickable="true"
 		android:id="@+id/item_timeline_separator"
 		android:layout_width="wrap_content"
-		android:paddingLeft="@dimen/timeline_item_horizontal_padding"
-		android:paddingRight="@dimen/timeline_item_horizontal_padding"
 		android:layout_height="match_parent"
 		android:layout_marginLeft="@dimen/horizontal_padding"
 		android:layout_marginRight="@dimen/horizontal_padding"
-		android:background="@color/timeline_separator_background">
+		android:background="@color/timeline_separator_background"
+		android:clickable="true"
+		android:paddingLeft="@dimen/timeline_item_horizontal_padding"
+		android:paddingRight="@dimen/timeline_item_horizontal_padding">
 
 		<TextView
 			android:id="@+id/date"
-			android:textColor="@color/timeline_separator_text"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			tools:text="21:30"
-			android:layout_gravity="center_vertical"/>
+			android:layout_gravity="center_vertical"
+			android:textColor="@color/timeline_separator_text"
+			tools:text="21:30"/>
 
 	</FrameLayout>
 
@@ -76,10 +76,10 @@
 		android:id="@+id/away_team_name"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_weight="1"
 		android:paddingRight="@dimen/horizontal_padding"
 		android:textColor="@color/timeline_text"
 		android:textSize="@dimen/timeline_item_team_size"
-		tools:text="Away team name"
-		android:layout_weight="1"/>
+		tools:text="Away team name"/>
 
 </LinearLayout>

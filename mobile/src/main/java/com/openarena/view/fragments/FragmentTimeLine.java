@@ -18,33 +18,32 @@ import android.widget.LinearLayout;
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
-import com.openarena.model.adapters.LeaguesAdapter;
+import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
-import com.openarena.model.objects.EventData;
-import com.openarena.model.objects.League;
+import com.openarena.model.objects.Fixture;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
 
-public class FragmentLeagues extends Fragment
-		implements Controller.OnGetLeagues, OnItemClickListener {
+public class FragmentTimeLine extends Fragment
+		implements Controller.OnGetFixtures, OnItemClickListener {
 
-	public static final String TAG = "FragmentLeagues";
+	public static final String TAG = "FragmentTimeLine";
 
 	private RecyclerView mRecyclerView;
 	private FrameLayout mProgressContent;
 	private LinearLayout mErrorContent;
 	private LinearLayout mEmptyContent;
-	private LeaguesAdapter mAdapter;
+	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
+	private int mSoccerSeasonId;
 
-	public static FragmentLeagues getInstance() {
-		Bundle args = new Bundle();
-		FragmentLeagues fragment = new FragmentLeagues();
-		fragment.setArguments(args);
+	public static FragmentTimeLine getInstance(Bundle data) {
+		FragmentTimeLine fragment = new FragmentTimeLine();
+		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
 	}
 
@@ -53,8 +52,8 @@ public class FragmentLeagues extends Fragment
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (savedInstanceState != null) {
-			ArrayList<League> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null && !list.isEmpty()) mAdapter = new LeaguesAdapter(list);
+			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
+			if (list != null && !list.isEmpty()) mAdapter = new FixturesAdapter(list);
 		}
 	}
 
@@ -67,6 +66,7 @@ public class FragmentLeagues extends Fragment
 		View view = inflater.inflate(R.layout.fragment_leagues, null);
 		setupUI(view);
 		mEventListener = (EventListener) getActivity();
+		mSoccerSeasonId = getArguments().getInt("soccerSeasonId");
 		mController = Controller.getInstance();
 		showContent();
 		return view;
@@ -74,7 +74,7 @@ public class FragmentLeagues extends Fragment
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_leagues, menu);
+		inflater.inflate(R.menu.fragment_timeline, menu);
 	}
 
 	@Override
@@ -83,6 +83,10 @@ public class FragmentLeagues extends Fragment
 		switch (id) {
 			case R.id.action_refresh:
 				loadData();
+				break;
+
+			case R.id.action_sort:
+				Snackbar.make(mErrorContent, "sort", Snackbar.LENGTH_SHORT).show();
 				break;
 
 			default:
@@ -95,7 +99,8 @@ public class FragmentLeagues extends Fragment
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		if (mAdapter != null) {
-			ArrayList<League> list = mAdapter.getList();
+			mSoccerSeasonId = outState.getInt("soccerSeasonId");
+			ArrayList<Fixture> list = mAdapter.getList();
 			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
 		}
 	}
@@ -134,11 +139,11 @@ public class FragmentLeagues extends Fragment
 	}
 
 	@Override
-	public void onSuccess(ArrayList<League> data) {
+	public void onSuccess(ArrayList<Fixture> data) {
 		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 		UI.show(mRecyclerView);
 		if (mAdapter == null) {
-			mAdapter = new LeaguesAdapter(data);
+			mAdapter = new FixturesAdapter(data);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
 			mAdapter.changeData(data);
@@ -147,8 +152,7 @@ public class FragmentLeagues extends Fragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_LEAGUE)
-				.setSoccerSeasonId(mAdapter.getItem(position).getID()));
+
 	}
 
 	@Override
@@ -185,7 +189,6 @@ public class FragmentLeagues extends Fragment
 	private void loadData() {
 		UI.hide(mRecyclerView, mEmptyContent, mErrorContent);
 		UI.show(mProgressContent);
-		mController.getListOfLeagues(getActivity(), this);
+		mController.getListOfFixtures(getActivity(), mSoccerSeasonId, this);
 	}
-
 }

@@ -10,6 +10,7 @@ import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.util.Const;
 import com.openarena.view.fragments.FragmentLeagues;
+import com.openarena.view.fragments.FragmentTimeLine;
 
 public class MainActivity extends AppCompatActivity implements EventListener {
 
@@ -21,8 +22,15 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setupUI();
+
 		mFragmentManager = getFragmentManager();
 		showContent();
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (mFragmentManager.getBackStackEntryCount() > 0) mFragmentManager.popBackStack();
+		else super.onBackPressed();
 	}
 
 	@Override
@@ -37,7 +45,14 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		int code = event.gecCode();
 		switch (code) {
 			case Const.EVENT_CODE_SELECT_LEAGUE:
-				// TODO: 27.03.2016
+				if (mFragmentManager.findFragmentByTag(FragmentTimeLine.TAG) == null) {
+					Bundle data = new Bundle();
+					data.putInt("soccerSeasonId", event.getSoccerSeasonId());
+					mFragmentManager.beginTransaction()
+							.replace(R.id.main_container, FragmentTimeLine.getInstance(data))
+							.addToBackStack(FragmentTimeLine.TAG)
+							.commit();
+				}
 				break;
 		}
 	}
@@ -48,11 +63,11 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	}
 
 	private void showContent() {
-		if (mFragmentManager.findFragmentByTag(FragmentLeagues.TAG) == null) {
-			mFragmentManager.beginTransaction()
-					.replace(R.id.main_container, FragmentLeagues.getInstance(), FragmentLeagues.TAG)
-					.commit();
-		}
+			if (mFragmentManager.findFragmentByTag(FragmentLeagues.TAG) == null) {
+				mFragmentManager.beginTransaction()
+						.replace(R.id.main_container, FragmentLeagues.getInstance(), FragmentLeagues.TAG)
+						.commit();
+			}
 	}
 
 }
