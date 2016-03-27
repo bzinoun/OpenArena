@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -157,6 +159,11 @@ public class FragmentLeagues extends Fragment
 	}
 
 	private void setupUI(View view) {
+		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+		if (toolbar != null) {
+			toolbar.setTitle(getString(R.string.leagues_title));
+			toolbar.setSubtitle(R.string.leagues_subtitle);
+		}
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(
 				getActivity(),

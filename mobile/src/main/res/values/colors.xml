@@ -5,7 +5,7 @@
 	<color name="primary">#0F9D58</color>
 	<color name="primary_dark">#0B8043</color>
 	<color name="toolbar_title">#FFF</color>
-	<color name="toolbar_subtitle">#AAA</color>
+	<color name="toolbar_subtitle">#D1D1D1</color>
 	<color name="leagues_list_text">#000</color>
 	<color name="leagues_list_background">#FAFAFA</color>
 	<color name="leagues_list_background_pressed">#E0E0E0</color>
