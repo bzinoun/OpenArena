@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.openarena.model.Api;
-import com.openarena.model.PreferencesManager;
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
@@ -27,15 +26,13 @@ public class Controller {
 	private static final int NUMBERS_OF_CORES = Runtime.getRuntime().availableProcessors();
 	private static Controller mInstance;
 	private ThreadPoolExecutor sExecutor;
-	private Handler sHandler;
-	private Context sContext;
+	private Handler mHandler;
 
-	public static synchronized void init(Context context) {
+	public static synchronized void init() {
 		if (mInstance == null) synchronized (Controller.class) {
 			if (mInstance == null) {
 				mInstance = new Controller();
-				mInstance.sContext = context;
-				mInstance.sHandler = new Handler();
+				mInstance.mHandler = new Handler();
 				mInstance.sExecutor = new ThreadPoolExecutor(
 						1,
 						NUMBERS_OF_CORES,
@@ -65,13 +62,13 @@ public class Controller {
 						JSONArray lastArray = new JSONArray(resultLast);
 						final ArrayList<League> list = parseLeagues(currentArray);
 						list.addAll(parseLeagues(lastArray));
-						if (!list.isEmpty()) sHandler.post(new Runnable() {
+						if (!list.isEmpty()) mHandler.post(new Runnable() {
 								@Override
 								public void run() {
 									callback.onSuccess(list);
 								}
 							});
-						else sHandler.post(new Runnable() {
+						else mHandler.post(new Runnable() {
 							@Override
 							public void run() {
 								callback.onError(Const.ERROR_CODE_RESULT_EMPTY);
@@ -81,7 +78,7 @@ public class Controller {
 					} catch (JSONException e) {
 						L.e(Controller.class, e.toString());
 						e.printStackTrace();
-						sHandler.post(new Runnable() {
+						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
 								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
@@ -89,7 +86,7 @@ public class Controller {
 						});
 					}
 				}
-				else sHandler.post(new Runnable() {
+				else mHandler.post(new Runnable() {
 					@Override
 					public void run() {
 						callback.onError(Const.ERROR_CODE_RESULT_NULL);
@@ -108,13 +105,13 @@ public class Controller {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
 						final ArrayList<Fixture> list = parseFixtures(array);
-						if (!list.isEmpty()) sHandler.post(new Runnable() {
+						if (!list.isEmpty()) mHandler.post(new Runnable() {
 								@Override
 								public void run() {
 									callback.onSuccess(list);
 								}
 							});
-						else sHandler.post(new Runnable() {
+						else mHandler.post(new Runnable() {
 							@Override
 							public void run() {
 								callback.onError(Const.ERROR_CODE_RESULT_EMPTY);
@@ -123,7 +120,7 @@ public class Controller {
 					} catch (JSONException e) {
 						L.e(Controller.class, e.toString());
 						e.printStackTrace();
-						sHandler.post(new Runnable() {
+						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
 								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
@@ -131,7 +128,7 @@ public class Controller {
 						});
 					}
 				}
-				else sHandler.post(new Runnable() {
+				else mHandler.post(new Runnable() {
 					@Override
 					public void run() {
 						callback.onError(Const.ERROR_CODE_RESULT_NULL);
@@ -139,10 +136,6 @@ public class Controller {
 				});
 			}
 		});
-	}
-
-	public boolean isFirstEnter() {
-		return PreferencesManager.getInstance(sContext).getBoolean(Const.PREF_FIRST_ENTER, true);
 	}
 
 	@NonNull

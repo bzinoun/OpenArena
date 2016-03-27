@@ -20,4 +20,12 @@ public class L {
 	public static void e(Class c, String message) {
 		Log.e(TAG, "{" + c.getSimpleName() + "} : " + message);
 	}
+
+	public static void d(String message) {
+		Log.d(TAG, message);
+	}
+
+	public static void d(Class c, String message) {
+		Log.d(TAG, "{" + c.getSimpleName() + "} : " + message);
+	}
 }

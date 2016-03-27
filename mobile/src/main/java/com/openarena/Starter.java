@@ -9,7 +9,7 @@ public class Starter extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Controller.init(getApplicationContext());
+		Controller.init();
 	}
 
 }

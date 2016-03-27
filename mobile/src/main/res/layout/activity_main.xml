@@ -12,35 +12,13 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
-		<include layout="@layout/toolbar"/>
+		<include layout="@layout/module_toolbar"/>
 
 	</android.support.design.widget.AppBarLayout>
 
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/recycler_view"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_margin="@dimen/horizontal_padding"
-		android:background="@drawable/leagues_list_background"
-		android:paddingBottom="@dimen/timeline_list_vertical_padding"
-		android:paddingTop="@dimen/timeline_list_vertical_padding"
-		android:visibility="gone"
-		tools:visibility="visible"/>
-
 	<FrameLayout
-		android:id="@+id/progress_bar"
+		android:id="@+id/main_container"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
-
-		<ProgressBar
-			android:layout_width="@dimen/main_progress_bar_size"
-			android:layout_height="@dimen/main_progress_bar_size"
-			android:layout_gravity="center"
-			android:indeterminate="true"/>
-
-	</FrameLayout>
-
-	<include
-		layout="@layout/error_content"/>
+		android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.openarena.model;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -44,6 +45,12 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 		}
 		L.e(AbstractRecyclerAdapter.class, "error to get item");
 		return null;
+	}
+
+	@NonNull
+	public ArrayList<OL> getList() {
+		if (mList != null) return mList;
+		else return new ArrayList<>();
 	}
 
 	public void addItem(int index, OL item) {

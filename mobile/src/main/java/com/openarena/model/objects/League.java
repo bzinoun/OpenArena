@@ -1,6 +1,8 @@
 package com.openarena.model.objects;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
@@ -12,7 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class League {
+public class League implements Parcelable {
 
 	private int mID;
 	private String mCaption;
@@ -25,6 +27,30 @@ public class League {
 	private long mLastUpdated;
 
 	protected League() {}
+
+	protected League(Parcel in) {
+		mID = in.readInt();
+		mCaption = in.readString();
+		mLeague = in.readString();
+		mYear = in.readInt();
+		mCurrentMatchday = in.readInt();
+		mNumberOfMatchdays = in.readInt();
+		mNumberOfTeams = in.readInt();
+		mNumberOfGames = in.readInt();
+		mLastUpdated = in.readLong();
+	}
+
+	public static final Creator<League> CREATOR = new Creator<League>() {
+		@Override
+		public League createFromParcel(Parcel in) {
+			return new League(in);
+		}
+
+		@Override
+		public League[] newArray(int size) {
+			return new League[size];
+		}
+	};
 
 	public static League parse(Cursor leagueCursor) {
 		League league = null;
@@ -116,4 +142,22 @@ public class League {
 		return mLastUpdated;
 	}
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+
+		dest.writeInt(mID);
+		dest.writeString(mCaption);
+		dest.writeString(mLeague);
+		dest.writeInt(mYear);
+		dest.writeInt(mCurrentMatchday);
+		dest.writeInt(mNumberOfMatchdays);
+		dest.writeInt(mNumberOfTeams);
+		dest.writeInt(mNumberOfGames);
+		dest.writeLong(mLastUpdated);
+	}
 }
