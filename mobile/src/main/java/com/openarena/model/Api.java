@@ -1,9 +1,7 @@
 package com.openarena.model;
 
 import android.content.Context;
-
 import com.openarena.R;
-import com.openarena.controllers.Connection;
 
 public class Api {
 

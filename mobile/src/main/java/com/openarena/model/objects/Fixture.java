@@ -3,13 +3,10 @@ package com.openarena.model.objects;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;

@@ -3,7 +3,7 @@ package com.openarena.model.objects;
 public class EventData {
 
 	private int mCode;
-	private int mSoccerSeasonId;
+	private int mID;
 
 	public EventData(int code) {
 		mCode = code;
@@ -14,11 +14,11 @@ public class EventData {
 	}
 
 	public int getSoccerSeasonId() {
-		return mSoccerSeasonId;
+		return mID;
 	}
 
-	public EventData setSoccerSeasonId(int soccerSeasonId) {
-		mSoccerSeasonId = soccerSeasonId;
+	public EventData setSoccerSeasonId(int id) {
+		mID = id;
 		return this;
 	}
 }

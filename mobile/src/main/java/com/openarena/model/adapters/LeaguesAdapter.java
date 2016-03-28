@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.openarena.R;
 import com.openarena.model.AbstractRecyclerAdapter;
 import com.openarena.model.objects.League;
-
 import java.util.ArrayList;
 
 public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapter.LeagueViewHolder> {

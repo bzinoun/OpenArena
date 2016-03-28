@@ -1,7 +1,6 @@
-package com.openarena.controllers;
+package com.openarena.model;
 
 import com.openarena.util.L;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +29,7 @@ public class Connection {
 			URL url = new URL(request);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod(mCanPost ? "POST" : "GET");
-			if (mTimeout > 0) connection.setConnectTimeout(mTimeout);
+			connection.setConnectTimeout(mTimeout > 0 ? mTimeout : 5000);
 			if (map != null && !map.isEmpty()) {
 				for (Map.Entry<String, String> header : map.entrySet()) {
 					connection.setRequestProperty(header.getKey(), header.getValue());
@@ -49,17 +48,12 @@ public class Connection {
 			return response;
 		} catch (IOException e) {
 			L.e(Connection.class, e.toString());
-			e.printStackTrace();
 		} finally {
-			if (connection != null) {
-				connection.disconnect();
-			}
+			if (connection != null) connection.disconnect();
 			try {
-				if (reader != null) {
-					reader.close();
-				}
+				if (reader != null) reader.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				L.e(Connection.class, e.toString());
 			}
 		}
 		L.e(Connection.class, "(Error)request->" + request);

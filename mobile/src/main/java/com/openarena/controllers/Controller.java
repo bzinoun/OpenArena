@@ -3,18 +3,15 @@ package com.openarena.controllers;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-
 import com.openarena.model.Api;
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.L;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -54,8 +51,10 @@ public class Controller {
 			@Override
 			public void run() {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
-				String resultCurrent = Api.getLeagueByYear(context, year);
-				String resultLast = Api.getLeagueByYear(context, year - 1);
+				String resultCurrent = null,
+						resultLast = null;
+				resultCurrent= Api.getLeagueByYear(context, year);
+				if (resultCurrent != null) resultLast = Api.getLeagueByYear(context, year - 1);
 				if (resultCurrent != null && resultLast != null) {
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
@@ -96,7 +95,10 @@ public class Controller {
 		});
 	}
 
-	public void getListOfFixtures(final Context context, final int soccerseasonId, final OnGetFixtures callback) {
+	public void getListOfFixtures(
+			final Context context,
+			final int soccerseasonId,
+			final OnGetFixtures callback) {
 		sExecutor.execute(new Runnable() {
 			@Override
 			public void run() {

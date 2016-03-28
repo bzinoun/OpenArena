@@ -3,7 +3,6 @@ package com.openarena.controllers;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
 import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;

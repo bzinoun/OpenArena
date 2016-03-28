@@ -3,9 +3,7 @@ package com.openarena.model;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 import com.openarena.util.L;
-
 import java.util.ArrayList;
 
 /**

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
@@ -26,7 +25,6 @@ import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
-
 import java.util.ArrayList;
 
 public class FragmentTimeLine extends Fragment
@@ -65,7 +63,7 @@ public class FragmentTimeLine extends Fragment
 			LayoutInflater inflater,
 			ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_leagues, null);
+		View view = inflater.inflate(R.layout.fragment_leagues, container, false);
 		setupUI(view);
 		mEventListener = (EventListener) getActivity();
 		mSoccerSeasonId = getArguments().getInt("soccerSeasonId");
