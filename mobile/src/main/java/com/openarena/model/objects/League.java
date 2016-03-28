@@ -3,10 +3,12 @@ package com.openarena.model.objects;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
-import org.json.JSONException;
+
 import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -78,29 +80,27 @@ public class League implements Parcelable {
 
 	public static League parse(JSONObject o) {
 		League league = new League();
-		try {
-			if (!o.isNull("id")) league.mID = o.getInt("id");
-			if (!o.isNull("caption")) league.mCaption = o.getString("caption");
-			if (!o.isNull("league")) league.mLeague = o.getString("league");
-			if (!o.isNull("year")) league.mYear = Integer.valueOf(o.getString("year"));
-			if (!o.isNull("currentMatchday")) league.mCurrentMatchday = o.getInt("currentMatchday");
-			if (!o.isNull("numberOfMatchdays")) league.mNumberOfMatchdays = o.getInt("numberOfMatchdays");
-			if (!o.isNull("numberOfTeams")) league.mNumberOfTeams = o.getInt("numberOfTeams");
-			if (!o.isNull("numberOfGames")) league.mNumberOfTeams = o.getInt("numberOfGames");
-			if (!o.isNull("lastUpdated")) {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
-				league.mLastUpdated = dateFormat.parse(o.getString("lastUpdated")).getTime();
+		league.mID = o.optInt("id");
+		league.mCaption = o.optString("caption");
+		league.mLeague = o.optString("league");
+		league.mYear = Integer.valueOf(o.optString("year"));
+		league.mCurrentMatchday = o.optInt("currentMatchday");
+		league.mNumberOfMatchdays = o.optInt("numberOfMatchdays");
+		league.mNumberOfTeams = o.optInt("numberOfTeams");
+		league.mNumberOfTeams = o.optInt("numberOfGames");
+		String date = o.optString("lastUpdated", null);
+		if (date != null) {
+			try {
+				league.mLastUpdated = new SimpleDateFormat(
+						"yyyy-MM-dd'T'hh:mm:ss'Z'",
+						Locale.getDefault())
+						.parse(date)
+						.getTime();
+			} catch (ParseException e) {
+				L.e(League.class, e.toString());
 			}
-			return league;
-
-		} catch (JSONException e) {
-			L.e(League.class, e.toString());
-			e.printStackTrace();
-		} catch (ParseException e) {
-			L.e(League.class, e.toString());
-			e.printStackTrace();
 		}
-		return null;
+		return league;
 	}
 
 	public int getID() {

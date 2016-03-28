@@ -13,11 +13,11 @@ public class EventData {
 		return mCode;
 	}
 
-	public int getSoccerSeasonId() {
+	public int getID() {
 		return mID;
 	}
 
-	public EventData setSoccerSeasonId(int id) {
+	public EventData setID(int id) {
 		mID = id;
 		return this;
 	}

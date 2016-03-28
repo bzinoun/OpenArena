@@ -5,7 +5,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
-import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -89,38 +88,36 @@ public class Fixture implements Parcelable {
 
 	public static Fixture parse(JSONObject o) {
 		Fixture fixture = new Fixture();
-		try {
-			if (!o.isNull("id")) fixture.mID = o.getInt("id");
-			if (!o.isNull("soccerseasonId")) fixture.mSoccerSeasonID = o.getInt("soccerseasonId");
-			if (!o.isNull("date")) {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
-				fixture.mDate = dateFormat.parse(o.getString("date")).getTime();
+		fixture.mID = o.optInt("id");
+		fixture.mSoccerSeasonID = o.optInt("soccerseasonId");
+			String date = o.optString("date", null);
+			if (date != null) {
+				try {
+					fixture.mDate = new SimpleDateFormat(
+							"yyyy-MM-dd'T'hh:mm:ss'Z'",
+							Locale.getDefault())
+							.parse(date)
+							.getTime();
+				} catch (ParseException e) {
+					L.e(Fixture.class, e.toString());
+				}
 			}
-			if (!o.isNull("status")) {
-				String status = o.getString("status");
-				if (status.equals("FINISHED")) fixture.mStatus = FINISHED;
-				else if (status.equals("TIMED")) fixture.mStatus = TIMED;
-			}
-			if (!o.isNull("matchday")) fixture.mMatchday = o.getInt("matchday");
-			if (!o.isNull("homeTeamId")) fixture.mHomeTeamID = o.getInt("homeTeamId");
-			if (!o.isNull("homeTeamName")) fixture.mHomeTeamName = o.getString("homeTeamName");
-			if (!o.isNull("awayTeamId")) fixture.mAwayTeamID = o.getInt("awayTeamId");
-			if (!o.isNull("awayTeamName")) fixture.mAwayTeamName = o.getString("awayTeamName");
-			if (!o.isNull("result")) {
-				JSONObject result = o.getJSONObject("result");
-				if (!result.isNull("goalsHomeTeam")) fixture.mGoalsHomeTeam = result.getInt("goalsHomeTeam");
-				if (!result.isNull("goalsAwayTeam")) fixture.mGoalsAwayTeam = result.getInt("goalsAwayTeam");
-			}
-			return fixture;
-
-		} catch (JSONException e) {
-			L.e(League.class, e.toString());
-			e.printStackTrace();
-		} catch (ParseException e) {
-			L.e(League.class, e.toString());
-			e.printStackTrace();
+		String status = o.optString("status", null);
+		if (status != null) {
+			if (status.equals("FINISHED")) fixture.mStatus = FINISHED;
+			else if (status.equals("TIMED")) fixture.mStatus = TIMED;
 		}
-		return null;
+		fixture.mMatchday = o.optInt("matchday");
+		fixture.mHomeTeamID = o.optInt("homeTeamId");
+		fixture.mHomeTeamName = o.optString("homeTeamName");
+		fixture.mAwayTeamID = o.optInt("awayTeamId");
+		fixture.mAwayTeamName = o.optString("awayTeamName");
+		JSONObject result = o.optJSONObject("result");
+		if (result != null) {
+			fixture.mGoalsHomeTeam = result.optInt("goalsHomeTeam", -1);
+			fixture.mGoalsAwayTeam = result.optInt("goalsAwayTeam", -1);
+		}
+		return fixture;
 	}
 
 	public int getID() {
