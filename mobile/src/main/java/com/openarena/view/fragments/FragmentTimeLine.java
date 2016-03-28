@@ -22,6 +22,7 @@ import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
+import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
@@ -152,7 +153,8 @@ public class FragmentTimeLine extends Fragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-
+		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE)
+				.setID(mAdapter.getItem(position).getID()));
 	}
 
 	@Override

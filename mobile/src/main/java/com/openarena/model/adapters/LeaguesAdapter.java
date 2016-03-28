@@ -8,13 +8,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.openarena.R;
 import com.openarena.model.AbstractRecyclerAdapter;
+import com.openarena.model.interfaces.OnItemTouchAdapter;
 import com.openarena.model.objects.League;
 import java.util.ArrayList;
 
-public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapter.LeagueViewHolder> {
+public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapter.LeagueViewHolder> implements OnItemTouchAdapter {
 
 	public LeaguesAdapter(ArrayList<League> list) {
 		super(list);
+	}
+
+	public LeaguesAdapter(ArrayList<League> list, RecyclerView recyclerView) {
+		super(list, recyclerView);
 	}
 
 	@Override

@@ -2,21 +2,38 @@ package com.openarena.model;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
+
+import com.openarena.model.interfaces.OnItemTouchAdapter;
 import com.openarena.util.L;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @param <OL> object of list
  * @param <VH> ViewHolder
  */
-public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class AbstractRecyclerAdapter<OL, VH extends RecyclerView.ViewHolder>
+		extends RecyclerView.Adapter<VH>
+		implements OnItemTouchAdapter {
 
 	protected ArrayList<OL> mList;
+	private RecyclerViewTouchHelperCallback callback;
 
 	public AbstractRecyclerAdapter(ArrayList<OL> list) {
 		mList = list;
+	}
+
+	public AbstractRecyclerAdapter(ArrayList<OL> list, RecyclerView recyclerView) {
+		mList = list;
+		if (recyclerView != null) {
+			callback = new RecyclerViewTouchHelperCallback(this);
+			ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+			touchHelper.attachToRecyclerView(recyclerView);
+		}
 	}
 
 	@Override
@@ -34,6 +51,33 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 		}
 	}
 
+	@Override
+	public void onItemDismiss(int position) {
+		mList.remove(position);
+		notifyItemRemoved(position);
+	}
+
+	@Override
+	public boolean onItemMove(int fromPosition, int toPosition) {
+		if (fromPosition < toPosition) {
+			for (int i = fromPosition; i < toPosition; i++) {
+				Collections.swap(mList, i, i + 1);
+			}
+		} else {
+			for (int i = fromPosition; i > toPosition; i--) {
+				Collections.swap(mList, i, i - 1);
+			}
+		}
+		notifyItemMoved(fromPosition, toPosition);
+		return true;
+	}
+
+	@NonNull
+	public ArrayList<OL> getList() {
+		if (mList != null) return mList;
+		else return new ArrayList<>();
+	}
+
 	public OL getItem(int position) {
 		if (mList != null) {
 			if (position >= 0 && position < mList.size()) {
@@ -45,10 +89,12 @@ public abstract class AbstractRecyclerAdapter<OL,VH extends RecyclerView.ViewHol
 		return null;
 	}
 
-	@NonNull
-	public ArrayList<OL> getList() {
-		if (mList != null) return mList;
-		else return new ArrayList<>();
+	public void setDragEnabled(boolean dragEnabled) {
+		if (callback != null) callback.setDragEnabled(dragEnabled);
+	}
+
+	public void setSwipeEnabled(boolean swipeEnabled) {
+		if (callback != null)callback.setSwipeEnabled(swipeEnabled);
 	}
 
 	public void addItem(int index, OL item) {

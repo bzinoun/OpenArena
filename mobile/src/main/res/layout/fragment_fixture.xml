@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			android:background="@drawable/fixture_teams_background"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/horizontal_padding"
+				android:layout_weight="1"
+				android:paddingRight="@dimen/horizontal_padding"
+				android:textColor="#333"
+				android:paddingBottom="8dp"
+				android:paddingTop="8dp"
+				android:textSize="16sp"
+				android:text="Home team"/>
+
+			<FrameLayout
+				android:layout_width="@dimen/fixture_result_size"
+				android:layout_height="wrap_content"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:paddingBottom="8dp"
+				android:paddingTop="8dp"
+				android:paddingLeft="@dimen/horizontal_padding"
+				android:paddingRight="@dimen/horizontal_padding"
+				android:textColor="#333"
+				android:textSize="16sp"
+				android:text="Away team"/>
+
+		</LinearLayout>
+
+		<TextView
+
+			android:layout_width="@dimen/fixture_result_size"
+			android:layout_height="@dimen/fixture_result_size"
+			android:layout_centerInParent="true"
+			android:background="@drawable/fixture_result_background"
+			android:gravity="center"
+			android:textColor="#333"
+			android:textSize="24sp"
+			android:text="2 : 3"/>
+
+	</RelativeLayout>
+
+	<include layout="@layout/content_progress"/>
+
+	<include layout="@layout/content_empty"/>
+
+	<include layout="@layout/content_error"/>
+
+</LinearLayout>

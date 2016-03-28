@@ -40,6 +40,7 @@ public class FragmentLeagues extends Fragment
 	private LeaguesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
+	private ArrayList<League> mList;
 
 	public static FragmentLeagues getInstance() {
 		Bundle args = new Bundle();
@@ -53,8 +54,7 @@ public class FragmentLeagues extends Fragment
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (savedInstanceState != null) {
-			ArrayList<League> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null && !list.isEmpty()) mAdapter = new LeaguesAdapter(list);
+			mList = savedInstanceState.getParcelableArrayList("list");
 		}
 	}
 
@@ -66,6 +66,11 @@ public class FragmentLeagues extends Fragment
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_leagues, container, false);
 		setupUI(view);
+		if (mList != null) {
+			//fixme
+			mAdapter = new LeaguesAdapter(mList, mRecyclerView);
+			mAdapter.setDragEnabled(true);
+		}
 		mEventListener = (EventListener) getActivity();
 		mController = Controller.getInstance();
 		showContent();
@@ -138,7 +143,9 @@ public class FragmentLeagues extends Fragment
 		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 		UI.show(mRecyclerView);
 		if (mAdapter == null) {
-			mAdapter = new LeaguesAdapter(data);
+			//fixme
+			mAdapter = new LeaguesAdapter(data, mRecyclerView);
+			mAdapter.setDragEnabled(true);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
 			mAdapter.changeData(data);
@@ -148,7 +155,7 @@ public class FragmentLeagues extends Fragment
 	@Override
 	public void onItemClick(View view, int position) {
 		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_LEAGUE)
-				.setSoccerSeasonId(mAdapter.getItem(position).getID()));
+				.setID(mAdapter.getItem(position).getID()));
 	}
 
 	@Override
