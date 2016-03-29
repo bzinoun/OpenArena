@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setupUI();
-
 		mFragmentManager = getFragmentManager();
 		showContent();
 	}
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					mFragmentManager.beginTransaction()
 							.replace(R.id.main_container, FragmentTimeLine.getInstance(data))
 							.addToBackStack(FragmentTimeLine.TAG)
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}
 				break;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					mFragmentManager.beginTransaction()
 							.replace(R.id.main_container, FragmentFixture.getInstance(data))
 							.addToBackStack(FragmentFixture.TAG)
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}
 				break;
@@ -82,14 +81,11 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	}
 
 	private void showContent() {
-			if (mFragmentManager.findFragmentByTag(FragmentLeagues.TAG) == null) {
-				mFragmentManager.beginTransaction()
-						.replace(
-								R.id.main_container,
-								FragmentLeagues.getInstance(),
-								FragmentLeagues.TAG)
-						.commit();
-			}
+		if (mFragmentManager.findFragmentByTag(FragmentLeagues.TAG) == null) {
+			mFragmentManager.beginTransaction()
+					.replace(R.id.main_container, FragmentLeagues.getInstance(null), FragmentLeagues.TAG)
+					.commit();
+		}
 	}
 
 }

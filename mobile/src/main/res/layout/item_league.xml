@@ -13,7 +13,8 @@
 		android:id="@+id/icon"
 		android:layout_width="@dimen/leagues_list_item_icon_size"
 		android:layout_height="@dimen/leagues_list_item_icon_size"
-		android:layout_gravity="center_vertical"/>
+		android:layout_gravity="center_vertical"
+		android:visibility="gone"/>
 
 	<TextView
 		android:id="@+id/name"

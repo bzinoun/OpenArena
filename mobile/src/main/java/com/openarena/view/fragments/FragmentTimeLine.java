@@ -40,9 +40,9 @@ public class FragmentTimeLine extends Fragment
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
-	private int mSoccerSeasonId;
+	private int mSoccerSeasonId = -1;
 
-	public static FragmentTimeLine getInstance(Bundle data) {
+	public static FragmentTimeLine getInstance(@Nullable Bundle data) {
 		FragmentTimeLine fragment = new FragmentTimeLine();
 		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
@@ -54,7 +54,7 @@ public class FragmentTimeLine extends Fragment
 		setHasOptionsMenu(true);
 		if (savedInstanceState != null) {
 			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null && !list.isEmpty()) mAdapter = new FixturesAdapter(list);
+			if (list != null) mAdapter = new FixturesAdapter(list);
 		}
 	}
 
@@ -66,11 +66,37 @@ public class FragmentTimeLine extends Fragment
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_leagues, container, false);
 		setupUI(view);
-		mEventListener = (EventListener) getActivity();
-		mSoccerSeasonId = getArguments().getInt("soccerSeasonId");
-		mController = Controller.getInstance();
+		if (mEventListener == null) mEventListener = (EventListener) getActivity();
+		if (mSoccerSeasonId < 0) mSoccerSeasonId = getArguments().getInt("soccerSeasonId");
+		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		return view;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mAdapter != null) {
+			ArrayList<Fixture> list = mAdapter.getList();
+			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
+		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (mEventListener != null) mEventListener = null;
+		if (mRecyclerView != null) mRecyclerView = null;
+		if (mEmptyContent != null) mEmptyContent = null;
+		if (mErrorContent != null) mErrorContent = null;
+		if (mProgressContent != null) mProgressContent = null;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mController != null) mController = null;
+		if (mAdapter != null) mAdapter = null;
 	}
 
 	@Override
@@ -94,28 +120,6 @@ public class FragmentTimeLine extends Fragment
 				return super.onOptionsItemSelected(item);
 		}
 		return true;
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mAdapter != null) {
-			mSoccerSeasonId = outState.getInt("soccerSeasonId");
-			ArrayList<Fixture> list = mAdapter.getList();
-			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
-		}
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		if (mEventListener != null) mEventListener = null;
-		if (mController != null) mController = null;
-		if (mRecyclerView != null) mRecyclerView = null;
-		if (mAdapter != null) mAdapter = null;
-		if (mEmptyContent != null) mEmptyContent = null;
-		if (mErrorContent != null) mErrorContent = null;
-		if (mProgressContent != null) mProgressContent = null;
 	}
 
 	@Override

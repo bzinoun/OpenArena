@@ -12,7 +12,7 @@ public class FragmentFixture extends Fragment {
 
 	public static final String TAG = "FixtureFragment";
 
-	private int mFixtureId;
+	private int mFixtureId = -1;
 
 	public static FragmentFixture getInstance(@Nullable Bundle data) {
 		FragmentFixture fragment = new FragmentFixture();
@@ -30,7 +30,7 @@ public class FragmentFixture extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_fixture, container, false);
 		setupUI(view);
-		mFixtureId = getArguments().getInt("fixtureId");
+		if (mFixtureId < 0) mFixtureId = getArguments().getInt("fixtureId");
 
 		return view;
 	}

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
@@ -26,6 +27,7 @@ import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
+
 import java.util.ArrayList;
 
 public class FragmentLeagues extends Fragment
@@ -40,12 +42,10 @@ public class FragmentLeagues extends Fragment
 	private LeaguesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
-	private ArrayList<League> mList;
 
-	public static FragmentLeagues getInstance() {
-		Bundle args = new Bundle();
+	public static FragmentLeagues getInstance(@Nullable Bundle args) {
 		FragmentLeagues fragment = new FragmentLeagues();
-		fragment.setArguments(args);
+		fragment.setArguments(args == null ? new Bundle() : args);
 		return fragment;
 	}
 
@@ -54,11 +54,11 @@ public class FragmentLeagues extends Fragment
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (savedInstanceState != null) {
-			mList = savedInstanceState.getParcelableArrayList("list");
+			ArrayList<League> list = savedInstanceState.getParcelableArrayList("list");
+			if (list != null && !list.isEmpty()) mAdapter = new LeaguesAdapter(list);
 		}
 	}
 
-	@Nullable
 	@Override
 	public View onCreateView(
 			LayoutInflater inflater,
@@ -66,15 +66,36 @@ public class FragmentLeagues extends Fragment
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_leagues, container, false);
 		setupUI(view);
-		if (mList != null) {
-			//fixme
-			mAdapter = new LeaguesAdapter(mList, mRecyclerView);
-			mAdapter.setDragEnabled(true);
-		}
-		mEventListener = (EventListener) getActivity();
-		mController = Controller.getInstance();
+		if (mEventListener == null) mEventListener = (EventListener) getActivity();
+		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		return view;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mAdapter != null) {
+			ArrayList<League> list = mAdapter.getList();
+			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
+		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (mEventListener != null) mEventListener = null;
+		if (mRecyclerView != null) mRecyclerView = null;
+		if (mEmptyContent != null) mEmptyContent = null;
+		if (mErrorContent != null) mErrorContent = null;
+		if (mProgressContent != null) mProgressContent = null;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mController != null) mController = null;
+		if (mAdapter != null) mAdapter = null;
 	}
 
 	@Override
@@ -94,27 +115,6 @@ public class FragmentLeagues extends Fragment
 				return super.onOptionsItemSelected(item);
 		}
 		return true;
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mAdapter != null) {
-			ArrayList<League> list = mAdapter.getList();
-			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
-		}
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		if (mEventListener != null) mEventListener = null;
-		if (mController != null) mController = null;
-		if (mRecyclerView != null) mRecyclerView = null;
-		if (mAdapter != null) mAdapter = null;
-		if (mEmptyContent != null) mEmptyContent = null;
-		if (mErrorContent != null) mErrorContent = null;
-		if (mProgressContent != null) mProgressContent = null;
 	}
 
 	@Override
@@ -143,9 +143,7 @@ public class FragmentLeagues extends Fragment
 		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 		UI.show(mRecyclerView);
 		if (mAdapter == null) {
-			//fixme
-			mAdapter = new LeaguesAdapter(data, mRecyclerView);
-			mAdapter.setDragEnabled(true);
+			mAdapter = new LeaguesAdapter(data);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
 			mAdapter.changeData(data);
