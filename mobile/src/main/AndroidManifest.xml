@@ -1,6 +1,13 @@
 <manifest
 	package="com.openarena"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionCode="1"
+	android:versionName="@string/app_version">
+
+	<uses-sdk
+		android:maxSdkVersion="23"
+		android:minSdkVersion="15"
+		android:targetSdkVersion="23"/>
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 
@@ -20,8 +27,5 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".view.activitys.TimeLineActivity"
-			android:theme="@style/AppTheme.NoActionBar"/>
 	</application>
 </manifest>

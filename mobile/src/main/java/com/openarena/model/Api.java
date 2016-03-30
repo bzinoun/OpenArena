@@ -1,6 +1,8 @@
 package com.openarena.model;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+
 import com.openarena.R;
 
 public class Api {
@@ -8,6 +10,11 @@ public class Api {
 	public static String getLeagueByYear(Context context, int year) {
 		Connection connection = getConnection(context);
 		return connection.request(getBaseUri() + "soccerseasons?season=" + String.valueOf(year));
+	}
+
+	public static String getFixtureDetailsById(Context context, int id) {
+		Connection connection = getConnection(context);
+		return connection.request(getBaseUri() + "fixtures/" + String.valueOf(id));
 	}
 
 	public static String getFixturesBySeasonId(Context context, int id) {
@@ -18,7 +25,7 @@ public class Api {
 	 *
 	 * @param timeFrame <b>//p|n[1-9]{1,2}//</b> of <b>null</b> for example "n1"
 	 */
-	public static String getFixturesBySeasonId(Context context, int id, String timeFrame) {
+	public static String getFixturesBySeasonId(Context context, int id, @Nullable String timeFrame) {
 		Connection connection = getConnection(context);
 		StringBuilder request = new StringBuilder()
 				.append(getBaseUri())

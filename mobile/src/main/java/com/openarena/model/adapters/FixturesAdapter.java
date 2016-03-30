@@ -23,7 +23,7 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 
 	@Override
 	public FixturesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timeline, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fixture, parent, false);
 		return new FixturesViewHolder(view);
 	}
 
@@ -32,8 +32,7 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 		Fixture item = mList.get(position);
 		holder.mHomeTeamName.setText(item.getHomeTeamName());
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
-		if (item.getStatus() == Fixture.FINISHED) {
-
+		if (item.getStatus() != Fixture.TIMED) {
 			UI.hide(holder.mDate);
 			UI.show(holder.mGoalsHomeTeam, holder.mGoalsAwayTeam);
 			holder.mGoalsHomeTeam.setText(String.valueOf(item.getGoalsHomeTeam()));

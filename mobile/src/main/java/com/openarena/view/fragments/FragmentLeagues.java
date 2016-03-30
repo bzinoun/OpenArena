@@ -42,6 +42,7 @@ public class FragmentLeagues extends Fragment
 	private LeaguesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
+	private Snackbar mSnackbar;
 
 	public static FragmentLeagues getInstance(@Nullable Bundle args) {
 		FragmentLeagues fragment = new FragmentLeagues();
@@ -73,15 +74,6 @@ public class FragmentLeagues extends Fragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mAdapter != null) {
-			ArrayList<League> list = mAdapter.getList();
-			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
-		}
-	}
-
-	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (mEventListener != null) mEventListener = null;
@@ -89,6 +81,19 @@ public class FragmentLeagues extends Fragment
 		if (mEmptyContent != null) mEmptyContent = null;
 		if (mErrorContent != null) mErrorContent = null;
 		if (mProgressContent != null) mProgressContent = null;
+		if (mSnackbar != null) {
+			mSnackbar.dismiss();
+			mSnackbar = null;
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mAdapter != null) {
+			ArrayList<League> list = mAdapter.getList();
+			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
+		}
 	}
 
 	@Override
@@ -127,14 +132,14 @@ public class FragmentLeagues extends Fragment
 		else {
 			UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
 			UI.show(mErrorContent);
-			Snackbar.make(mErrorContent, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
+			mSnackbar = Snackbar.make(mRecyclerView, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
 					.setAction(R.string.snackbar_result_null_action, new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							loadData();
 						}
-					})
-					.show();
+					});
+			mSnackbar.show();
 		}
 	}
 
@@ -142,6 +147,7 @@ public class FragmentLeagues extends Fragment
 	public void onSuccess(ArrayList<League> data) {
 		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 		UI.show(mRecyclerView);
+		if (mSnackbar != null) mSnackbar.dismiss();
 		if (mAdapter == null) {
 			mAdapter = new LeaguesAdapter(data);
 			mRecyclerView.setAdapter(mAdapter);
@@ -177,9 +183,9 @@ public class FragmentLeagues extends Fragment
 				mRecyclerView,
 				this));
 		mRecyclerView.setHasFixedSize(true);
-		mProgressContent = (FrameLayout) view.findViewById(R.id.progress_content);
-		mEmptyContent = (LinearLayout) view.findViewById(R.id.empty_content);
-		mErrorContent = (LinearLayout) view.findViewById(R.id.error_content);
+		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
+		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
+		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
 		UI.hide(mEmptyContent, mErrorContent, mProgressContent, mRecyclerView);
 	}
 

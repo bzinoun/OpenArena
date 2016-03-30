@@ -7,10 +7,13 @@ import android.os.Parcelable;
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class League implements Parcelable {
@@ -101,6 +104,22 @@ public class League implements Parcelable {
 			}
 		}
 		return league;
+	}
+
+	public static ArrayList<League> parseArray(JSONArray array) {
+		if (array != null) {
+			ArrayList<League> list = new ArrayList<>();
+			int count = array.length();
+			for (int i = 0; i < count; i++) {
+				try {
+					list.add(League.parse(array.getJSONObject(i)));
+				} catch (JSONException e) {
+					L.e(League.class, e.toString());
+				}
+			}
+			return list;
+		}
+		else return null;
 	}
 
 	public int getID() {

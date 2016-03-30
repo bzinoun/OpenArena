@@ -11,9 +11,9 @@ import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.util.Const;
 import com.openarena.util.L;
-import com.openarena.view.fragments.FragmentFixture;
+import com.openarena.view.fragments.FragmentFixtureDetails;
+import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentLeagues;
-import com.openarena.view.fragments.FragmentTimeLine;
 
 public class MainActivity extends AppCompatActivity implements EventListener {
 
@@ -47,24 +47,24 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		int code = event.gecCode();
 		switch (code) {
 			case Const.EVENT_CODE_SELECT_LEAGUE:
-				if (mFragmentManager.findFragmentByTag(FragmentTimeLine.TAG) == null) {
+				if (mFragmentManager.findFragmentByTag(FragmentFixtures.TAG) == null) {
 					Bundle data = new Bundle();
 					data.putInt("soccerSeasonId", event.getID());
 					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, FragmentTimeLine.getInstance(data))
-							.addToBackStack(FragmentTimeLine.TAG)
+							.replace(R.id.main_container, FragmentFixtures.getInstance(data))
+							.addToBackStack(FragmentFixtures.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}
 				break;
 
 			case Const.EVENT_CODE_SELECT_FIXTURE:
-				if (mFragmentManager.findFragmentByTag(FragmentFixture.TAG) == null) {
+				if (mFragmentManager.findFragmentByTag(FragmentFixtureDetails.TAG) == null) {
 					Bundle data = new Bundle();
-					data.putInt("fixtureId", event.getID());
+					data.putParcelable("fixture", event.getFixture());
 					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, FragmentFixture.getInstance(data))
-							.addToBackStack(FragmentFixture.TAG)
+							.replace(R.id.main_container, FragmentFixtureDetails.getInstance(data))
+							.addToBackStack(FragmentFixtureDetails.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}

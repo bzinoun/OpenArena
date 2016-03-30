@@ -28,10 +28,10 @@ import com.openarena.util.Const;
 import com.openarena.util.UI;
 import java.util.ArrayList;
 
-public class FragmentTimeLine extends Fragment
+public class FragmentFixtures extends Fragment
 		implements Controller.OnGetFixtures, OnItemClickListener {
 
-	public static final String TAG = "FragmentTimeLine";
+	public static final String TAG = "FragmentFixtures";
 
 	private RecyclerView mRecyclerView;
 	private FrameLayout mProgressContent;
@@ -40,10 +40,11 @@ public class FragmentTimeLine extends Fragment
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
+	private Snackbar mSnackbar;
 	private int mSoccerSeasonId = -1;
 
-	public static FragmentTimeLine getInstance(@Nullable Bundle data) {
-		FragmentTimeLine fragment = new FragmentTimeLine();
+	public static FragmentFixtures getInstance(@Nullable Bundle data) {
+		FragmentFixtures fragment = new FragmentFixtures();
 		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
 	}
@@ -74,15 +75,6 @@ public class FragmentTimeLine extends Fragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mAdapter != null) {
-			ArrayList<Fixture> list = mAdapter.getList();
-			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
-		}
-	}
-
-	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (mEventListener != null) mEventListener = null;
@@ -90,6 +82,19 @@ public class FragmentTimeLine extends Fragment
 		if (mEmptyContent != null) mEmptyContent = null;
 		if (mErrorContent != null) mErrorContent = null;
 		if (mProgressContent != null) mProgressContent = null;
+		if (mSnackbar != null) {
+			mSnackbar.dismiss();
+			mSnackbar = null;
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mAdapter != null) {
+			ArrayList<Fixture> list = mAdapter.getList();
+			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
+		}
 	}
 
 	@Override
@@ -101,7 +106,7 @@ public class FragmentTimeLine extends Fragment
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_timeline, menu);
+		inflater.inflate(R.menu.fragment_fixtures, menu);
 	}
 
 	@Override
@@ -113,7 +118,7 @@ public class FragmentTimeLine extends Fragment
 				break;
 
 			case R.id.action_sort:
-				Snackbar.make(mErrorContent, "sort", Snackbar.LENGTH_SHORT).show();
+				Snackbar.make(mRecyclerView, "sort", Snackbar.LENGTH_SHORT).show();
 				break;
 
 			default:
@@ -132,14 +137,14 @@ public class FragmentTimeLine extends Fragment
 		else {
 			UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
 			UI.show(mErrorContent);
-			Snackbar.make(mErrorContent, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
+			mSnackbar = Snackbar.make(mRecyclerView, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
 					.setAction(R.string.snackbar_result_null_action, new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							loadData();
 						}
-					})
-					.show();
+					});
+			mSnackbar.show();
 		}
 	}
 
@@ -147,6 +152,7 @@ public class FragmentTimeLine extends Fragment
 	public void onSuccess(ArrayList<Fixture> data) {
 		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 		UI.show(mRecyclerView);
+		if (mSnackbar != null) mSnackbar.dismiss();
 		if (mAdapter == null) {
 			mAdapter = new FixturesAdapter(data);
 			mRecyclerView.setAdapter(mAdapter);
@@ -158,7 +164,7 @@ public class FragmentTimeLine extends Fragment
 	@Override
 	public void onItemClick(View view, int position) {
 		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE)
-				.setID(mAdapter.getItem(position).getID()));
+				.setFixture(mAdapter.getItem(position)));
 	}
 
 	@Override
@@ -169,7 +175,7 @@ public class FragmentTimeLine extends Fragment
 	private void setupUI(View view) {
 		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 		if (toolbar != null) {
-			toolbar.setTitle(getString(R.string.timeline_title));
+			toolbar.setTitle(getString(R.string.fixtures_title));
 			toolbar.setSubtitle(null);
 		}
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -182,9 +188,9 @@ public class FragmentTimeLine extends Fragment
 				mRecyclerView,
 				this));
 		mRecyclerView.setHasFixedSize(true);
-		mProgressContent = (FrameLayout) view.findViewById(R.id.progress_content);
-		mEmptyContent = (LinearLayout) view.findViewById(R.id.empty_content);
-		mErrorContent = (LinearLayout) view.findViewById(R.id.error_content);
+		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
+		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
+		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
 		UI.hide(mEmptyContent, mErrorContent, mProgressContent, mRecyclerView);
 	}
 

@@ -2,16 +2,19 @@ package com.openarena.controllers;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+
 import com.openarena.model.Api;
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
+import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.L;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -59,8 +62,8 @@ public class Controller {
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
 						JSONArray lastArray = new JSONArray(resultLast);
-						final ArrayList<League> list = parseLeagues(currentArray);
-						list.addAll(parseLeagues(lastArray));
+						final ArrayList<League> list = League.parseArray(currentArray);
+						list.addAll(League.parseArray(lastArray));
 						if (!list.isEmpty()) mHandler.post(new Runnable() {
 								@Override
 								public void run() {
@@ -76,7 +79,6 @@ public class Controller {
 
 					} catch (JSONException e) {
 						L.e(Controller.class, e.toString());
-						e.printStackTrace();
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -106,7 +108,7 @@ public class Controller {
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
-						final ArrayList<Fixture> list = parseFixtures(array);
+						final ArrayList<Fixture> list = Fixture.parseArray(array);
 						if (!list.isEmpty()) mHandler.post(new Runnable() {
 								@Override
 								public void run() {
@@ -121,7 +123,6 @@ public class Controller {
 						});
 					} catch (JSONException e) {
 						L.e(Controller.class, e.toString());
-						e.printStackTrace();
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -140,42 +141,56 @@ public class Controller {
 		});
 	}
 
-	@NonNull
-	private ArrayList<League> parseLeagues(JSONArray array) {
-		ArrayList<League> list = new ArrayList<>();
-		if (array != null) {
-			int count = array.length();
-			for (int i = 0; i < count; i++) {
-				try {
-					list.add(League.parse(array.getJSONObject(i)));
-				} catch (JSONException e) {
-					L.e(Controller.class, e.toString());
-					e.printStackTrace();
+	public void getFixtureDetails(
+			final Context context,
+			final int fixtureId,
+			final OnGetFixtureDetails callback) {
+		sExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				String result = Api.getFixtureDetailsById(context, fixtureId);
+				if (result != null) {
+					try {
+						JSONObject object = new JSONObject(result).getJSONObject("head2head");
+						final Head2head head2head = Head2head.parse(object);
+						if (head2head != null) {
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									callback.onSuccess(head2head);
+								}
+							});
+						}
+						else mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError(Const.ERROR_CODE_RESULT_NULL);
+							}
+						});
+					} catch (JSONException e) {
+						L.e(Controller.class, e.toString());
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
+							}
+						});
+					}
 				}
+				else mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onError(Const.ERROR_CODE_RESULT_NULL);
+					}
+				});
 			}
-		}
-		return list;
-	}
-
-	@NonNull
-	private ArrayList<Fixture> parseFixtures(JSONArray array) {
-		ArrayList<Fixture> list = new ArrayList<>();
-		if (array != null) {
-			int count = array.length();
-			for (int i = 0; i < count; i++) {
-				try {
-					list.add(Fixture.parse(array.getJSONObject(i)));
-				} catch (JSONException e) {
-					L.e(Controller.class, e.toString());
-					e.printStackTrace();
-				}
-			}
-		}
-		return list;
+		});
 	}
 
 	public interface OnGetLeagues extends OnResultListener<ArrayList<League>> {}
 
 	public interface OnGetFixtures extends OnResultListener<ArrayList<Fixture>> {}
+
+	public interface OnGetFixtureDetails extends OnResultListener<Head2head> {}
 
 }

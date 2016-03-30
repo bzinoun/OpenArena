@@ -9,11 +9,11 @@
 	<color name="leagues_list_text">#000</color>
 	<color name="leagues_list_background">#FAFAFA</color>
 	<color name="leagues_list_background_pressed">#E0E0E0</color>
-	<color name="timeline_list_text">#555</color>
-	<color name="timeline_list_background">#FAFAFA</color>
-	<color name="timeline_list_background_pressed">#E0E0E0</color>
-	<color name="timeline_list_separator_background">#A5D6A7</color>
-	<color name="fixture_result_background">#FFD740</color>
-	<color name="fixture_teams_background">#E0E0E0</color>
+	<color name="fixtures_list_text">#555</color>
+	<color name="fixtures_list_background">#FAFAFA</color>
+	<color name="fixtures_list_background_pressed">#E0E0E0</color>
+	<color name="fixtures_list_separator_background">#A5D6A7</color>
+	<color name="fixture_details_result_background">#FFD740</color>
+	<color name="fixture_details_teams_background">#E0E0E0</color>
 	<color name="window_background">#EEEEEE</color>
 </resources>

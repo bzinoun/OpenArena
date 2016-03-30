@@ -7,11 +7,11 @@
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler_view"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/leagues_list_margin"
-		android:background="@drawable/leagues_list_background"
-		android:paddingBottom="@dimen/leagues_list_vertical_padding"
-		android:paddingTop="@dimen/leagues_list_vertical_padding"/>
+		android:layout_height="match_parent"
+		android:layout_margin="@dimen/fixtures_list_margin"
+		android:background="@drawable/fixtures_list_background"
+		android:paddingBottom="@dimen/fixtures_list_vertical_padding"
+		android:paddingTop="@dimen/fixtures_list_vertical_padding"/>
 
 	<include layout="@layout/content_progress"/>
 

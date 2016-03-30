@@ -3,11 +3,11 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="@dimen/timeline_list_item_height"
-	android:background="@drawable/timeline_list_item"
+	android:layout_height="@dimen/fixtures_list_item_height"
+	android:background="@drawable/fixtures_list_item"
 	android:clickable="true"
-	android:paddingLeft="@dimen/timeline_list_item_horizontal_padding"
-	android:paddingRight="@dimen/timeline_list_item_horizontal_padding">
+	android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
+	android:paddingRight="@dimen/fixtures_list_item_horizontal_padding">
 
 	<TextView
 		android:id="@+id/home_team_name"
@@ -18,10 +18,10 @@
 		android:layout_centerVertical="true"
 		android:layout_toLeftOf="@+id/goals_home_team"
 		android:layout_toStartOf="@+id/goals_home_team"
-		android:paddingLeft="@dimen/timeline_list_item_horizontal_padding"
-		android:paddingRight="@dimen/timeline_list_item_horizontal_padding"
-		android:textColor="@color/timeline_list_text"
-		android:textSize="@dimen/timeline_list_item_team_size"
+		android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
+		android:paddingRight="@dimen/fixtures_list_item_horizontal_padding"
+		android:textColor="@color/fixtures_list_text"
+		android:textSize="@dimen/fixtures_list_item_team_size"
 		tools:text="Home team name"/>
 
 	<TextView
@@ -29,30 +29,30 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/item_timeline_separator"
-		android:layout_toStartOf="@+id/item_timeline_separator"
-		android:textColor="@color/timeline_list_text"
-		android:textSize="@dimen/timeline_list_item_goal_size"
+		android:layout_toLeftOf="@+id/item_fixture_separator"
+		android:layout_toStartOf="@+id/item_fixture_separator"
+		android:textColor="@color/fixtures_list_text"
+		android:textSize="@dimen/fixtures_list_item_goal_size"
 		tools:text="3"/>
 
 	<FrameLayout
-		android:id="@+id/item_timeline_separator"
+		android:id="@+id/item_fixture_separator"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_centerHorizontal="true"
-		android:layout_marginLeft="@dimen/timeline_list_item_horizontal_padding"
-		android:layout_marginRight="@dimen/timeline_list_item_horizontal_padding"
-		android:background="@color/timeline_list_separator_background"
+		android:layout_marginLeft="@dimen/fixtures_list_item_horizontal_padding"
+		android:layout_marginRight="@dimen/fixtures_list_item_horizontal_padding"
+		android:background="@color/fixtures_list_separator_background"
 		android:clickable="true"
-		android:paddingLeft="@dimen/timeline_list_item_horizontal_padding"
-		android:paddingRight="@dimen/timeline_list_item_horizontal_padding">
+		android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
+		android:paddingRight="@dimen/fixtures_list_item_horizontal_padding">
 
 		<TextView
 			android:id="@+id/date"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
-			android:textColor="@color/timeline_list_text"
+			android:textColor="@color/fixtures_list_text"
 			tools:text="21:30"/>
 
 	</FrameLayout>
@@ -62,10 +62,10 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerVertical="true"
-		android:layout_toEndOf="@+id/item_timeline_separator"
-		android:layout_toRightOf="@+id/item_timeline_separator"
-		android:textColor="@color/timeline_list_text"
-		android:textSize="@dimen/timeline_list_item_goal_size"
+		android:layout_toEndOf="@+id/item_fixture_separator"
+		android:layout_toRightOf="@+id/item_fixture_separator"
+		android:textColor="@color/fixtures_list_text"
+		android:textSize="@dimen/fixtures_list_item_goal_size"
 		tools:text="3"/>
 
 	<TextView
@@ -77,10 +77,10 @@
 		android:layout_centerVertical="true"
 		android:layout_toEndOf="@+id/goals_away_team"
 		android:layout_toRightOf="@+id/goals_away_team"
-		android:paddingLeft="@dimen/timeline_list_item_horizontal_padding"
-		android:paddingRight="@dimen/timeline_list_item_horizontal_padding"
-		android:textColor="@color/timeline_list_text"
-		android:textSize="@dimen/timeline_list_item_team_size"
+		android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
+		android:paddingRight="@dimen/fixtures_list_item_horizontal_padding"
+		android:textColor="@color/fixtures_list_text"
+		android:textSize="@dimen/fixtures_list_item_team_size"
 		tools:text="Away team name"/>
 
 </RelativeLayout>
