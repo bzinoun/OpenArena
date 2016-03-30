@@ -116,8 +116,8 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 				loadData();
 				break;
 
-			case R.id.action_sort:
-				Snackbar.make(mRecyclerView, "sort", Snackbar.LENGTH_SHORT).show();
+			case R.id.action_score_table:
+				Snackbar.make(mRecyclerView, "score table", Snackbar.LENGTH_SHORT).show();
 				break;
 
 			default:
@@ -198,8 +198,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	private void showContent() {
 		mHome.setText(mFixture.getHomeTeamName());
 		mAway.setText(mFixture.getAwayTeamName());
-		// TODO: 30.03.2016 string formatter
-		if (mFixture.getStatus() != Fixture.TIMED) mResult.setText(mFixture.getGoalsHomeTeam() + " : " + mFixture.getGoalsAwayTeam());
+		if (mFixture.getStatus() != Fixture.TIMED) mResult.setText(String.format(getString(R.string.fixture_details_result), mFixture.getGoalsHomeTeam(), mFixture.getGoalsAwayTeam()));
 		else mResult.setText(new SimpleDateFormat("hh:mm", Locale.getDefault()).format(new Date(mFixture.getDate())));
 		if (mAdapter == null) loadData();
 		else {

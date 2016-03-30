@@ -102,7 +102,7 @@ public class Fixture implements Parcelable {
 			if (date != null) {
 				try {
 					fixture.mDate = new SimpleDateFormat(
-							"yyyy-MM-dd'T'hh:mm:ss'Z'",
+							"yyyy-MM-dd'T'HH:mm:ss'Z'",
 							Locale.getDefault())
 							.parse(date)
 							.getTime();

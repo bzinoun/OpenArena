@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.openarena.R;
 import com.openarena.model.AbstractRecyclerAdapter;
 import com.openarena.model.objects.Fixture;
 import com.openarena.util.UI;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 		else {
 			UI.show(holder.mDate);
 			UI.hide(holder.mGoalsHomeTeam, holder.mGoalsAwayTeam);
-			DateFormat format = new SimpleDateFormat("hh:mm", Locale.getDefault());
+			DateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 			holder.mDate.setText(format.format(new Date(item.getDate())));
 		}
 	}
