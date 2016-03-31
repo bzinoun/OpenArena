@@ -3,18 +3,42 @@ package com.openarena.controllers;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
+
 import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
 import com.openarena.util.DBConst;
+import com.openarena.util.L;
+
+import java.util.ArrayList;
 
 public class DBManager {
 
 	private static SQLHelper sSQLHelper;
 
-	public void init(Context context) {
+	public static void init(Context context) {
 		sSQLHelper = SQLHelper.getInstance(context);
+	}
+
+	@Nullable
+	public static ArrayList<League> getLeaguesList() {
+		Cursor cursor = sSQLHelper.getAll(DBConst.TABLE_LEAGUES);
+		ArrayList<League> list = League.parseArray(cursor);
+		if (cursor != null) cursor.close();
+		return list;
+	}
+
+	@Nullable
+	public static ArrayList<Fixture> getFixturesList(int soccerseasonId) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_FIXTURES,
+				new String[] {DBConst.SOCCER_SEASON_ID},
+				new String[] {String.valueOf(soccerseasonId)});
+		ArrayList<Fixture> list = Fixture.parseArray(cursor);
+		if (cursor != null) cursor.close();
+		return list;
 	}
 
 	public static League getLeague(int id) {
@@ -47,6 +71,26 @@ public class DBManager {
 		return head2head;
 	}
 
+	public static void setLeaguesList(ArrayList<League> list) {
+		L.e(DBManager.class, "setLeaguesList");
+		if (list != null && !list.isEmpty()) {
+			for (League league : list) {
+				L.e(DBManager.class, "setLeague->" + league.getCaption());
+				setLeague(league);
+			}
+		}
+	}
+
+	public static void setFixturesList(ArrayList<Fixture> list) {
+		L.e(DBManager.class, "setFixturesList");
+		if (list != null && !list.isEmpty()) {
+			for (Fixture fixture : list) {
+				L.e(DBManager.class, "setFixture->" + fixture.getID());
+				setFixture(fixture);
+			}
+		}
+	}
+
 	public static void setLeague(League league) {
 		if (league != null) {
 			ContentValues data = new ContentValues();
@@ -65,12 +109,14 @@ public class DBManager {
 					new String[] {DBConst.ID},
 					new String[] {String.valueOf(league.getID())});
 			if (cursor.moveToFirst()) {
+				L.e(DBManager.class, "update->" + league.getCaption());
 				sSQLHelper.update(
 						DBConst.TABLE_LEAGUES,
 						data, new String[] {DBConst.ID},
 						new String[] {String.valueOf(league.getID())});
 			}
 			else {
+				L.e(DBManager.class, "insert->" + league.getCaption());
 				sSQLHelper.insert(DBConst.TABLE_LEAGUES, data);
 			}
 			cursor.close();

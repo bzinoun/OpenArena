@@ -3,6 +3,7 @@ package com.openarena.model.objects;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
@@ -90,6 +91,41 @@ public class Fixture implements Parcelable {
 			fixture.mGoalsAwayTeam = fixtureCursor.getInt(col_goalsAwayTeam);
 		}
 		return fixture;
+	}
+
+	@Nullable
+	public static ArrayList<Fixture> parseArray(Cursor fixturesCursor) {
+		if (fixturesCursor.moveToFirst()) {
+			int col_id = fixturesCursor.getColumnIndex(DBConst.ID);
+			int col_soccerSeasonId = fixturesCursor.getColumnIndex(DBConst.SOCCER_SEASON_ID);
+			int col_date = fixturesCursor.getColumnIndex(DBConst.DATE);
+			int col_status = fixturesCursor.getColumnIndex(DBConst.STATUS);
+			int col_matchday = fixturesCursor.getColumnIndex(DBConst.MATCHDAY);
+			int col_homeTeamId = fixturesCursor.getColumnIndex(DBConst.HOME_TEAM_ID);
+			int col_homeTeamName = fixturesCursor.getColumnIndex(DBConst.HOME_TEAM_NAME);
+			int col_awayTeamId = fixturesCursor.getColumnIndex(DBConst.AWAY_TEAM_ID);
+			int col_awayTeamName = fixturesCursor.getColumnIndex(DBConst.AWAY_TEAM_NAME);
+			int col_goalsHomeTeam = fixturesCursor.getColumnIndex(DBConst.GOALS_HOME_TEAM);
+			int col_goalsAwayTeam = fixturesCursor.getColumnIndex(DBConst.GOALS_AWAY_TEAM);
+			ArrayList<Fixture> list = new ArrayList<>();
+			do {
+				Fixture fixture = new Fixture();
+				fixture.mID = fixturesCursor.getInt(col_id);
+				fixture.mSoccerSeasonID = fixturesCursor.getInt(col_soccerSeasonId);
+				fixture.mDate = fixturesCursor.getLong(col_date);
+				fixture.mStatus = fixturesCursor.getInt(col_status);
+				fixture.mMatchday = fixturesCursor.getInt(col_matchday);
+				fixture.mHomeTeamID = fixturesCursor.getInt(col_homeTeamId);
+				fixture.mHomeTeamName = fixturesCursor.getString(col_homeTeamName);
+				fixture.mAwayTeamID = fixturesCursor.getInt(col_awayTeamId);
+				fixture.mAwayTeamName = fixturesCursor.getString(col_awayTeamName);
+				fixture.mGoalsHomeTeam = fixturesCursor.getInt(col_goalsHomeTeam);
+				fixture.mGoalsAwayTeam = fixturesCursor.getInt(col_goalsAwayTeam);
+				list.add(fixture);
+			} while (fixturesCursor.moveToNext());
+			return list;
+		}
+		else return null;
 	}
 
 	public static Fixture parse(JSONObject o) {

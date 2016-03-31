@@ -27,7 +27,8 @@ public class Controller {
 	private ThreadPoolExecutor sExecutor;
 	private Handler mHandler;
 
-	public static synchronized void init() {
+	public static synchronized void init(Context context) {
+		DBManager.init(context);
 		if (mInstance == null) synchronized (Controller.class) {
 			if (mInstance == null) {
 				mInstance = new Controller();
@@ -52,6 +53,13 @@ public class Controller {
 		sExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
+				final ArrayList<League> dbList = DBManager.getLeaguesList();
+				if (dbList != null) mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onSuccess(dbList);
+					}
+				});
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				String resultCurrent = null,
 						resultLast = null;
@@ -63,12 +71,15 @@ public class Controller {
 						JSONArray lastArray = new JSONArray(resultLast);
 						final ArrayList<League> list = League.parseArray(currentArray);
 						list.addAll(League.parseArray(lastArray));
-						if (!list.isEmpty()) mHandler.post(new Runnable() {
+						if (!list.isEmpty()) {
+							DBManager.setLeaguesList(list);
+							mHandler.post(new Runnable() {
 								@Override
 								public void run() {
 									callback.onSuccess(list);
 								}
 							});
+						}
 						else mHandler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -103,17 +114,27 @@ public class Controller {
 		sExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
+				final ArrayList<Fixture> dbList = DBManager.getFixturesList(soccerseasonId);
+				if (dbList != null) mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onSuccess(dbList);
+					}
+				});
 				String result = Api.getFixturesBySeasonId(context, soccerseasonId);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
 						final ArrayList<Fixture> list = Fixture.parseArray(array);
-						if (!list.isEmpty()) mHandler.post(new Runnable() {
+						if (!list.isEmpty()) {
+							DBManager.setFixturesList(list);
+							mHandler.post(new Runnable() {
 								@Override
 								public void run() {
 									callback.onSuccess(list);
 								}
 							});
+						}
 						else mHandler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -147,12 +168,20 @@ public class Controller {
 		sExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
+				final Head2head dbHead2head = DBManager.getHead2head(fixtureId);
+				if (dbHead2head != null) mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onSuccess(dbHead2head);
+					}
+				});
 				String result = Api.getFixtureDetailsById(context, fixtureId);
 				if (result != null) {
 					try {
 						JSONObject object = new JSONObject(result).getJSONObject("head2head");
 						final Head2head head2head = Head2head.parse(fixtureId, object);
 						if (head2head != null) {
+							DBManager.setHead2head(dbHead2head);
 							mHandler.post(new Runnable() {
 								@Override
 								public void run() {

@@ -3,6 +3,7 @@ package com.openarena.model.objects;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
@@ -78,6 +79,37 @@ public class League implements Parcelable {
 			league.mLastUpdated = leagueCursor.getLong(col_lastUpdated);
 		}
 		return league;
+	}
+
+	@Nullable
+	public static ArrayList<League> parseArray(Cursor leaguesCursor) {
+		if (leaguesCursor.moveToFirst()) {
+			int col_id = leaguesCursor.getColumnIndex(DBConst.ID);
+			int col_caption = leaguesCursor.getColumnIndex(DBConst.CAPTION);
+			int col_league = leaguesCursor.getColumnIndex(DBConst.LEAGUE);
+			int col_year = leaguesCursor.getColumnIndex(DBConst.YEAR);
+			int col_currentMatchday = leaguesCursor.getColumnIndex(DBConst.CURRENT_MATCHDAY);
+			int col_numberOfMatchdays = leaguesCursor.getColumnIndex(DBConst.NUMBER_OF_MATCHDAYS);
+			int col_numberOfTeams = leaguesCursor.getColumnIndex(DBConst.NUMBER_OF_TEAMS);
+			int col_numberOfGames = leaguesCursor.getColumnIndex(DBConst.NUMBER_OF_GAMES);
+			int col_lastUpdated = leaguesCursor.getColumnIndex(DBConst.LAST_UPDATED);
+			ArrayList<League> list = new ArrayList<>();
+			do {
+				League league = new League();
+				league.mID = leaguesCursor.getInt(col_id);
+				league.mCaption = leaguesCursor.getString(col_caption);
+				league.mLeague = leaguesCursor.getString(col_league);
+				league.mYear = leaguesCursor.getInt(col_year);
+				league.mCurrentMatchday = leaguesCursor.getInt(col_currentMatchday);
+				league.mNumberOfMatchdays = leaguesCursor.getInt(col_numberOfMatchdays);
+				league.mNumberOfTeams = leaguesCursor.getInt(col_numberOfTeams);
+				league.mNumberOfGames = leaguesCursor.getInt(col_numberOfGames);
+				league.mLastUpdated = leaguesCursor.getLong(col_lastUpdated);
+				list.add(league);
+			} while (leaguesCursor.moveToNext());
+			return list;
+		}
+		return null;
 	}
 
 	public static League parse(JSONObject o) {

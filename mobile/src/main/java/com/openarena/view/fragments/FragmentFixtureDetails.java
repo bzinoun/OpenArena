@@ -84,6 +84,10 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		if (mHome != null) mHome = null;
 		if (mAway != null) mAway = null;
 		if (mResult != null) mResult = null;
+		if (mSnackbar != null) {
+			mSnackbar.dismiss();
+			mSnackbar = null;
+		}
 	}
 
 	@Override
@@ -138,17 +142,24 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 
 	@Override
 	public void onError(int code) {
-		mAdapter = null;
-		UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
-		UI.show(mErrorContent);
-		mSnackbar = Snackbar.make(mRecyclerView, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
-				.setAction(R.string.snackbar_result_null_action, new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						loadData();
-					}
-				});
-		mSnackbar.show();
+		if (mAdapter == null || mAdapter.getList().isEmpty()) {
+			UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
+			UI.show(mErrorContent);
+			mSnackbar = Snackbar.make(
+					getActivity().findViewById(R.id.main_container),
+					R.string.snackbar_result_null_text,
+					Snackbar.LENGTH_INDEFINITE)
+					.setAction(
+							R.string.snackbar_result_null_action,
+							new View.OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									loadData();
+								}
+							}
+					);
+			mSnackbar.show();
+		}
 	}
 
 	@Override

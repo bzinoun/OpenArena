@@ -129,22 +129,28 @@ public class FragmentFixtures extends Fragment
 
 	@Override
 	public void onError(int code) {
-		mAdapter = null;
-		if (code == Const.ERROR_CODE_RESULT_EMPTY) {
-			UI.hide(mRecyclerView, mErrorContent, mProgressContent);
-			UI.show(mEmptyContent);
-		}
-		else {
-			UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
-			UI.show(mErrorContent);
-			mSnackbar = Snackbar.make(mRecyclerView, R.string.snackbar_result_null_text, Snackbar.LENGTH_INDEFINITE)
-					.setAction(R.string.snackbar_result_null_action, new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							loadData();
-						}
-					});
-			mSnackbar.show();
+		if (mAdapter == null || mAdapter.getList().isEmpty()) {
+			if (code == Const.ERROR_CODE_RESULT_EMPTY) {
+				UI.hide(mRecyclerView, mErrorContent, mProgressContent);
+				UI.show(mEmptyContent);
+			} else {
+				UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
+				UI.show(mErrorContent);
+				mSnackbar = Snackbar.make(
+						getActivity().findViewById(R.id.main_container),
+						R.string.snackbar_result_null_text,
+						Snackbar.LENGTH_INDEFINITE)
+						.setAction(
+								R.string.snackbar_result_null_action,
+								new View.OnClickListener() {
+									@Override
+									public void onClick(View v) {
+										loadData();
+									}
+								}
+						);
+				mSnackbar.show();
+			}
 		}
 	}
 
