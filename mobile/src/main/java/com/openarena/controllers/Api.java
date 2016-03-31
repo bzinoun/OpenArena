@@ -1,9 +1,10 @@
-package com.openarena.model;
+package com.openarena.controllers;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.openarena.R;
+import com.openarena.model.Connection;
 
 public class Api {
 

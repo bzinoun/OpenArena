@@ -1,8 +1,10 @@
 package com.openarena.model.objects;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.openarena.util.DBConst;
 import com.openarena.util.L;
 
 import org.json.JSONObject;
@@ -14,6 +16,7 @@ import java.util.Locale;
 
 public class Head2head implements Parcelable {
 
+	private int mFixtureID;
 	private int mCount;
 	private long mTimeFrameStart;
 	private long mTimeFrameEnd;
@@ -25,6 +28,7 @@ public class Head2head implements Parcelable {
 	protected Head2head() {}
 
 	protected Head2head(Parcel in) {
+		mFixtureID = in.readInt();
 		mCount = in.readInt();
 		mTimeFrameStart = in.readLong();
 		mTimeFrameEnd = in.readLong();
@@ -46,9 +50,32 @@ public class Head2head implements Parcelable {
 		}
 	};
 
-	public static Head2head parse(JSONObject o) {
+	public static Head2head parse(Cursor head2headCursor) {
+		Head2head head2head = null;
+		if (head2headCursor.moveToFirst()) {
+			int col_fixture_id = head2headCursor.getColumnIndex(DBConst.FIXTURE_ID);
+			int col_count = head2headCursor.getColumnIndex(DBConst.COUNT);
+			int col_time_frame_start = head2headCursor.getColumnIndex(DBConst.TIME_FRAME_START);
+			int col_time_frame_end = head2headCursor.getColumnIndex(DBConst.TIME_FRAME_END);
+			int col_home_team_wins = head2headCursor.getColumnIndex(DBConst.HOME_TEAM_WINS);
+			int col_away_team_wins = head2headCursor.getColumnIndex(DBConst.AWAY_TEAM_WINS);
+			int col_draws = head2headCursor.getColumnIndex(DBConst.DRAWS);
+			head2head = new Head2head();
+			head2head.mFixtureID = head2headCursor.getInt(col_fixture_id);
+			head2head.mCount = head2headCursor.getInt(col_count);
+			head2head.mTimeFrameStart = head2headCursor.getLong(col_time_frame_start);
+			head2head.mTimeFrameEnd = head2headCursor.getLong(col_time_frame_end);
+			head2head.mHomeTeamWins = head2headCursor.getInt(col_home_team_wins);
+			head2head.mAwayTeamWins = head2headCursor.getInt(col_away_team_wins);
+			head2head.mDraws = head2headCursor.getInt(col_draws);
+		}
+		return head2head;
+	}
+
+	public static Head2head parse(int fixture_id, JSONObject o) {
 		if (o != null) {
 			Head2head head2head = new Head2head();
+			head2head.mFixtureID = fixture_id;
 			head2head.mCount = o.optInt("count");
 			String timeFrameStart = o.optString("timeFrameStart", null);
 			if (timeFrameStart != null) {
@@ -81,6 +108,10 @@ public class Head2head implements Parcelable {
 			return head2head;
 		}
 		else return null;
+	}
+
+	public int getFixtureID() {
+		return mFixtureID;
 	}
 
 	public int getCount() {
@@ -119,6 +150,7 @@ public class Head2head implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 
+		dest.writeInt(mFixtureID);
 		dest.writeInt(mCount);
 		dest.writeLong(mTimeFrameStart);
 		dest.writeLong(mTimeFrameEnd);

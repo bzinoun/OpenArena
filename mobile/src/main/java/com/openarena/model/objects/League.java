@@ -77,7 +77,6 @@ public class League implements Parcelable {
 			league.mNumberOfGames = leagueCursor.getInt(col_numberOfGames);
 			league.mLastUpdated = leagueCursor.getLong(col_lastUpdated);
 		}
-		leagueCursor.close();
 		return league;
 	}
 

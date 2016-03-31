@@ -1,4 +1,4 @@
-package com.openarena.model;
+package com.openarena.controllers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

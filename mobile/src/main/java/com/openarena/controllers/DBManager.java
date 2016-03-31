@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
+import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
 import com.openarena.util.DBConst;
 
@@ -34,6 +35,16 @@ public class DBManager {
 		Fixture fixture = Fixture.parse(cursor);
 		if (cursor != null) cursor.close();
 		return fixture;
+	}
+
+	public static Head2head getHead2head(int fixture_id) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_HEAD2HEAD,
+				new String[] {DBConst.FIXTURE_ID},
+				new String[] {String.valueOf(fixture_id)});
+		Head2head head2head = Head2head.parse(cursor);
+		if (cursor != null) cursor.close();
+		return head2head;
 	}
 
 	public static void setLeague(League league) {
@@ -93,6 +104,34 @@ public class DBManager {
 			}
 			else {
 				sSQLHelper.insert(DBConst.TABLE_FIXTURES, data);
+			}
+			cursor.close();
+		}
+	}
+
+	public static void setHead2head(Head2head head2head) {
+		if (head2head != null) {
+			ContentValues data = new ContentValues();
+			data.put(DBConst.FIXTURE_ID, head2head.getFixtureID());
+			data.put(DBConst.COUNT, head2head.getCount());
+			data.put(DBConst.TIME_FRAME_START, head2head.getTimeFrameStart());
+			data.put(DBConst.TIME_FRAME_END, head2head.getTimeFrameEnd());
+			data.put(DBConst.HOME_TEAM_WINS, head2head.getHomeTeamWins());
+			data.put(DBConst.AWAY_TEAM_WINS, head2head.getAwayTeamWins());
+			data.put(DBConst.DRAWS, head2head.getDraws());
+
+			Cursor cursor = sSQLHelper.getAll(
+					DBConst.TABLE_HEAD2HEAD,
+					new String[] {DBConst.FIXTURE_ID},
+					new String[] {String.valueOf(head2head.getFixtureID())});
+			if (cursor.moveToFirst()) {
+				sSQLHelper.update(
+						DBConst.TABLE_HEAD2HEAD,
+						data, new String[] {DBConst.FIXTURE_ID},
+						new String[] {String.valueOf(head2head.getFixtureID())});
+			}
+			else {
+				sSQLHelper.insert(DBConst.TABLE_HEAD2HEAD, data);
 			}
 			cursor.close();
 		}

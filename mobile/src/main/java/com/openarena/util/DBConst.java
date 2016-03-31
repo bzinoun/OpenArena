@@ -3,7 +3,8 @@ package com.openarena.util;
 public class DBConst {
 	public static final String TABLE_LEAGUES = "table_leagues";
 	public static final String TABLE_FIXTURES = "table_fixtures";
-	public static final String TABLE_TEAMS = "table_teams";
+	public static final String TABLE_HEAD2HEAD = "table_head2head";
+
 	public static final String ID = "id";
 	public static final String CAPTION = "caption";
 	public static final String LEAGUE = "league";
@@ -24,5 +25,13 @@ public class DBConst {
 	public static final String AWAY_TEAM_NAME = "awayTeamName";
 	public static final String GOALS_HOME_TEAM = "goalsHomeTeam";
 	public static final String GOALS_AWAY_TEAM = "goalsAwayTeam";
+
+	public static final String FIXTURE_ID = "fixture_id";
+	public static final String COUNT = "count";
+	public static final String TIME_FRAME_START = "time_frame_start";
+	public static final String TIME_FRAME_END = "time_frame_end";
+	public static final String HOME_TEAM_WINS = "home_team_wins";
+	public static final String AWAY_TEAM_WINS = "away_team_wins";
+	public static final String DRAWS = "draws";
 
 }

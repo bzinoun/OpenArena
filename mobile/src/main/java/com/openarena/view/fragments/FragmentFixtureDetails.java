@@ -199,7 +199,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		mHome.setText(mFixture.getHomeTeamName());
 		mAway.setText(mFixture.getAwayTeamName());
 		if (mFixture.getStatus() != Fixture.TIMED) mResult.setText(String.format(getString(R.string.fixture_details_result), mFixture.getGoalsHomeTeam(), mFixture.getGoalsAwayTeam()));
-		else mResult.setText(new SimpleDateFormat("hh:mm", Locale.getDefault()).format(new Date(mFixture.getDate())));
+		else mResult.setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(mFixture.getDate())));
 		if (mAdapter == null) loadData();
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);

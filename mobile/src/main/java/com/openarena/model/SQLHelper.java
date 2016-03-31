@@ -49,19 +49,28 @@ public class SQLHelper extends SQLiteOpenHelper {
 				DBConst.GOALS_HOME_TEAM + " INTEGER," +
 				DBConst.GOALS_AWAY_TEAM + " INTEGER";
 
+		String params3 = DBConst.FIXTURE_ID + " INTEGER NOT NULL," +
+				DBConst.COUNT + " INTEGER," +
+				DBConst.TIME_FRAME_START + " INTEGER," +
+				DBConst.TIME_FRAME_END + " INTEGER," +
+				DBConst.HOME_TEAM_WINS + " INTEGER," +
+				DBConst.AWAY_TEAM_WINS + " INTEGER," +
+				DBConst.DRAWS + " INTEGER";
+
 		createTable(db, DBConst.TABLE_LEAGUES, params1);
 		createTable(db, DBConst.TABLE_FIXTURES, params2);
+		createTable(db, DBConst.TABLE_HEAD2HEAD, params3);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		dropData(db);
+		dropTables(db);
 		onCreate(db);
 	}
 
 	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		dropData(db);
+		dropTables(db);
 		onCreate(db);
 	}
 
@@ -148,9 +157,10 @@ public class SQLHelper extends SQLiteOpenHelper {
 		getWritableDatabase().delete(tableName, null, null);
 	}
 
-	public void dropData(SQLiteDatabase db) {
+	public void dropTables(SQLiteDatabase db) {
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_LEAGUES);
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_FIXTURES);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_HEAD2HEAD);
 	}
 
 }

@@ -3,7 +3,6 @@ package com.openarena.controllers;
 import android.content.Context;
 import android.os.Handler;
 
-import com.openarena.model.Api;
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
@@ -152,7 +151,7 @@ public class Controller {
 				if (result != null) {
 					try {
 						JSONObject object = new JSONObject(result).getJSONObject("head2head");
-						final Head2head head2head = Head2head.parse(object);
+						final Head2head head2head = Head2head.parse(fixtureId, object);
 						if (head2head != null) {
 							mHandler.post(new Runnable() {
 								@Override

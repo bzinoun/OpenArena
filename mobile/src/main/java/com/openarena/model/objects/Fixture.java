@@ -89,7 +89,6 @@ public class Fixture implements Parcelable {
 			fixture.mGoalsHomeTeam = fixtureCursor.getInt(col_goalsHomeTeam);
 			fixture.mGoalsAwayTeam = fixtureCursor.getInt(col_goalsAwayTeam);
 		}
-		fixtureCursor.close();
 		return fixture;
 	}
 
