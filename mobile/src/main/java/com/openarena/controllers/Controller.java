@@ -110,18 +110,19 @@ public class Controller {
 	public void getListOfFixtures(
 			final Context context,
 			final int soccerseasonId,
+			final int matchday,
 			final OnGetFixtures callback) {
 		sExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				final ArrayList<Fixture> dbList = DBManager.getFixturesList(soccerseasonId);
+				final ArrayList<Fixture> dbList = DBManager.getFixturesListByMachday(soccerseasonId, matchday);
 				if (dbList != null) mHandler.post(new Runnable() {
 					@Override
 					public void run() {
 						callback.onSuccess(dbList);
 					}
 				});
-				String result = Api.getFixturesBySeasonId(context, soccerseasonId);
+				String result = Api.getFixturesByMatchday(context, soccerseasonId, matchday);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");

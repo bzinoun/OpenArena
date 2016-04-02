@@ -73,26 +73,26 @@ public class Connection {
 		if (key != null && !key.isEmpty() && value != null && !value.isEmpty()) map.put(key, value);
 	}
 
-	public static class Builder {
+	public static class Creator {
 
 		private Connection connection = new Connection();
 
-		public Builder setPost(boolean canPost) {
+		public Creator setPost(boolean canPost) {
 			connection.setPost(canPost);
 			return this;
 		}
 
-		public Builder setTimeout(int timeout) {
+		public Creator setTimeout(int timeout) {
 			connection.setTimeout(timeout);
 			return this;
 		}
 
-		public Builder putHeader(String key, String value) {
+		public Creator putHeader(String key, String value) {
 			connection.putHeader(key, value);
 			return this;
 		}
 
-		public Connection build() {
+		public Connection create() {
 			return connection;
 		}
 	}

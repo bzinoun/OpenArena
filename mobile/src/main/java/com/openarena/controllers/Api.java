@@ -18,32 +18,32 @@ public class Api {
 		return connection.request(getBaseUri() + "fixtures/" + String.valueOf(id));
 	}
 
-	public static String getFixturesBySeasonId(Context context, int id) {
-		return getFixturesBySeasonId(context, id, null);
+	public static String getFixturesByMatchday(Context context, int id, int matchday) {
+		return getFixtures(context, id, "matchday=" + String.valueOf(matchday));
 	}
 
-	/**
-	 *
-	 * @param timeFrame <b>//p|n[1-9]{1,2}//</b> of <b>null</b> for example "n1"
-	 */
-	public static String getFixturesBySeasonId(Context context, int id, @Nullable String timeFrame) {
+	public static String getFixtures(Context context, int id) {
+		return getFixtures(context, id, null);
+	}
+
+	public static String getFixtures(Context context, int id, @Nullable String filter) {
 		Connection connection = getConnection(context);
 		StringBuilder request = new StringBuilder()
 				.append(getBaseUri())
 				.append("soccerseasons/")
 				.append(String.valueOf(id))
 				.append("/fixtures");
-		if (timeFrame != null) request.append("?timeFrame=")
-				.append(timeFrame);
+		if (filter != null) request.append("?")
+				.append(filter);
 		else request.append("?timeFrame=n7");
 		return connection.request(request.toString());
 	}
 
 	private static Connection getConnection(Context context) {
-		return new Connection.Builder()
+		return new Connection.Creator()
 				.putHeader("X-Auth-Token", context.getString(R.string.api_key))
 				.putHeader("X-Response-Control", context.getString(R.string.api_response_control_mini))
-				.build();
+				.create();
 	}
 
 	private static String getBaseUri() {

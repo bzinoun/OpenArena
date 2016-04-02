@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 			case Const.EVENT_CODE_SELECT_LEAGUE:
 				if (mFragmentManager.findFragmentByTag(FragmentFixtures.TAG) == null) {
 					Bundle data = new Bundle();
-					data.putInt("soccerSeasonId", event.getID());
+					data.putParcelable("league", event.getLeague());
 					mFragmentManager.beginTransaction()
 							.replace(R.id.main_container, FragmentFixtures.getInstance(data))
 							.addToBackStack(FragmentFixtures.TAG)

@@ -121,7 +121,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 				break;
 
 			case R.id.action_score_table:
-				Snackbar.make(mRecyclerView, "score table", Snackbar.LENGTH_SHORT).show();
+				Snackbar.make(getActivity().findViewById(R.id.main_container), "score table", Snackbar.LENGTH_SHORT).show();
 				break;
 
 			default:

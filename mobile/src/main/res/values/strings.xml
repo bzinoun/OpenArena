@@ -11,6 +11,7 @@
 	<string name="leagues_title">Leagues list</string>
 	<string name="leagues_subtitle">2015 – 2016</string>
 	<string name="fixtures_title">This week</string>
+	<string name="fixtures_matchday">Matchday %1$d</string>
 	<string name="fixture_details_title">Fixture details</string>
 	<string name="fixture_details_result">%1$d : %2$d</string>
 	<string name="navigation_settings">Settings</string>
@@ -18,6 +19,7 @@
 	<string name="option_refresh">Refresh</string>
 	<string name="option_sort">Sort</string>
 	<string name="option_score_table">Score table</string>
+	<string name="context_select_matchday">Select matchday</string>
 
 	<!-- API resources -->
 	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>

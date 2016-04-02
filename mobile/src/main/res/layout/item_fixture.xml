@@ -5,9 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="@dimen/fixtures_list_item_height"
 	android:background="@drawable/fixtures_list_item"
-	android:clickable="true"
-	android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
-	android:paddingRight="@dimen/fixtures_list_item_horizontal_padding">
+	android:clickable="true">
 
 	<TextView
 		android:id="@+id/home_team_name"

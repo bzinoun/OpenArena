@@ -166,7 +166,7 @@ public class FragmentLeagues extends Fragment
 	@Override
 	public void onItemClick(View view, int position) {
 		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_LEAGUE)
-				.setID(mAdapter.getItem(position).getID()));
+				.setLeague(mAdapter.getItem(position)));
 	}
 
 	@Override

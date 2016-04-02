@@ -4,6 +4,7 @@ public class EventData {
 
 	private int mCode;
 	private int mID;
+	private League mLeague;
 	private Fixture mFixture;
 
 	public EventData(int code) {
@@ -18,12 +19,21 @@ public class EventData {
 		return mID;
 	}
 
+	public League getLeague() {
+		return mLeague;
+	}
+
 	public Fixture getFixture() {
 		return mFixture;
 	}
 
 	public EventData setID(int id) {
 		mID = id;
+		return this;
+	}
+
+	public EventData setLeague(League league) {
+		mLeague = league;
 		return this;
 	}
 

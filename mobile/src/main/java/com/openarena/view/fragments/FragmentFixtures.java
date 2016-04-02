@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
@@ -24,8 +27,10 @@ import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
+import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
+
 import java.util.ArrayList;
 
 public class FragmentFixtures extends Fragment
@@ -37,11 +42,12 @@ public class FragmentFixtures extends Fragment
 	private FrameLayout mProgressContent;
 	private LinearLayout mErrorContent;
 	private LinearLayout mEmptyContent;
+	private TextView mMatchday;
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
 	private Snackbar mSnackbar;
-	private int mSoccerSeasonId = -1;
+	private League mLeague;
 
 	public static FragmentFixtures getInstance(@Nullable Bundle data) {
 		FragmentFixtures fragment = new FragmentFixtures();
@@ -53,6 +59,9 @@ public class FragmentFixtures extends Fragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		if (mEventListener == null) mEventListener = (EventListener) getActivity();
+		if (mLeague == null) mLeague = getArguments().getParcelable("league");
+		if (mController == null) mController = Controller.getInstance();
 		if (savedInstanceState != null) {
 			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
 			if (list != null) mAdapter = new FixturesAdapter(list);
@@ -65,11 +74,8 @@ public class FragmentFixtures extends Fragment
 			LayoutInflater inflater,
 			ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_leagues, container, false);
+		View view = inflater.inflate(R.layout.fragment_fixtures, container, false);
 		setupUI(view);
-		if (mEventListener == null) mEventListener = (EventListener) getActivity();
-		if (mSoccerSeasonId < 0) mSoccerSeasonId = getArguments().getInt("soccerSeasonId");
-		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		return view;
 	}
@@ -77,7 +83,6 @@ public class FragmentFixtures extends Fragment
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		if (mEventListener != null) mEventListener = null;
 		if (mRecyclerView != null) mRecyclerView = null;
 		if (mEmptyContent != null) mEmptyContent = null;
 		if (mErrorContent != null) mErrorContent = null;
@@ -100,6 +105,8 @@ public class FragmentFixtures extends Fragment
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if (mEventListener != null) mEventListener = null;
+		if (mMatchday != null) mMatchday = null;
 		if (mController != null) mController = null;
 		if (mAdapter != null) mAdapter = null;
 	}
@@ -114,16 +121,42 @@ public class FragmentFixtures extends Fragment
 		int id = item.getItemId();
 		switch (id) {
 			case R.id.action_refresh:
-				loadData();
+				loadData(mLeague.getCurrentMatchday());
 				break;
 
 			case R.id.action_sort:
-				Snackbar.make(mRecyclerView, "sort", Snackbar.LENGTH_SHORT).show();
+				Snackbar.make(getActivity().findViewById(R.id.main_container), "sort", Snackbar.LENGTH_SHORT).show();
+				break;
+
+			case R.id.action_score_table:
+				Snackbar.make(getActivity().findViewById(R.id.main_container), "score table", Snackbar.LENGTH_SHORT).show();
 				break;
 
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		int id = v.getId();
+		switch (id) {
+			case R.id.matchday:
+				menu.setHeaderTitle(getString(R.string.context_select_matchday));
+				for (int i = 1; i <= mLeague.getNumberOfMatchdays(); i++) {
+					menu.add(0, i, 0, String.valueOf(i));
+				}
+				break;
+
+			default:
+				super.onCreateContextMenu(menu, v, menuInfo);
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		loadData(item.getItemId());
 		return true;
 	}
 
@@ -145,7 +178,7 @@ public class FragmentFixtures extends Fragment
 								new View.OnClickListener() {
 									@Override
 									public void onClick(View v) {
-										loadData();
+										loadData(mLeague.getCurrentMatchday());
 									}
 								}
 						);
@@ -181,7 +214,7 @@ public class FragmentFixtures extends Fragment
 	private void setupUI(View view) {
 		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 		if (toolbar != null) {
-			toolbar.setTitle(getString(R.string.fixtures_title));
+			toolbar.setTitle(mLeague.getCaption());
 			toolbar.setSubtitle(null);
 		}
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -194,6 +227,17 @@ public class FragmentFixtures extends Fragment
 				mRecyclerView,
 				this));
 		mRecyclerView.setHasFixedSize(true);
+		mMatchday = (TextView) view.findViewById(R.id.matchday);
+		mMatchday.setText(String.format(
+				getString(R.string.fixtures_matchday),
+				mLeague.getCurrentMatchday()));
+		mMatchday.setOnCreateContextMenuListener(this);
+		mMatchday.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getActivity().openContextMenu(v);
+			}
+		});
 		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
 		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
 		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
@@ -201,7 +245,7 @@ public class FragmentFixtures extends Fragment
 	}
 
 	private void showContent() {
-		if (mAdapter == null) loadData();
+		if (mAdapter == null) loadData(mLeague.getCurrentMatchday());
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
 			UI.show(mRecyclerView);
@@ -209,9 +253,13 @@ public class FragmentFixtures extends Fragment
 		}
 	}
 
-	private void loadData() {
+	private void loadData(int matchday) {
 		UI.hide(mRecyclerView, mEmptyContent, mErrorContent);
 		UI.show(mProgressContent);
-		mController.getListOfFixtures(getActivity(), mSoccerSeasonId, this);
+		if (mAdapter != null) mAdapter = null;
+		mMatchday.setText(String.format(
+				getString(R.string.fixtures_matchday),
+				matchday));
+		mController.getListOfFixtures(getActivity(), mLeague.getID(), matchday, this);
 	}
 }

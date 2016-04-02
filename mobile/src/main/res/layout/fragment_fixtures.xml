@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:orientation="vertical">
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_margin="8dp"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:id="@+id/matchday"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="8dp"
+			android:gravity="center_vertical"
+			android:background="@drawable/fixtures_matchday_background"
+			android:textColor="@color/fixtures_matchday"
+			android:textSize="18sp"
+			tools:text="Matchday 32"/>
+
+		<ImageView
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_gravity="end|center_vertical"
+			android:src="@drawable/ic_menu_down"/>
+
+	</FrameLayout>
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler_view"
@@ -19,4 +45,4 @@
 
 	<include layout="@layout/content_error"/>
 
-</FrameLayout>
+</LinearLayout>
