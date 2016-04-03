@@ -1,6 +1,6 @@
 package com.openarena.model.adapters;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class ScoresAdapter extends AbstractRecyclerAdapter<Scores, ScoresAdapter.ScoresViewHolder> {
 
-	private Context mContext;
+	private Resources mResources;
 
-	public ScoresAdapter(Context context, ArrayList<Scores> list) {
+	public ScoresAdapter(Resources resources, ArrayList<Scores> list) {
 		super(list);
-		mContext = context;
+		mResources = resources;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class ScoresAdapter extends AbstractRecyclerAdapter<Scores, ScoresAdapter
 		holder.mPlayedGames.setText(String.valueOf(item.getPlayedGames()));
 		holder.mGoals.setText(String.valueOf(item.getGoals()));
 		holder.mAgainstDifference.setText(String.format(
-				mContext.getString(R.string.scores_against_difference),
+				mResources.getString(R.string.scores_against_difference),
 				item.getGoalAgainst(),
 				item.getGoalDifference()));
 		holder.mPoints.setText(String.valueOf(item.getPoints()));

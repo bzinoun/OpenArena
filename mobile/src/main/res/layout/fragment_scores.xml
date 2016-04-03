@@ -17,16 +17,16 @@
 		android:paddingTop="4dp">
 
 		<TextView
-			android:layout_width="36dp"
+			android:layout_width="@dimen/scores_table_rank_width"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"
-			android:text="№"/>
+			android:text="@string/scores_head_number"/>
 
 		<ImageView
-			android:layout_width="30dp"
-			android:layout_height="30dp"
+			android:layout_width="@dimen/scores_table_icon_size"
+			android:layout_height="@dimen/scores_table_icon_size"
 			android:src="@mipmap/ic_launcher"/>
 
 		<TextView
@@ -35,46 +35,44 @@
 			android:layout_weight="1"
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"
-			android:text="Team"
-			android:textSize="16sp"/>
+			android:text="@string/scores_head_team"
+			android:textSize="@dimen/scores_table_text_size"/>
 
 		<TextView
-			android:layout_width="40dp"
+			android:layout_width="@dimen/scores_table_played_games_width"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
-			android:text="PG"/>
+			android:text="@string/scores_head_played_games"/>
 
 		<TextView
-			android:layout_width="40dp"
+			android:layout_width="@dimen/scores_table_goals_width"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
-			android:text="G"/>
+			android:text="@string/scores_head_goals"/>
 
 		<TextView
-			android:layout_width="40dp"
+			android:layout_width="@dimen/scores_table_against_difference_width"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
-			android:text="A/D"/>
+			android:text="@string/scores_head_against_difference"/>
 
 		<TextView
-			android:layout_width="40dp"
+			android:layout_width="@dimen/scores_table_points_width"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
-			android:text="P"/>
+			android:text="@string/scores_head_points"/>
 
 	</LinearLayout>
 
 	<FrameLayout
-		android:background="@color/scores_separator_background"
 		android:layout_width="match_parent"
-		android:layout_height="2dp"/>
+		android:layout_height="2dp"
+		android:background="@color/scores_separator_background"/>
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler_view"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:paddingLeft="8dp"
-		android:paddingRight="8dp"/>
+		android:layout_height="match_parent"/>
 
 	<include layout="@layout/content_progress"/>
 

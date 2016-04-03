@@ -5,14 +5,17 @@
 	android:layout_width="match_parent"
 	android:layout_height="48dp"
 	android:clickable="true"
+	android:background="@drawable/scores_list_item_background"
 	android:gravity="center_vertical"
 	android:orientation="horizontal"
+	android:paddingLeft="8dp"
+	android:paddingRight="8dp"
 	android:paddingBottom="4dp"
 	android:paddingTop="4dp">
 
 	<TextView
 		android:id="@+id/rank"
-		android:layout_width="36dp"
+		android:layout_width="@dimen/scores_table_rank_width"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		android:paddingLeft="8dp"
@@ -21,8 +24,8 @@
 
 	<ImageView
 		android:id="@+id/icon"
-		android:layout_width="30dp"
-		android:layout_height="30dp"
+		android:layout_width="@dimen/scores_table_icon_size"
+		android:layout_height="@dimen/scores_table_icon_size"
 		tools:src="@mipmap/ic_launcher"/>
 
 	<TextView
@@ -32,33 +35,33 @@
 		android:layout_weight="1"
 		android:paddingLeft="8dp"
 		android:paddingRight="8dp"
-		android:textSize="16sp"
+		android:textSize="@dimen/scores_table_text_size"
 		tools:text="Manchester"/>
 
 	<TextView
 		android:id="@+id/played_games"
-		android:layout_width="40dp"
+		android:layout_width="@dimen/scores_table_played_games_width"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		tools:text="60"/>
 
 	<TextView
 		android:id="@+id/goals"
-		android:layout_width="40dp"
+		android:layout_width="@dimen/scores_table_goals_width"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		tools:text="50"/>
 
 	<TextView
 		android:id="@+id/against_difference"
-		android:layout_width="40dp"
+		android:layout_width="@dimen/scores_table_against_difference_width"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
-		tools:text="25/25"/>
+		tools:text="25/-25"/>
 
 	<TextView
 		android:id="@+id/points"
-		android:layout_width="40dp"
+		android:layout_width="@dimen/scores_table_points_width"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		tools:text="23"/>

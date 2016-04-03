@@ -59,12 +59,10 @@ public class FragmentFixtures extends Fragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		if (mEventListener == null) mEventListener = (EventListener) getActivity();
 		if (mLeague == null) mLeague = getArguments().getParcelable("league");
-		if (mController == null) mController = Controller.getInstance();
 		if (savedInstanceState != null) {
 			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null) mAdapter = new FixturesAdapter(list);
+			if (list != null) mAdapter = new FixturesAdapter(getResources(), list);
 		}
 	}
 
@@ -75,6 +73,8 @@ public class FragmentFixtures extends Fragment
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_fixtures, container, false);
 		setupUI(view);
+		if (mEventListener == null) mEventListener = (EventListener) getActivity();
+		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		return view;
 	}
@@ -142,7 +142,7 @@ public class FragmentFixtures extends Fragment
 		int id = v.getId();
 		switch (id) {
 			case R.id.matchday:
-				menu.setHeaderTitle(getString(R.string.context_select_matchday));
+				menu.setHeaderTitle(getString(R.string.context_head_select_matchday));
 				for (int i = 1; i <= mLeague.getNumberOfMatchdays(); i++) {
 					menu.add(0, i, 0, String.valueOf(i));
 				}
@@ -192,7 +192,7 @@ public class FragmentFixtures extends Fragment
 		UI.show(mRecyclerView);
 		if (mSnackbar != null) mSnackbar.dismiss();
 		if (mAdapter == null) {
-			mAdapter = new FixturesAdapter(data);
+			mAdapter = new FixturesAdapter(getResources(), data);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
 			mAdapter.changeData(data);

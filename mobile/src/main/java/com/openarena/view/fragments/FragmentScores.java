@@ -55,12 +55,10 @@ public class FragmentScores extends Fragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		if (mEventListener == null) mEventListener = (EventListener) getActivity();
-		if (mController == null) mController = Controller.getInstance();
 		if (mLeague == null) mLeague = getArguments().getParcelable("league");
 		if (savedInstanceState != null) {
 			ArrayList<Scores> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null) mAdapter = new ScoresAdapter(getActivity(), list);
+			if (list != null) mAdapter = new ScoresAdapter(getResources(), list);
 		}
 	}
 
@@ -71,6 +69,8 @@ public class FragmentScores extends Fragment
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_scores, container, false);
 		setupUI(view);
+		if (mEventListener == null) mEventListener = (EventListener) getActivity();
+		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		return view;
 	}
@@ -158,7 +158,7 @@ public class FragmentScores extends Fragment
 		UI.show(mRecyclerView);
 		if (mSnackbar != null) mSnackbar.dismiss();
 		if (mAdapter == null) {
-			mAdapter = new ScoresAdapter(getActivity(), data);
+			mAdapter = new ScoresAdapter(getResources(), data);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
 			mAdapter.changeData(data);

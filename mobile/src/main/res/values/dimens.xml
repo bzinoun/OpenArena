@@ -15,7 +15,17 @@
 	<dimen name="fixtures_list_item_height">48dp</dimen>
 	<dimen name="fixtures_list_item_team_size">12sp</dimen>
 	<dimen name="fixtures_list_item_goal_size">18sp</dimen>
-	<dimen name="fixtures_list_item_horizontal_padding">8dp</dimen>
+	<dimen name="fixtures_list_item_horizontal_padding">16dp</dimen>
 	<dimen name="fixtures_list_vertical_padding">4dp</dimen>
-	<dimen name="fixture_details_result_size">72dp</dimen>
+
+	<dimen name="fixture_details_result_size">50dp</dimen>
+	<dimen name="fixture_details_result_text_size">20sp</dimen>
+
+	<dimen name="scores_table_text_size">14sp</dimen>
+	<dimen name="scores_table_icon_size">30dp</dimen>
+	<dimen name="scores_table_rank_width">36dp</dimen>
+	<dimen name="scores_table_played_games_width">40dp</dimen>
+	<dimen name="scores_table_goals_width">40dp</dimen>
+	<dimen name="scores_table_against_difference_width">48dp</dimen>
+	<dimen name="scores_table_points_width">40dp</dimen>
 </resources>

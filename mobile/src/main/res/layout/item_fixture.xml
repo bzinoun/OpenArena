@@ -7,74 +7,60 @@
 	android:background="@drawable/fixtures_list_item"
 	android:clickable="true">
 
+	<FrameLayout
+		android:id="@+id/result_layout"
+		android:layout_width="60dp"
+		android:layout_height="match_parent"
+		android:layout_centerHorizontal="true">
+
+		<TextView
+			android:id="@+id/date"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_vertical"
+			android:gravity="center"
+			android:visibility="gone"
+			android:textColor="@color/fixtures_list_text"
+			tools:text="21:30"/>
+
+		<TextView
+			android:id="@+id/result"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp"
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp"
+			android:background="@drawable/fixture_list_item_result_background"
+			android:gravity="center"
+			android:textColor="@color/fixtures_list_text"
+			tools:text="1 : 2"/>
+
+	</FrameLayout>
+
 	<TextView
 		android:id="@+id/home_team_name"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
-		android:layout_alignParentStart="true"
 		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/goals_home_team"
-		android:layout_toStartOf="@+id/goals_home_team"
+		android:layout_toLeftOf="@id/result_layout"
+		android:layout_toStartOf="@id/result_layout"
 		android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
 		android:paddingRight="@dimen/fixtures_list_item_horizontal_padding"
 		android:textColor="@color/fixtures_list_text"
 		android:textSize="@dimen/fixtures_list_item_team_size"
 		tools:text="Home team name"/>
 
-	<TextView
-		android:id="@+id/goals_home_team"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/item_fixture_separator"
-		android:layout_toStartOf="@+id/item_fixture_separator"
-		android:textColor="@color/fixtures_list_text"
-		android:textSize="@dimen/fixtures_list_item_goal_size"
-		tools:text="3"/>
-
-	<FrameLayout
-		android:id="@+id/item_fixture_separator"
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_marginLeft="@dimen/fixtures_list_item_horizontal_padding"
-		android:layout_marginRight="@dimen/fixtures_list_item_horizontal_padding"
-		android:background="@color/fixtures_list_separator_background"
-		android:clickable="true"
-		android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
-		android:paddingRight="@dimen/fixtures_list_item_horizontal_padding">
-
-		<TextView
-			android:id="@+id/date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			android:textColor="@color/fixtures_list_text"
-			tools:text="21:30"/>
-
-	</FrameLayout>
-
-	<TextView
-		android:id="@+id/goals_away_team"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerVertical="true"
-		android:layout_toEndOf="@+id/item_fixture_separator"
-		android:layout_toRightOf="@+id/item_fixture_separator"
-		android:textColor="@color/fixtures_list_text"
-		android:textSize="@dimen/fixtures_list_item_goal_size"
-		tools:text="3"/>
 
 	<TextView
 		android:id="@+id/away_team_name"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentEnd="true"
-		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:layout_toEndOf="@+id/goals_away_team"
-		android:layout_toRightOf="@+id/goals_away_team"
+		android:layout_toEndOf="@+id/result_layout"
+		android:layout_toRightOf="@+id/result_layout"
+		android:gravity="end"
 		android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
 		android:paddingRight="@dimen/fixtures_list_item_horizontal_padding"
 		android:textColor="@color/fixtures_list_text"

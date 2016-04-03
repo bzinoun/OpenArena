@@ -1,5 +1,6 @@
 package com.openarena.model.adapters;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,11 @@ import java.util.Locale;
 
 public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAdapter.FixturesViewHolder> {
 
-	public FixturesAdapter(ArrayList<Fixture> list) {
+	private Resources mResources;
+
+	public FixturesAdapter(Resources resources, ArrayList<Fixture> list) {
 		super(list);
+		mResources = resources;
 	}
 
 	@Override
@@ -36,13 +40,15 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
 		if (item.getStatus() != Fixture.TIMED) {
 			UI.hide(holder.mDate);
-			UI.show(holder.mGoalsHomeTeam, holder.mGoalsAwayTeam);
-			holder.mGoalsHomeTeam.setText(String.valueOf(item.getGoalsHomeTeam()));
-			holder.mGoalsAwayTeam.setText(String.valueOf(item.getGoalsAwayTeam()));
+			UI.show(holder.mResult);
+			holder.mResult.setText(String.format(mResources.getString(
+					R.string.fixtures_list_item_result),
+					item.getGoalsHomeTeam(),
+					item.getGoalsAwayTeam()));
 		}
 		else {
+			UI.hide(holder.mResult);
 			UI.show(holder.mDate);
-			UI.hide(holder.mGoalsHomeTeam, holder.mGoalsAwayTeam);
 			DateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 			holder.mDate.setText(format.format(new Date(item.getDate())));
 		}
@@ -52,17 +58,15 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 
 		private TextView mHomeTeamName,
 				mAwayTeamName,
-				mGoalsHomeTeam,
-				mGoalsAwayTeam,
-				mDate;
+				mDate,
+				mResult;
 
 		public FixturesViewHolder(View itemView) {
 			super(itemView);
 			mHomeTeamName = (TextView) itemView.findViewById(R.id.home_team_name);
 			mAwayTeamName = (TextView) itemView.findViewById(R.id.away_team_name);
-			mGoalsHomeTeam = (TextView) itemView.findViewById(R.id.goals_home_team);
-			mGoalsAwayTeam = (TextView) itemView.findViewById(R.id.goals_away_team);
 			mDate = (TextView) itemView.findViewById(R.id.date);
+			mResult = (TextView) itemView.findViewById(R.id.result);
 		}
 	}
 }

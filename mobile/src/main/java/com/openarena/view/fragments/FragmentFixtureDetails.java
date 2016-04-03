@@ -58,9 +58,10 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		if (mFixture == null) mFixture = getArguments().getParcelable("fixture");
 		if (savedInstanceState != null) {
 			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null) mAdapter = new FixturesAdapter(list);
+			if (list != null) mAdapter = new FixturesAdapter(getResources(), list);
 		}
 	}
 
@@ -68,7 +69,6 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_fixture_details, container, false);
 		setupUI(view);
-		if (mFixture == null) mFixture = getArguments().getParcelable("fixture");
 		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		return view;
@@ -173,7 +173,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 			UI.show(mRecyclerView);
 			if (mAdapter == null) {
-				mAdapter = new FixturesAdapter(data.getFixtures());
+				mAdapter = new FixturesAdapter(getResources(), data.getFixtures());
 				mRecyclerView.setAdapter(mAdapter);
 			} else {
 				mAdapter.changeData(data.getFixtures());
@@ -185,7 +185,11 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 		if (toolbar != null) {
 			toolbar.setTitle(getString(R.string.fixture_details_title));
-			toolbar.setSubtitle(null);
+			if (mFixture.getStatus() == Fixture.TIMED) {
+				toolbar.setSubtitle(
+						new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+								.format(new Date(mFixture.getDate())));
+			}
 		}
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(
@@ -209,8 +213,15 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	private void showContent() {
 		mHome.setText(mFixture.getHomeTeamName());
 		mAway.setText(mFixture.getAwayTeamName());
-		if (mFixture.getStatus() != Fixture.TIMED) mResult.setText(String.format(getString(R.string.fixture_details_result), mFixture.getGoalsHomeTeam(), mFixture.getGoalsAwayTeam()));
-		else mResult.setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(mFixture.getDate())));
+		if (mFixture.getStatus() != Fixture.TIMED) {
+			mResult.setText(String.format(
+					getString(R.string.fixture_details_result),
+					mFixture.getGoalsHomeTeam(),
+					mFixture.getGoalsAwayTeam()));
+		}
+		else {
+			mResult.setText(getString(R.string.fixture_details_empty_result));
+		}
 		if (mAdapter == null) loadData();
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
