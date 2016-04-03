@@ -10,7 +10,7 @@ import com.openarena.util.DBConst;
 public class SQLHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "openarena.ApplicationDB";
-	private static final int DB_VERSION = 1;
+	private static final int DB_VERSION = 2;
 
 	private static volatile SQLHelper sInstance;
 
@@ -57,9 +57,21 @@ public class SQLHelper extends SQLiteOpenHelper {
 				DBConst.AWAY_TEAM_WINS + " INTEGER," +
 				DBConst.DRAWS + " INTEGER";
 
+		String params4 = DBConst.SOCCER_SEASON_ID + " INTEGER NOT NULL," +
+				DBConst.RANK + " INTEGER," +
+				DBConst.TEAM + " TEXT," +
+				DBConst.TEAM_ID + " INTEGER," +
+				DBConst.PLAYED_GAMES + " INTEGER," +
+				DBConst.CREST_URI + " TEXT," +
+				DBConst.POINTS + " INTEGER," +
+				DBConst.GOALS + " INTEGER," +
+				DBConst.GOAL_AGAINST + " INTEGER," +
+				DBConst.GOAL_DIFFERENCE + " INTEGER";
+
 		createTable(db, DBConst.TABLE_LEAGUES, params1);
 		createTable(db, DBConst.TABLE_FIXTURES, params2);
 		createTable(db, DBConst.TABLE_HEAD2HEAD, params3);
+		createTable(db, DBConst.TABLE_SCORES, params4);
 	}
 
 	@Override
@@ -72,6 +84,13 @@ public class SQLHelper extends SQLiteOpenHelper {
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		dropTables(db);
 		onCreate(db);
+	}
+
+	public void dropTables(SQLiteDatabase db) {
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_LEAGUES);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_FIXTURES);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_HEAD2HEAD);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_SCORES);
 	}
 
 	private void createTable(SQLiteDatabase db, String tableName, String params) {
@@ -126,7 +145,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 	/**
 	 * Get all columns and sort
 	 * @param orderBy column to order
-	 * @param reverse if <b>true</b> from large to small
+	 * @param beginningAtLarge if <b>true</b> from large to small
 	 * @return Cursor
 	 */
 	public Cursor getAll(
@@ -134,8 +153,8 @@ public class SQLHelper extends SQLiteOpenHelper {
 			String[] where,
 			String[] arguments,
 			String orderBy,
-			boolean reverse) {
-		orderBy += reverse ? " DESC" : " ASC";
+			boolean beginningAtLarge) {
+		orderBy += beginningAtLarge ? " DESC" : " ASC";
 		return get(tableName, null, where, arguments, null, null, orderBy);
 	}
 
@@ -155,12 +174,6 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 	public void deleteAll(String tableName) {
 		getWritableDatabase().delete(tableName, null, null);
-	}
-
-	public void dropTables(SQLiteDatabase db) {
-		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_LEAGUES);
-		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_FIXTURES);
-		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_HEAD2HEAD);
 	}
 
 }

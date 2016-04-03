@@ -9,6 +9,7 @@ import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
+import com.openarena.model.objects.Scores;
 import com.openarena.util.DBConst;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class DBManager {
 	}
 
 	@Nullable
-	public static ArrayList<Fixture> getFixturesListByMachday(int soccerseasonId, int matchday) {
+	public static ArrayList<Fixture> getFixturesListByMatchday(int soccerseasonId, int matchday) {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_FIXTURES,
 				new String[] {DBConst.SOCCER_SEASON_ID, DBConst.MATCHDAY},
-				new String[] {String.valueOf(soccerseasonId), String.valueOf(matchday)});
+				new String[] {String.valueOf(soccerseasonId), String.valueOf(matchday)}, DBConst.DATE, false);
 		ArrayList<Fixture> list = Fixture.parseArray(cursor);
 		if (cursor != null) cursor.close();
 		return list;
@@ -45,8 +46,19 @@ public class DBManager {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_FIXTURES,
 				new String[] {DBConst.SOCCER_SEASON_ID},
-				new String[] {String.valueOf(soccerseasonId)});
+				new String[] {String.valueOf(soccerseasonId)}, DBConst.DATE, true);
 		ArrayList<Fixture> list = Fixture.parseArray(cursor);
+		if (cursor != null) cursor.close();
+		return list;
+	}
+
+	@Nullable
+	public static ArrayList<Scores> getScoresList(int soccerseasonId) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_SCORES,
+				new String[] {DBConst.SOCCER_SEASON_ID},
+				new String[] {String.valueOf(soccerseasonId)}, DBConst.POINTS, true);
+		ArrayList<Scores> list = Scores.parseArray(cursor);
 		if (cursor != null) cursor.close();
 		return list;
 	}
@@ -81,6 +93,16 @@ public class DBManager {
 		return head2head;
 	}
 
+	public static Scores getScores(int soccerSeasonId) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_SCORES,
+				new String[] {DBConst.SOCCER_SEASON_ID},
+				new String[] {String.valueOf(soccerSeasonId)});
+		Scores scores = Scores.parse(cursor);
+		if (cursor != null) cursor.close();
+		return scores;
+	}
+
 	public static void setLeaguesList(ArrayList<League> list) {
 		if (list != null && !list.isEmpty()) {
 			for (League league : list) {
@@ -93,6 +115,14 @@ public class DBManager {
 		if (list != null && !list.isEmpty()) {
 			for (Fixture fixture : list) {
 				setFixture(fixture);
+			}
+		}
+	}
+
+	public static void setScoresList(ArrayList<Scores> list) {
+		if (list != null && !list.isEmpty()) {
+			for (Scores scores : list) {
+				setScores(scores);
 			}
 		}
 	}
@@ -182,6 +212,37 @@ public class DBManager {
 			}
 			else {
 				sSQLHelper.insert(DBConst.TABLE_HEAD2HEAD, data);
+			}
+			cursor.close();
+		}
+	}
+
+	public static void setScores(Scores scores) {
+		if (scores != null) {
+			ContentValues data = new ContentValues();
+			data.put(DBConst.SOCCER_SEASON_ID, scores.getSoccerSeasonID());
+			data.put(DBConst.RANK, scores.getRank());
+			data.put(DBConst.TEAM, scores.getTeam());
+			data.put(DBConst.TEAM_ID, scores.getTeamId());
+			data.put(DBConst.PLAYED_GAMES, scores.getPlayedGames());
+			data.put(DBConst.CREST_URI, scores.getCrestURI());
+			data.put(DBConst.POINTS, scores.getPoints());
+			data.put(DBConst.GOALS, scores.getGoals());
+			data.put(DBConst.GOAL_AGAINST, scores.getGoalAgainst());
+			data.put(DBConst.GOAL_DIFFERENCE, scores.getGoalDifference());
+
+			Cursor cursor = sSQLHelper.getAll(
+					DBConst.TABLE_SCORES,
+					new String[] {DBConst.SOCCER_SEASON_ID, DBConst.TEAM_ID},
+					new String[] {String.valueOf(scores.getSoccerSeasonID()), String.valueOf(scores.getTeamId())});
+			if (cursor.moveToFirst()) {
+				sSQLHelper.update(
+						DBConst.TABLE_SCORES,
+						data, new String[] {DBConst.SOCCER_SEASON_ID, DBConst.TEAM_ID},
+						new String[] {String.valueOf(scores.getSoccerSeasonID()), String.valueOf(scores.getTeamId())});
+			}
+			else {
+				sSQLHelper.insert(DBConst.TABLE_SCORES, data);
 			}
 			cursor.close();
 		}

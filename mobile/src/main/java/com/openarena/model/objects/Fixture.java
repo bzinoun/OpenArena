@@ -63,6 +63,7 @@ public class Fixture implements Parcelable {
 		}
 	};
 
+	@Nullable
 	public static Fixture parse(Cursor fixtureCursor) {
 		Fixture fixture = null;
 		if (fixtureCursor.moveToFirst()) {
@@ -128,6 +129,7 @@ public class Fixture implements Parcelable {
 		else return null;
 	}
 
+	@Nullable
 	public static Fixture parse(JSONObject o) {
 		if (o != null) {
 			Fixture fixture = new Fixture();
@@ -165,6 +167,7 @@ public class Fixture implements Parcelable {
 		else return null;
 	}
 
+	@Nullable
 	public static ArrayList<Fixture> parseArray(JSONArray array) {
 		if (array != null) {
 			ArrayList<Fixture> list = new ArrayList<>();

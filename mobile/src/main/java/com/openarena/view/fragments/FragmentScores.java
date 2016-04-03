@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,40 +16,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
-import com.openarena.model.adapters.FixturesAdapter;
+import com.openarena.model.adapters.ScoresAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
-import com.openarena.model.objects.EventData;
-import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
+import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
 
-public class FragmentFixtures extends Fragment
-		implements Controller.OnGetFixtures, OnItemClickListener {
+public class FragmentScores extends Fragment
+		implements Controller.OnGetScores, OnItemClickListener {
 
-	public static final String TAG = "FragmentFixtures";
+	public static final String TAG = "FragmentScores";
 
 	private RecyclerView mRecyclerView;
 	private FrameLayout mProgressContent;
 	private LinearLayout mErrorContent;
 	private LinearLayout mEmptyContent;
-	private TextView mMatchday;
-	private FixturesAdapter mAdapter;
+	private ScoresAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
-	private Snackbar mSnackbar;
 	private League mLeague;
+	private Snackbar mSnackbar;
 
-	public static FragmentFixtures getInstance(@Nullable Bundle data) {
-		FragmentFixtures fragment = new FragmentFixtures();
+	public static FragmentScores getInstance(@Nullable Bundle data) {
+		FragmentScores fragment = new FragmentScores();
 		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
 	}
@@ -60,11 +56,11 @@ public class FragmentFixtures extends Fragment
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (mEventListener == null) mEventListener = (EventListener) getActivity();
-		if (mLeague == null) mLeague = getArguments().getParcelable("league");
 		if (mController == null) mController = Controller.getInstance();
+		if (mLeague == null) mLeague = getArguments().getParcelable("league");
 		if (savedInstanceState != null) {
-			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null) mAdapter = new FixturesAdapter(list);
+			ArrayList<Scores> list = savedInstanceState.getParcelableArrayList("list");
+			if (list != null) mAdapter = new ScoresAdapter(getActivity(), list);
 		}
 	}
 
@@ -73,7 +69,7 @@ public class FragmentFixtures extends Fragment
 			LayoutInflater inflater,
 			ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_fixtures, container, false);
+		View view = inflater.inflate(R.layout.fragment_scores, container, false);
 		setupUI(view);
 		showContent();
 		return view;
@@ -96,7 +92,7 @@ public class FragmentFixtures extends Fragment
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		if (mAdapter != null) {
-			ArrayList<Fixture> list = mAdapter.getList();
+			ArrayList<Scores> list = mAdapter.getList();
 			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
 		}
 	}
@@ -105,14 +101,14 @@ public class FragmentFixtures extends Fragment
 	public void onDestroy() {
 		super.onDestroy();
 		if (mEventListener != null) mEventListener = null;
-		if (mMatchday != null) mMatchday = null;
 		if (mController != null) mController = null;
+		if (mLeague != null) mLeague = null;
 		if (mAdapter != null) mAdapter = null;
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_fixtures, menu);
+		inflater.inflate(R.menu.fragment_scores, menu);
 	}
 
 	@Override
@@ -120,42 +116,12 @@ public class FragmentFixtures extends Fragment
 		int id = item.getItemId();
 		switch (id) {
 			case R.id.action_refresh:
-				loadData(mLeague.getCurrentMatchday());
-				break;
-
-			case R.id.action_sort:
-				Snackbar.make(getActivity().findViewById(R.id.main_container), "sort", Snackbar.LENGTH_SHORT).show();
-				break;
-
-			case R.id.action_score_table:
-				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE).setLeague(mLeague));
+				loadData();
 				break;
 
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-		return true;
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-		int id = v.getId();
-		switch (id) {
-			case R.id.matchday:
-				menu.setHeaderTitle(getString(R.string.context_select_matchday));
-				for (int i = 1; i <= mLeague.getNumberOfMatchdays(); i++) {
-					menu.add(0, i, 0, String.valueOf(i));
-				}
-				break;
-
-			default:
-				super.onCreateContextMenu(menu, v, menuInfo);
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		loadData(item.getItemId());
 		return true;
 	}
 
@@ -177,7 +143,7 @@ public class FragmentFixtures extends Fragment
 								new View.OnClickListener() {
 									@Override
 									public void onClick(View v) {
-										loadData(mLeague.getCurrentMatchday());
+										loadData();
 									}
 								}
 						);
@@ -187,12 +153,12 @@ public class FragmentFixtures extends Fragment
 	}
 
 	@Override
-	public void onSuccess(ArrayList<Fixture> data) {
+	public void onSuccess(ArrayList<Scores> data) {
 		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 		UI.show(mRecyclerView);
 		if (mSnackbar != null) mSnackbar.dismiss();
 		if (mAdapter == null) {
-			mAdapter = new FixturesAdapter(data);
+			mAdapter = new ScoresAdapter(getActivity(), data);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
 			mAdapter.changeData(data);
@@ -201,8 +167,8 @@ public class FragmentFixtures extends Fragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE)
-				.setFixture(mAdapter.getItem(position)));
+		/*mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE)
+				.setFixture(mAdapter.getItem(position)));*/
 	}
 
 	@Override
@@ -226,17 +192,6 @@ public class FragmentFixtures extends Fragment
 				mRecyclerView,
 				this));
 		mRecyclerView.setHasFixedSize(true);
-		mMatchday = (TextView) view.findViewById(R.id.matchday);
-		mMatchday.setText(String.format(
-				getString(R.string.fixtures_matchday),
-				mLeague.getCurrentMatchday()));
-		mMatchday.setOnCreateContextMenuListener(this);
-		mMatchday.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getActivity().openContextMenu(v);
-			}
-		});
 		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
 		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
 		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
@@ -244,7 +199,7 @@ public class FragmentFixtures extends Fragment
 	}
 
 	private void showContent() {
-		if (mAdapter == null) loadData(mLeague.getCurrentMatchday());
+		if (mAdapter == null) loadData();
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
 			UI.show(mRecyclerView);
@@ -252,13 +207,10 @@ public class FragmentFixtures extends Fragment
 		}
 	}
 
-	private void loadData(int matchday) {
+	private void loadData() {
 		UI.hide(mRecyclerView, mEmptyContent, mErrorContent);
 		UI.show(mProgressContent);
 		if (mAdapter != null) mAdapter = null;
-		mMatchday.setText(String.format(
-				getString(R.string.fixtures_matchday),
-				matchday));
-		mController.getListOfFixtures(getActivity(), mLeague.getID(), matchday, this);
+		mController.getScores(getActivity(), mLeague.getID(), this);
 	}
 }

@@ -17,5 +17,6 @@
 	<color name="fixtures_list_separator_background">#A5D6A7</color>
 	<color name="fixture_details_result_background">#FFD740</color>
 	<color name="fixture_details_teams_background">#BDBDBD</color>
+	<color name="scores_separator_background">#CCC</color>
 	<color name="window_background">#E0E0E0</color>
 </resources>

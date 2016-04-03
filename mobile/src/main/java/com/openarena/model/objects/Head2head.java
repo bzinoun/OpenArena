@@ -3,6 +3,7 @@ package com.openarena.model.objects;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
@@ -50,6 +51,7 @@ public class Head2head implements Parcelable {
 		}
 	};
 
+	@Nullable
 	public static Head2head parse(Cursor head2headCursor) {
 		Head2head head2head = null;
 		if (head2headCursor.moveToFirst()) {
@@ -72,6 +74,7 @@ public class Head2head implements Parcelable {
 		return head2head;
 	}
 
+	@Nullable
 	public static Head2head parse(int fixture_id, JSONObject o) {
 		if (o != null) {
 			Head2head head2head = new Head2head();

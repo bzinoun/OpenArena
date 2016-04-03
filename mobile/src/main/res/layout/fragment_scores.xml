@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:clickable="true"
+		android:gravity="center_vertical"
+		android:orientation="horizontal"
+		android:paddingBottom="4dp"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:paddingTop="4dp">
+
+		<TextView
+			android:layout_width="36dp"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp"
+			android:text="№"/>
+
+		<ImageView
+			android:layout_width="30dp"
+			android:layout_height="30dp"
+			android:src="@mipmap/ic_launcher"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp"
+			android:text="Team"
+			android:textSize="16sp"/>
+
+		<TextView
+			android:layout_width="40dp"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:text="PG"/>
+
+		<TextView
+			android:layout_width="40dp"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:text="G"/>
+
+		<TextView
+			android:layout_width="40dp"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:text="A/D"/>
+
+		<TextView
+			android:layout_width="40dp"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:text="P"/>
+
+	</LinearLayout>
+
+	<FrameLayout
+		android:background="@color/scores_separator_background"
+		android:layout_width="match_parent"
+		android:layout_height="2dp"/>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"/>
+
+	<include layout="@layout/content_progress"/>
+
+	<include layout="@layout/content_empty"/>
+
+	<include layout="@layout/content_error"/>
+
+</LinearLayout>
