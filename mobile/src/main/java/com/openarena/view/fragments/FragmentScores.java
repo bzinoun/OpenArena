@@ -44,6 +44,7 @@ public class FragmentScores extends Fragment
 	private EventListener mEventListener;
 	private League mLeague;
 	private Snackbar mSnackbar;
+	private boolean mIsShow;
 
 	public static FragmentScores getInstance(@Nullable Bundle data) {
 		FragmentScores fragment = new FragmentScores();
@@ -72,6 +73,7 @@ public class FragmentScores extends Fragment
 		if (mEventListener == null) mEventListener = (EventListener) getActivity();
 		if (mController == null) mController = Controller.getInstance();
 		showContent();
+		mIsShow = true;
 		return view;
 	}
 
@@ -86,6 +88,7 @@ public class FragmentScores extends Fragment
 			mSnackbar.dismiss();
 			mSnackbar = null;
 		}
+		mIsShow = false;
 	}
 
 	@Override
@@ -127,7 +130,7 @@ public class FragmentScores extends Fragment
 
 	@Override
 	public void onError(int code) {
-		if (mAdapter == null || mAdapter.getList().isEmpty()) {
+		if (mIsShow && (mAdapter == null || mAdapter.getList().isEmpty())) {
 			if (code == Const.ERROR_CODE_RESULT_EMPTY) {
 				UI.hide(mRecyclerView, mErrorContent, mProgressContent);
 				UI.show(mEmptyContent);
@@ -154,14 +157,16 @@ public class FragmentScores extends Fragment
 
 	@Override
 	public void onSuccess(ArrayList<Scores> data) {
-		UI.hide(mErrorContent, mEmptyContent, mProgressContent);
-		UI.show(mRecyclerView);
-		if (mSnackbar != null) mSnackbar.dismiss();
-		if (mAdapter == null) {
-			mAdapter = new ScoresAdapter(getResources(), data);
-			mRecyclerView.setAdapter(mAdapter);
-		} else {
-			mAdapter.changeData(data);
+		if (mIsShow) {
+			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
+			UI.show(mRecyclerView);
+			if (mSnackbar != null) mSnackbar.dismiss();
+			if (mAdapter == null) {
+				mAdapter = new ScoresAdapter(getResources(), data);
+				mRecyclerView.setAdapter(mAdapter);
+			} else {
+				mAdapter.changeData(data);
+			}
 		}
 	}
 

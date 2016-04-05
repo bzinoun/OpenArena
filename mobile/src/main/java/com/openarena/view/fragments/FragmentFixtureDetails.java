@@ -47,6 +47,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private Fixture mFixture;
+	private boolean mIsShow;
 
 	public static FragmentFixtureDetails getInstance(@Nullable Bundle data) {
 		FragmentFixtureDetails fragment = new FragmentFixtureDetails();
@@ -71,6 +72,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		setupUI(view);
 		if (mController == null) mController = Controller.getInstance();
 		showContent();
+		mIsShow = true;
 		return view;
 	}
 
@@ -88,6 +90,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 			mSnackbar.dismiss();
 			mSnackbar = null;
 		}
+		mIsShow = false;
 	}
 
 	@Override
@@ -142,7 +145,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 
 	@Override
 	public void onError(int code) {
-		if (mAdapter == null || mAdapter.getList().isEmpty()) {
+		if (mIsShow && (mAdapter == null || mAdapter.getList().isEmpty())) {
 			UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
 			UI.show(mErrorContent);
 			mSnackbar = Snackbar.make(
@@ -164,19 +167,21 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 
 	@Override
 	public void onSuccess(Head2head data) {
-		if (mSnackbar != null) mSnackbar.dismiss();
-		if (data.getFixtures() == null || data.getFixtures().isEmpty()) {
-			UI.hide(mErrorContent, mProgressContent, mRecyclerView);
-			UI.show(mEmptyContent);
-		}
-		else {
-			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
-			UI.show(mRecyclerView);
-			if (mAdapter == null) {
-				mAdapter = new FixturesAdapter(getResources(), data.getFixtures());
-				mRecyclerView.setAdapter(mAdapter);
-			} else {
-				mAdapter.changeData(data.getFixtures());
+		if (mIsShow) {
+			if (mSnackbar != null) mSnackbar.dismiss();
+			if (data.getFixtures() == null || data.getFixtures().isEmpty()) {
+				UI.hide(mErrorContent, mProgressContent, mRecyclerView);
+				UI.show(mEmptyContent);
+			}
+			else {
+				UI.hide(mErrorContent, mEmptyContent, mProgressContent);
+				UI.show(mRecyclerView);
+				if (mAdapter == null) {
+					mAdapter = new FixturesAdapter(getResources(), data.getFixtures());
+					mRecyclerView.setAdapter(mAdapter);
+				} else {
+					mAdapter.changeData(data.getFixtures());
+				}
 			}
 		}
 	}
