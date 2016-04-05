@@ -26,7 +26,7 @@
 		android:id="@+id/icon"
 		android:layout_width="@dimen/scores_table_icon_size"
 		android:layout_height="@dimen/scores_table_icon_size"
-		tools:src="@mipmap/ic_launcher"/>
+		android:src="@drawable/ic_cup"/>
 
 	<TextView
 		android:id="@+id/team"

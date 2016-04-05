@@ -10,7 +10,7 @@
 	<ImageView
 		android:layout_width="@dimen/alert_content_icon_size"
 		android:layout_height="@dimen/alert_content_icon_size"
-		android:src="@drawable/ic_emoticon_sad"/>
+		android:src="@drawable/ic_sad_cup"/>
 
 	<TextView
 		android:layout_width="wrap_content"

@@ -25,7 +25,7 @@ public class Configs {
 		return new DisplayImageOptions.Builder()
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
-				.showImageOnLoading(R.mipmap.ic_launcher)
+				.showImageOnLoading(R.drawable.ic_cup)
 				.build();
 	}
 }
