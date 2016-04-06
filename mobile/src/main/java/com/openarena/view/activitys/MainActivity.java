@@ -15,6 +15,7 @@ import com.openarena.view.fragments.FragmentFixtureDetails;
 import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentLeagues;
 import com.openarena.view.fragments.FragmentScores;
+import com.openarena.view.fragments.FragmentTeam;
 
 public class MainActivity extends AppCompatActivity implements EventListener {
 
@@ -78,6 +79,18 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					mFragmentManager.beginTransaction()
 							.replace(R.id.main_container, FragmentScores.getInstance(data))
 							.addToBackStack(FragmentScores.TAG)
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+				}
+				break;
+
+			case Const.EVENT_CODE_SELECT_SCORES:
+				if (mFragmentManager.findFragmentByTag(FragmentTeam.TAG) == null) {
+					Bundle data = new Bundle();
+					data.putParcelable("scores", event.getScores());
+					mFragmentManager.beginTransaction()
+							.replace(R.id.main_container, FragmentTeam.getInstance(data))
+							.addToBackStack(FragmentTeam.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}

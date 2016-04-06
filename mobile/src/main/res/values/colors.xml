@@ -21,6 +21,7 @@
 	<color name="fixture_details_teams_background">#BDBDBD</color>
 	<color name="fixture_details_result_text">#222</color>
 	<color name="fixture_details_teams_text">#333</color>
+	<color name="fixture_details_head2head_text">#333</color>
 	<color name="scores_separator_background">#CCC</color>
 	<color name="window_background">#E0E0E0</color>
 	<color name="window_background_pressed">#CACACA</color>

@@ -23,6 +23,7 @@ import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.ScoresAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
+import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
@@ -172,8 +173,8 @@ public class FragmentScores extends Fragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-		/*mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE)
-				.setFixture(mAdapter.getItem(position)));*/
+		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_SCORES)
+				.setScores(mAdapter.getItem(position)));
 	}
 
 	@Override

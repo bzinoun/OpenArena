@@ -43,6 +43,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	private TextView mHome;
 	private TextView mAway;
 	private TextView mResult;
+	private TextView mHeader;
 	private Snackbar mSnackbar;
 	private FixturesAdapter mAdapter;
 	private Controller mController;
@@ -86,6 +87,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		if (mHome != null) mHome = null;
 		if (mAway != null) mAway = null;
 		if (mResult != null) mResult = null;
+		if (mHeader != null) mHeader = null;
 		if (mSnackbar != null) {
 			mSnackbar.dismiss();
 			mSnackbar = null;
@@ -146,7 +148,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	@Override
 	public void onError(int code) {
 		if (mIsShow && (mAdapter == null || mAdapter.getList().isEmpty())) {
-			UI.hide(mRecyclerView, mEmptyContent, mProgressContent);
+			UI.hide(mRecyclerView, mEmptyContent, mProgressContent, mHeader);
 			UI.show(mErrorContent);
 			mSnackbar = Snackbar.make(
 					getActivity().findViewById(R.id.main_container),
@@ -170,12 +172,12 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		if (mIsShow) {
 			if (mSnackbar != null) mSnackbar.dismiss();
 			if (data.getFixtures() == null || data.getFixtures().isEmpty()) {
-				UI.hide(mErrorContent, mProgressContent, mRecyclerView);
+				UI.hide(mErrorContent, mProgressContent, mRecyclerView, mHeader);
 				UI.show(mEmptyContent);
 			}
 			else {
 				UI.hide(mErrorContent, mEmptyContent, mProgressContent);
-				UI.show(mRecyclerView);
+				UI.show(mRecyclerView, mHeader);
 				if (mAdapter == null) {
 					mAdapter = new FixturesAdapter(getResources(), data.getFixtures());
 					mRecyclerView.setAdapter(mAdapter);
@@ -209,10 +211,11 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		mHome = (TextView) view.findViewById(R.id.home);
 		mAway = (TextView) view.findViewById(R.id.away);
 		mResult = (TextView) view.findViewById(R.id.result);
+		mHeader = (TextView) view.findViewById(R.id.header);
 		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
 		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
 		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
-		UI.hide(mRecyclerView, mErrorContent, mEmptyContent, mProgressContent);
+		UI.hide(mRecyclerView, mErrorContent, mEmptyContent, mProgressContent, mHeader);
 	}
 
 	private void showContent() {
@@ -230,13 +233,13 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 		if (mAdapter == null) loadData();
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
-			UI.show(mRecyclerView);
+			UI.show(mRecyclerView, mHeader);
 			mRecyclerView.setAdapter(mAdapter);
 		}
 	}
 
 	private void loadData() {
-		UI.hide(mRecyclerView, mEmptyContent, mErrorContent);
+		UI.hide(mRecyclerView, mEmptyContent, mErrorContent, mHeader);
 		UI.show(mProgressContent);
 		mController.getFixtureDetails(getActivity(), mFixture.getID(), this);
 	}

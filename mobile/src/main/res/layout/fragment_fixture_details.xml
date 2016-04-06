@@ -54,12 +54,30 @@
 
 	</RelativeLayout>
 
+
+	<TextView
+		android:id="@+id/header"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/fixtures_list_margin"
+		android:layout_marginRight="@dimen/fixtures_list_margin"
+		android:layout_marginTop="@dimen/fixtures_list_margin"
+		android:background="@drawable/fixture_details_head2head_background"
+		android:paddingLeft="@dimen/horizontal_padding"
+		android:paddingRight="@dimen/horizontal_padding"
+		android:paddingTop="@dimen/fixtures_list_margin"
+		android:paddingBottom="@dimen/fixtures_list_margin"
+		android:textColor="@color/fixture_details_head2head_text"
+		android:text="@string/fixture_details_head2head"/>
+
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_margin="@dimen/fixtures_list_margin"
-		android:background="@drawable/fixtures_list_background"
+		android:layout_marginBottom="@dimen/fixtures_list_margin"
+		android:layout_marginLeft="@dimen/fixtures_list_margin"
+		android:layout_marginRight="@dimen/fixtures_list_margin"
+		android:background="@drawable/fixture_details_head2head_list_background"
 		android:paddingBottom="@dimen/fixtures_list_vertical_padding"
 		android:paddingTop="@dimen/fixtures_list_vertical_padding"/>
 
