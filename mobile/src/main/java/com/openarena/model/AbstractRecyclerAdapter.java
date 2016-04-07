@@ -1,13 +1,12 @@
 package com.openarena.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
-
 import com.openarena.model.interfaces.OnItemTouchAdapter;
 import com.openarena.util.L;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -72,12 +71,22 @@ public abstract class AbstractRecyclerAdapter<OL, VH extends RecyclerView.ViewHo
 		return true;
 	}
 
+	/**
+	 * Return list, if null return empty ArrayList
+	 * @return ArrayList
+	 */
 	@NonNull
 	public ArrayList<OL> getList() {
 		if (mList != null) return mList;
 		else return new ArrayList<>();
 	}
 
+	/**
+	 * Return item list if position valid and list not null
+	 * @param position position
+	 * @return Object item or null
+	 */
+	@Nullable
 	public OL getItem(int position) {
 		if (mList != null) {
 			if (position >= 0 && position < mList.size()) {
@@ -89,14 +98,27 @@ public abstract class AbstractRecyclerAdapter<OL, VH extends RecyclerView.ViewHo
 		return null;
 	}
 
+	/**
+	 * Set ability to drag
+	 * @param dragEnabled set true if drag
+	 */
 	public void setDragEnabled(boolean dragEnabled) {
 		if (callback != null) callback.setDragEnabled(dragEnabled);
 	}
 
+	/**
+	 * Set ability to swipe
+	 * @param swipeEnabled set true if swipe
+	 */
 	public void setSwipeEnabled(boolean swipeEnabled) {
 		if (callback != null)callback.setSwipeEnabled(swipeEnabled);
 	}
 
+	/**
+	 * Insert item to list
+	 * @param index position
+	 * @param item object item
+	 */
 	public void addItem(int index, OL item) {
 		if (mList != null) {
 			mList.add(index, item);
@@ -104,6 +126,11 @@ public abstract class AbstractRecyclerAdapter<OL, VH extends RecyclerView.ViewHo
 		}
 	}
 
+	/**
+	 * Replace item
+	 * @param index position
+	 * @param item object item
+	 */
 	public void replaceItem(int index, OL item) {
 		if (mList != null) {
 			mList.set(index, item);
@@ -111,6 +138,10 @@ public abstract class AbstractRecyclerAdapter<OL, VH extends RecyclerView.ViewHo
 		}
 	}
 
+	/**
+	 * Remove item
+	 * @param index position
+	 */
 	public void removeItem(int index) {
 		if (mList != null) {
 			mList.remove(index);
@@ -118,6 +149,10 @@ public abstract class AbstractRecyclerAdapter<OL, VH extends RecyclerView.ViewHo
 		}
 	}
 
+	/**
+	 * Change list
+	 * @param list new list
+	 */
 	public void changeData(ArrayList<OL> list) {
 		if (list != null) {
 			mList = list;

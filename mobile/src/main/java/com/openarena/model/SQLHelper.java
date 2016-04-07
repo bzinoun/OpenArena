@@ -14,6 +14,11 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 	private static volatile SQLHelper sInstance;
 
+	/**
+	 * This method initialized DataBase and return references for singleton object
+	 * @param context application context
+	 * @return references for singleton object
+	 */
 	public static synchronized SQLHelper getInstance(Context context) {
 		if (sInstance == null) synchronized (SQLHelper.class) {
 			if (sInstance == null) sInstance = new SQLHelper(context);
@@ -86,6 +91,10 @@ public class SQLHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Drop all tables
+	 * @param db database
+	 */
 	public void dropTables(SQLiteDatabase db) {
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_LEAGUES);
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_FIXTURES);
@@ -93,17 +102,35 @@ public class SQLHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_SCORES);
 	}
 
-	private void createTable(SQLiteDatabase db, String tableName, String params) {
+	/**
+	 * Create table
+	 * @param db database
+	 * @param tableName table name
+	 * @param fields fields
+	 */
+	private void createTable(SQLiteDatabase db, String tableName, String fields) {
 		StringBuilder query = new StringBuilder()
 				.append("CREATE TABLE ").append(tableName)
-				.append("(").append(params).append(");");
+				.append("(").append(fields).append(");");
 		db.execSQL(query.toString());
 	}
 
+	/**
+	 * Insert row by table name
+	 * @param tableName table name
+	 * @param values values in row
+	 */
 	public void insert(String tableName, ContentValues values) {
 		getWritableDatabase().insert(tableName, null, values);
 	}
 
+	/**
+	 * Update row by table name
+	 * @param tableName table name
+	 * @param values values in row
+	 * @param where array where
+	 * @param arguments array arguments
+	 */
 	public void update(String tableName, ContentValues values, String[] where, String[] arguments) {
 		StringBuilder sb = new StringBuilder();
 		int len = where.length;
@@ -114,8 +141,15 @@ public class SQLHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 *
+	 * Return reference on row by table name
+	 * @param tableName table name
+	 * @param columns columns to return
+	 * @param where array where
+	 * @param arguments array arguments
+	 * @param groupBy group by
+	 * @param having having
 	 * @param orderBy your column + <b>ASC</b> or <b>DESC</b>
+	 * @return reference on row
 	 */
 	public Cursor get(String tableName, String[] columns, String[] where,
 					  String[] arguments, String groupBy, String having, String orderBy) {
@@ -134,19 +168,34 @@ public class SQLHelper extends SQLiteOpenHelper {
 				.query(tableName, columns, where_str, arguments, groupBy, having, orderBy);
 	}
 
+	/**
+	 * Return reference on row by table name
+	 * @param tableName table name
+	 * @return reference on row
+	 */
 	public Cursor getAll(String tableName) {
 		return get(tableName, null, null, null, null, null, null);
 	}
 
+	/**
+	 * Return reference on row by table name
+	 * @param tableName table name
+	 * @param where array where
+	 * @param arguments array arguments
+	 * @return reference on row
+	 */
 	public Cursor getAll(String tableName, String[] where, String[] arguments) {
 		return get(tableName, null, where, arguments, null, null, null);
 	}
 
 	/**
-	 * Get all columns and sort
-	 * @param orderBy column to order
-	 * @param beginningAtLarge if <b>true</b> from large to small
-	 * @return Cursor
+	 * Return reference on row by table name
+	 * @param tableName table name
+	 * @param where array where
+	 * @param arguments array arguments
+	 * @param orderBy column which sort
+	 * @param beginningAtLarge begin at large
+	 * @return reference on row
 	 */
 	public Cursor getAll(
 			String tableName,
@@ -158,7 +207,13 @@ public class SQLHelper extends SQLiteOpenHelper {
 		return get(tableName, null, where, arguments, null, null, orderBy);
 	}
 
-	public void deleteAll(String tableName, String[] where, String[] argument) {
+	/**
+	 * Remove selected rows in table
+	 * @param tableName table name
+	 * @param where array where
+	 * @param arguments array arguments
+	 */
+	public void removeAll(String tableName, String[] where, String[] arguments) {
 		StringBuilder sb = null;
 		if (where != null) {
 			sb = new StringBuilder();
@@ -169,10 +224,14 @@ public class SQLHelper extends SQLiteOpenHelper {
 		}
 		String where_str = null;
 		if (sb != null) where_str = sb.toString();
-		getWritableDatabase().delete(tableName, where_str, argument);
+		getWritableDatabase().delete(tableName, where_str, arguments);
 	}
 
-	public void deleteAll(String tableName) {
+	/**
+	 * Clear table by table name
+	 * @param tableName table name
+	 */
+	public void removeAll(String tableName) {
 		getWritableDatabase().delete(tableName, null, null);
 	}
 

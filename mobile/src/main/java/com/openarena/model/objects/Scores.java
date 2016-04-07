@@ -4,14 +4,11 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class Scores implements Parcelable {

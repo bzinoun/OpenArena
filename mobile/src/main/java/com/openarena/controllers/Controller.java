@@ -2,7 +2,6 @@ package com.openarena.controllers;
 
 import android.content.Context;
 import android.os.Handler;
-
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
@@ -10,11 +9,9 @@ import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
 import com.openarena.util.L;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.LinkedBlockingQueue;

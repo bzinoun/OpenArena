@@ -17,6 +17,11 @@ public class Connection {
 
 	protected Connection() {}
 
+	/**
+	 * Return string result
+	 * @param request request string
+	 * @return string result
+	 */
 	public String request(String request) {
 		if (request != null && !request.isEmpty()) return response(request);
 		else return null;
@@ -77,23 +82,41 @@ public class Connection {
 
 		private Connection connection = new Connection();
 
+		/**
+		 * Switch method for request, default <b>GET</b>
+		 * @param canPost if must <b>POST</b> set true
+		 */
 		public Creator setPost(boolean canPost) {
 			connection.setPost(canPost);
 			return this;
 		}
 
+		/**
+		 * Set timeout in milliseconds
+		 * @param timeout timeout
+		 */
 		public Creator setTimeout(int timeout) {
 			connection.setTimeout(timeout);
 			return this;
 		}
 
+		/**
+		 * Put headers to request
+		 * @param key key
+		 * @param value value
+		 */
 		public Creator putHeader(String key, String value) {
 			connection.putHeader(key, value);
 			return this;
 		}
 
+		/**
+		 * Create object witch params
+		 * @return object
+		 */
 		public Connection create() {
 			return connection;
 		}
 	}
+
 }

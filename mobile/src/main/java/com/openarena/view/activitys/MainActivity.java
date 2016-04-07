@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import com.openarena.R;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;

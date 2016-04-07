@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
@@ -26,7 +25,6 @@ import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
 import com.openarena.util.UI;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
