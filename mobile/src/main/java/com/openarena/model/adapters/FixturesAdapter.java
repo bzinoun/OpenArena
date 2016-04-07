@@ -15,21 +15,33 @@ import com.openarena.util.UI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAdapter.FixturesViewHolder> {
+public class FixturesAdapter
+		extends AbstractRecyclerAdapter<Fixture, FixturesAdapter.FixturesViewHolder> {
 
 	private Resources mResources;
+	private Date mDate;
+	private Date mDateTmp;
+	private Calendar mCalendar;
+	private Calendar mCalendarTmp;
 
 	public FixturesAdapter(Resources resources, ArrayList<Fixture> list) {
 		super(list);
 		mResources = resources;
+		mCalendar = Calendar.getInstance();
+		mCalendarTmp = Calendar.getInstance();
+		mDate = new Date();
+		mDateTmp = new Date();
 	}
 
 	@Override
 	public FixturesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fixture, parent, false);
+		View view = LayoutInflater
+				.from(parent.getContext())
+				.inflate(R.layout.item_fixture, parent, false);
 		return new FixturesViewHolder(view);
 	}
 
@@ -52,6 +64,35 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 			DateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 			holder.mDate.setText(format.format(new Date(item.getDate())));
 		}
+
+		mDate.setTime(item.getDate());
+		mCalendar.setTime(mDate);
+		if (position > 0) {
+			mDateTmp.setTime(mList.get(position - 1).getDate());
+			mCalendarTmp.setTime(mDateTmp);
+		}
+		if (position == 0
+				|| (mCalendar.get(Calendar.DAY_OF_YEAR)
+				!= mCalendarTmp.get(Calendar.DAY_OF_YEAR))) {
+			mDateTmp.setTime(System.currentTimeMillis());
+			mCalendarTmp.setTime(mDateTmp);
+			if (mCalendar.get(Calendar.DAY_OF_YEAR) == mCalendarTmp.get(Calendar.DAY_OF_YEAR)) {
+				holder.mHeader.setText(
+						mResources.getString(R.string.fixtures_list_item_header_today));
+			}
+			else if (mCalendar.get(Calendar.DAY_OF_YEAR)
+					== mCalendarTmp.get(Calendar.DAY_OF_YEAR) + 1) {
+				holder.mHeader.setText(
+						mResources.getString(R.string.fixtures_list_item_header_tomorrow));
+			}
+			else {
+				holder.mHeader.setText(
+						new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+								.format(new Date(item.getDate())));
+			}
+			UI.show(holder.mHeader);
+		}
+		else UI.hide(holder.mHeader);
 	}
 
 	public static class FixturesViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +100,8 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 		private TextView mHomeTeamName,
 				mAwayTeamName,
 				mDate,
-				mResult;
+				mResult,
+				mHeader;
 
 		public FixturesViewHolder(View itemView) {
 			super(itemView);
@@ -67,6 +109,7 @@ public class FixturesAdapter extends AbstractRecyclerAdapter<Fixture, FixturesAd
 			mAwayTeamName = (TextView) itemView.findViewById(R.id.away_team_name);
 			mDate = (TextView) itemView.findViewById(R.id.date);
 			mResult = (TextView) itemView.findViewById(R.id.result);
+			mHeader = (TextView) itemView.findViewById(R.id.header);
 		}
 	}
 }

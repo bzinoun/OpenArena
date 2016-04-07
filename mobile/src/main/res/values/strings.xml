@@ -11,6 +11,8 @@
 
 	<string name="fixtures_matchday">Matchday %1$d</string>
 	<string name="fixtures_list_item_result">%1$d : %2$d</string>
+	<string name="fixtures_list_item_header_today">Today</string>
+	<string name="fixtures_list_item_header_tomorrow">Tomorrow</string>
 
 	<string name="fixture_details_title">Fixture details</string>
 	<string name="fixture_details_result">%1$d : %2$d</string>
