@@ -124,12 +124,10 @@ public class FragmentFixtures extends Fragment
 				loadData(mLeague.getCurrentMatchday());
 				break;
 
-			case R.id.action_sort:
-				Snackbar.make(getActivity().findViewById(R.id.main_container), "sort", Snackbar.LENGTH_SHORT).show();
-				break;
-
 			case R.id.action_score_table:
-				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE).setLeague(mLeague));
+				mEventListener.onEvent(
+						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
+								.setLeague(mLeague));
 				break;
 
 			default:

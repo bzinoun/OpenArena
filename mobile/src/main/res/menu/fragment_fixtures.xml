@@ -17,11 +17,4 @@
 		android:title="@string/option_score_table"
 		app:showAsAction="ifRoom"/>
 
-	<item
-		android:id="@+id/action_sort"
-		android:icon="@drawable/ic_filter_variant"
-		android:orderInCategory="100"
-		android:title="@string/option_sort"
-		app:showAsAction="never"/>
-
 </menu>

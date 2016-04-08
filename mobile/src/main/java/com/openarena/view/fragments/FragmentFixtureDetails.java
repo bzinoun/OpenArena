@@ -19,11 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.openarena.R;
 import com.openarena.controllers.Controller;
+import com.openarena.controllers.DBManager;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.FixturesAdapter;
+import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
+import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
+import com.openarena.util.Const;
 import com.openarena.util.UI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +47,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	private TextView mResult;
 	private TextView mHeader;
 	private Snackbar mSnackbar;
+	private EventListener mEventListener;
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private Fixture mFixture;
@@ -69,6 +74,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_fixture_details, container, false);
 		setupUI(view);
+		if (mEventListener == null) mEventListener = (EventListener) getActivity();
 		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		mIsShow = true;
@@ -105,6 +111,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if (mEventListener != null) mEventListener = null;
 		if (mAdapter != null) mAdapter = null;
 		if (mController != null) mController = null;
 		if (mFixture != null) mFixture = null;
@@ -124,7 +131,9 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 				break;
 
 			case R.id.action_score_table:
-				Snackbar.make(getActivity().findViewById(R.id.main_container), "score table", Snackbar.LENGTH_SHORT).show();
+				mEventListener.onEvent(
+						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
+								.setLeague(DBManager.getLeague(mFixture.getSoccerSeasonID())));
 				break;
 
 			default:
