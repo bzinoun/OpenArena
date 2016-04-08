@@ -18,7 +18,7 @@ public class Scores implements Parcelable {
 	private String mTeam;
 	private int mTeamId;
 	private int mPlayedGames;
-	private String mCrestURI;
+	private String mCrestURL;
 	private int mPoints;
 	private int mGoals;
 	private int mGoalAgainst;
@@ -32,7 +32,7 @@ public class Scores implements Parcelable {
 		mTeam = in.readString();
 		mTeamId = in.readInt();
 		mPlayedGames = in.readInt();
-		mCrestURI = in.readString();
+		mCrestURL = in.readString();
 		mPoints = in.readInt();
 		mGoals = in.readInt();
 		mGoalAgainst = in.readInt();
@@ -60,7 +60,7 @@ public class Scores implements Parcelable {
 			int col_team = scoresCursor.getColumnIndex(DBConst.TEAM);
 			int col_teamId = scoresCursor.getColumnIndex(DBConst.TEAM_ID);
 			int col_playedGames = scoresCursor.getColumnIndex(DBConst.PLAYED_GAMES);
-			int col_crestURI = scoresCursor.getColumnIndex(DBConst.CREST_URI);
+			int col_crestURL = scoresCursor.getColumnIndex(DBConst.CREST_URL);
 			int col_points = scoresCursor.getColumnIndex(DBConst.POINTS);
 			int col_goals = scoresCursor.getColumnIndex(DBConst.GOALS);
 			int col_goalAgainst = scoresCursor.getColumnIndex(DBConst.GOAL_AGAINST);
@@ -71,7 +71,7 @@ public class Scores implements Parcelable {
 			scores.mTeam= scoresCursor.getString(col_team);
 			scores.mTeamId = scoresCursor.getInt(col_teamId);
 			scores.mPlayedGames = scoresCursor.getInt(col_playedGames);
-			scores.mCrestURI = scoresCursor.getString(col_crestURI);
+			scores.mCrestURL = scoresCursor.getString(col_crestURL);
 			scores.mPoints = scoresCursor.getInt(col_points);
 			scores.mGoals = scoresCursor.getInt(col_goals);
 			scores.mGoalAgainst = scoresCursor.getInt(col_goalAgainst);
@@ -88,7 +88,7 @@ public class Scores implements Parcelable {
 			int col_team = scoresCursor.getColumnIndex(DBConst.TEAM);
 			int col_teamId = scoresCursor.getColumnIndex(DBConst.TEAM_ID);
 			int col_playedGames = scoresCursor.getColumnIndex(DBConst.PLAYED_GAMES);
-			int col_crestURI = scoresCursor.getColumnIndex(DBConst.CREST_URI);
+			int col_crestURL = scoresCursor.getColumnIndex(DBConst.CREST_URL);
 			int col_points = scoresCursor.getColumnIndex(DBConst.POINTS);
 			int col_goals = scoresCursor.getColumnIndex(DBConst.GOALS);
 			int col_goalAgainst = scoresCursor.getColumnIndex(DBConst.GOAL_AGAINST);
@@ -101,7 +101,7 @@ public class Scores implements Parcelable {
 				scores.mTeam= scoresCursor.getString(col_team);
 				scores.mTeamId = scoresCursor.getInt(col_teamId);
 				scores.mPlayedGames = scoresCursor.getInt(col_playedGames);
-				scores.mCrestURI = scoresCursor.getString(col_crestURI);
+				scores.mCrestURL = scoresCursor.getString(col_crestURL);
 				scores.mPoints = scoresCursor.getInt(col_points);
 				scores.mGoals = scoresCursor.getInt(col_goals);
 				scores.mGoalAgainst = scoresCursor.getInt(col_goalAgainst);
@@ -122,7 +122,7 @@ public class Scores implements Parcelable {
 			scores.mTeam= o.optString("team");
 			scores.mTeamId = o.optInt("teamId");
 			scores.mPlayedGames = o.optInt("playedGames");
-			scores.mCrestURI = o.optString("crestURI");
+			scores.mCrestURL = o.optString("crestURI");
 			scores.mPoints = o.optInt("points");
 			scores.mGoals = o.optInt("goals");
 			scores.mGoalAgainst = o.optInt("goalsAgainst");
@@ -170,7 +170,7 @@ public class Scores implements Parcelable {
 	}
 
 	public String getCrestURI() {
-		return mCrestURI;
+		return mCrestURL;
 	}
 
 	public int getPoints() {
@@ -202,7 +202,7 @@ public class Scores implements Parcelable {
 		dest.writeString(mTeam);
 		dest.writeInt(mTeamId);
 		dest.writeInt(mPlayedGames);
-		dest.writeString(mCrestURI);
+		dest.writeString(mCrestURL);
 		dest.writeInt(mPoints);
 		dest.writeInt(mGoals);
 		dest.writeInt(mGoalAgainst);

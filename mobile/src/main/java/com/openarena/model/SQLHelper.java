@@ -10,7 +10,7 @@ import com.openarena.util.DBConst;
 public class SQLHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "openarena.ApplicationDB";
-	private static final int DB_VERSION = 1;
+	private static final int DB_VERSION = 2;
 
 	private static volatile SQLHelper sInstance;
 
@@ -67,16 +67,23 @@ public class SQLHelper extends SQLiteOpenHelper {
 				DBConst.TEAM + " TEXT," +
 				DBConst.TEAM_ID + " INTEGER," +
 				DBConst.PLAYED_GAMES + " INTEGER," +
-				DBConst.CREST_URI + " TEXT," +
+				DBConst.CREST_URL + " TEXT," +
 				DBConst.POINTS + " INTEGER," +
 				DBConst.GOALS + " INTEGER," +
 				DBConst.GOAL_AGAINST + " INTEGER," +
 				DBConst.GOAL_DIFFERENCE + " INTEGER";
 
+		String params5 = DBConst.ID + " INTEGER NOT NULL," +
+				DBConst.NAME + " TEXT," +
+				DBConst.SHORT_NAME + " TEXT," +
+				DBConst.SQUAD_MARKET_VALUE + " TEXT," +
+				DBConst.CREST_URL + " TEXT";
+
 		createTable(db, DBConst.TABLE_LEAGUES, params1);
 		createTable(db, DBConst.TABLE_FIXTURES, params2);
 		createTable(db, DBConst.TABLE_HEAD2HEAD, params3);
 		createTable(db, DBConst.TABLE_SCORES, params4);
+		createTable(db, DBConst.TABLE_TEAM, params5);
 	}
 
 	@Override
@@ -100,6 +107,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_FIXTURES);
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_HEAD2HEAD);
 		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_SCORES);
+		db.execSQL("DROP TABLE IF EXISTS " + DBConst.TABLE_TEAM);
 	}
 
 	/**

@@ -26,6 +26,7 @@
 	<string name="scores_head_goals">G</string>
 	<string name="scores_head_against_difference">A/D</string>
 	<string name="scores_head_points">P</string>
+	<string name="scores_sort_dialog_title">Categories</string>
 
 	<string name="option_refresh">Refresh</string>
 	<string name="option_sort">Sort</string>

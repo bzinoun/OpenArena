@@ -223,7 +223,7 @@ public class DBManager {
 			data.put(DBConst.TEAM, scores.getTeam());
 			data.put(DBConst.TEAM_ID, scores.getTeamId());
 			data.put(DBConst.PLAYED_GAMES, scores.getPlayedGames());
-			data.put(DBConst.CREST_URI, scores.getCrestURI());
+			data.put(DBConst.CREST_URL, scores.getCrestURI());
 			data.put(DBConst.POINTS, scores.getPoints());
 			data.put(DBConst.GOALS, scores.getGoals());
 			data.put(DBConst.GOAL_AGAINST, scores.getGoalAgainst());

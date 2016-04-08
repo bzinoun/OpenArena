@@ -5,6 +5,7 @@ public class DBConst {
 	public static final String TABLE_FIXTURES = "table_fixtures";
 	public static final String TABLE_HEAD2HEAD = "table_head2head";
 	public static final String TABLE_SCORES = "table_scores";
+	public static final String TABLE_TEAM = "table_team";
 
 	public static final String ID = "id";
 	public static final String CAPTION = "caption";
@@ -39,10 +40,14 @@ public class DBConst {
 	public static final String TEAM = "team";
 	public static final String TEAM_ID = "team_id";
 	public static final String PLAYED_GAMES = "played_games";
-	public static final String CREST_URI = "crest_uri";
+	public static final String CREST_URL = "crest_url";
 	public static final String POINTS = "points";
 	public static final String GOALS = "goals";
 	public static final String GOAL_AGAINST = "goal_against";
 	public static final String GOAL_DIFFERENCE = "goal_difference";
+
+	public static final String NAME = "name";
+	public static final String SHORT_NAME = "short_name";
+	public static final String SQUAD_MARKET_VALUE = "squad_market_value";
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,21 +17,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.ScoresAdapter;
+import com.openarena.model.comparators.ComparatorScores;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
+import com.openarena.util.L;
 import com.openarena.util.UI;
+
 import java.util.ArrayList;
 
 public class FragmentScores extends Fragment
-		implements Controller.OnGetScores, OnItemClickListener {
+		implements Controller.OnGetScores, OnItemClickListener, View.OnClickListener {
 
 	public static final String TAG = "FragmentScores";
 
@@ -43,6 +48,7 @@ public class FragmentScores extends Fragment
 	private EventListener mEventListener;
 	private League mLeague;
 	private Snackbar mSnackbar;
+	private AlertDialog mDialog;
 	private boolean mIsShow;
 
 	public static FragmentScores getInstance(@Nullable Bundle data) {
@@ -83,6 +89,7 @@ public class FragmentScores extends Fragment
 		if (mEmptyContent != null) mEmptyContent = null;
 		if (mErrorContent != null) mErrorContent = null;
 		if (mProgressContent != null) mProgressContent = null;
+		if (mDialog != null) mDialog = null;
 		if (mSnackbar != null) {
 			mSnackbar.dismiss();
 			mSnackbar = null;
@@ -119,6 +126,10 @@ public class FragmentScores extends Fragment
 		switch (id) {
 			case R.id.action_refresh:
 				loadData();
+				break;
+
+			case R.id.action_sort:
+				showSortDialog();
 				break;
 
 			default:
@@ -180,6 +191,23 @@ public class FragmentScores extends Fragment
 
 	}
 
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+			case R.id.played_games:
+
+				break;
+
+			case R.id.goals:
+
+				break;
+
+			default:
+				L.e("default id");
+		}
+	}
+
 	private void setupUI(View view) {
 		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 		if (toolbar != null) {
@@ -217,4 +245,30 @@ public class FragmentScores extends Fragment
 		if (mAdapter != null) mAdapter = null;
 		mController.getScores(getActivity(), mLeague.getID(), this);
 	}
+
+	private void showSortDialog() {
+		View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_scores_sort, null, false);
+		view.findViewById(R.id.played_games).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ComparatorScores.sortByPlayedGames(mAdapter.getList());
+				mAdapter.notifyDataSetChanged();
+				mDialog.dismiss();
+			}
+		});
+		view.findViewById(R.id.goals).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ComparatorScores.sortByGoals(mAdapter.getList());
+				mAdapter.notifyDataSetChanged();
+				mDialog.dismiss();
+			}
+		});
+		mDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog)
+				.setTitle(getString(R.string.scores_sort_dialog_title))
+				.setView(view)
+				.create();
+		mDialog.show();
+	}
+
 }
