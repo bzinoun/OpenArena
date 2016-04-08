@@ -4,12 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
+
 import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
+import com.openarena.model.objects.Team;
 import com.openarena.util.DBConst;
+
 import java.util.ArrayList;
 
 public class DBManager {
@@ -99,6 +102,16 @@ public class DBManager {
 		Scores scores = Scores.parse(cursor);
 		if (cursor != null) cursor.close();
 		return scores;
+	}
+
+	public static Team getTeam(int team_id) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_TEAM,
+				new String[] {DBConst.ID},
+				new String[] {String.valueOf(team_id)});
+		Team team = Team.parse(cursor);
+		if (cursor != null) cursor.close();
+		return team;
 	}
 
 	public static void setLeaguesList(ArrayList<League> list) {
@@ -241,6 +254,33 @@ public class DBManager {
 			}
 			else {
 				sSQLHelper.insert(DBConst.TABLE_SCORES, data);
+			}
+			cursor.close();
+		}
+	}
+
+	public static void setTeam(Team team) {
+		if (team != null) {
+			ContentValues data = new ContentValues();
+			data.put(DBConst.ID, team.getID());
+			if (team.isChanged()) data.put(DBConst.IS_FAVORITE, team.getIsFavorite());
+			data.put(DBConst.NAME, team.getName());
+			data.put(DBConst.SHORT_NAME, team.getShortName());
+			data.put(DBConst.SQUAD_MARKET_VALUE, team.getSquadMarketValue());
+			data.put(DBConst.CREST_URL, team.getCrestURL());
+
+			Cursor cursor = sSQLHelper.getAll(
+					DBConst.TABLE_TEAM,
+					new String[] {DBConst.ID},
+					new String[] {String.valueOf(team.getID())});
+			if (cursor.moveToFirst()) {
+				sSQLHelper.update(
+						DBConst.TABLE_TEAM,
+						data, new String[] {DBConst.ID},
+						new String[] {String.valueOf(team.getID())});
+			}
+			else {
+				sSQLHelper.insert(DBConst.TABLE_TEAM, data);
 			}
 			cursor.close();
 		}

@@ -46,12 +46,21 @@ public class Api {
 		Connection connection = getConnection(context);
 		StringBuilder request = new StringBuilder()
 				.append(getBaseUri())
-				.append("/soccerseasons/")
+				.append("soccerseasons/")
 				.append(soccerSeasonId)
 				.append("/leagueTable");
 		if (matchday > 0) {
 			request.append("?matchday=").append(String.valueOf(matchday));
 		}
+		return connection.request(request.toString());
+	}
+
+	public static String getTeam(Context context, int teamId) {
+		Connection connection = getConnection(context);
+		StringBuilder request = new StringBuilder()
+				.append(getBaseUri())
+				.append("teams/")
+				.append(String.valueOf(teamId));
 		return connection.request(request.toString());
 	}
 

@@ -10,7 +10,7 @@ import com.openarena.util.DBConst;
 public class SQLHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "openarena.ApplicationDB";
-	private static final int DB_VERSION = 2;
+	private static final int DB_VERSION = 3;
 
 	private static volatile SQLHelper sInstance;
 
@@ -74,6 +74,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 				DBConst.GOAL_DIFFERENCE + " INTEGER";
 
 		String params5 = DBConst.ID + " INTEGER NOT NULL," +
+				DBConst.IS_FAVORITE + " INTEGER," +
 				DBConst.NAME + " TEXT," +
 				DBConst.SHORT_NAME + " TEXT," +
 				DBConst.SQUAD_MARKET_VALUE + " TEXT," +

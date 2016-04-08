@@ -46,6 +46,7 @@ public class DBConst {
 	public static final String GOAL_AGAINST = "goal_against";
 	public static final String GOAL_DIFFERENCE = "goal_difference";
 
+	public static final String IS_FAVORITE = "is_favorite";
 	public static final String NAME = "name";
 	public static final String SHORT_NAME = "short_name";
 	public static final String SQUAD_MARKET_VALUE = "squad_market_value";

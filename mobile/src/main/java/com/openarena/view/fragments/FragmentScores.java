@@ -29,13 +29,12 @@ import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
-import com.openarena.util.L;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
 
 public class FragmentScores extends Fragment
-		implements Controller.OnGetScores, OnItemClickListener, View.OnClickListener {
+		implements Controller.OnGetScores, OnItemClickListener {
 
 	public static final String TAG = "FragmentScores";
 
@@ -189,23 +188,6 @@ public class FragmentScores extends Fragment
 	@Override
 	public void onItemLongClick(View view, int position) {
 
-	}
-
-	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		switch (id) {
-			case R.id.played_games:
-
-				break;
-
-			case R.id.goals:
-
-				break;
-
-			default:
-				L.e("default id");
-		}
 	}
 
 	private void setupUI(View view) {
