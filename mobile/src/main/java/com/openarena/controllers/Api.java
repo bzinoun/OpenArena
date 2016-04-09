@@ -64,6 +64,16 @@ public class Api {
 		return connection.request(request.toString());
 	}
 
+	public static String getPlayers(Context context, int teamId) {
+		Connection connection = getConnection(context);
+		StringBuilder request = new StringBuilder()
+				.append(getBaseUri())
+				.append("teams/")
+				.append(String.valueOf(teamId))
+				.append("/players");
+		return connection.request(request.toString());
+	}
+
 	private static Connection getConnection(Context context) {
 		return new Connection.Creator()
 				.putHeader("X-Auth-Token", context.getString(R.string.api_key))

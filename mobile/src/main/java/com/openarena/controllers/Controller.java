@@ -2,20 +2,18 @@ package com.openarena.controllers;
 
 import android.content.Context;
 import android.os.Handler;
-
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
+import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.util.Const;
 import com.openarena.util.L;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -326,6 +324,60 @@ public class Controller {
 		});
 	}
 
+	public void getPlayers(
+			final Context context,
+			final int teamId,
+			final OnGetPlayers callback) {
+		sExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				final ArrayList<Player> dbList = DBManager.getPlayerList(teamId);
+				if (dbList != null) mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onSuccess(dbList);
+					}
+				});
+				String result = Api.getPlayers(context, teamId);
+				if (result != null) {
+					try {
+						JSONArray array = new JSONObject(result).getJSONArray("players");
+						final ArrayList<Player> players = Player.parseArray(teamId, array);
+						if (players != null && !players.isEmpty()) {
+							DBManager.setPlayersList(players);
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									callback.onSuccess(players);
+								}
+							});
+						}
+						else mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError(Const.ERROR_CODE_RESULT_NULL);
+							}
+						});
+					} catch (JSONException e) {
+						L.e(Controller.class, e.toString());
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
+							}
+						});
+					}
+				}
+				else mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onError(Const.ERROR_CODE_RESULT_NULL);
+					}
+				});
+			}
+		});
+	}
+
 	public interface OnGetLeagues extends OnResultListener<ArrayList<League>> {}
 
 	public interface OnGetFixtures extends OnResultListener<ArrayList<Fixture>> {}
@@ -335,5 +387,7 @@ public class Controller {
 	public interface OnGetScores extends OnResultListener<ArrayList<Scores>> {}
 
 	public interface OnGetTeam extends OnResultListener<Team> {}
+
+	public interface OnGetPlayers extends OnResultListener<ArrayList<Player>> {}
 
 }

@@ -18,7 +18,8 @@ public class Fixture implements Parcelable {
 
 	public static final int FINISHED = 0;
 	public static final int TIMED = 1;
-	public static final int INDEFINITE = 2;
+	public static final int SCHEDULED = 2;
+	public static final int INDEFINITE = 4;
 
 	private int mID;
 	private int mSoccerSeasonID;
@@ -146,8 +147,22 @@ public class Fixture implements Parcelable {
 			}
 			String status = o.optString("status", null);
 			if (status != null) {
-				if (status.equals("FINISHED")) fixture.mStatus = FINISHED;
-				else if (status.equals("TIMED")) fixture.mStatus = TIMED;
+				switch (status) {
+					case "FINISHED":
+						fixture.mStatus = FINISHED;
+						break;
+
+					case "TIMED":
+						fixture.mStatus = TIMED;
+						break;
+
+					case "SCHEDULED":
+						fixture.mStatus = SCHEDULED;
+						break;
+
+					default:
+						fixture.mStatus = INDEFINITE;
+				}
 			}
 			fixture.mMatchday = o.optInt("matchday");
 			fixture.mHomeTeamID = o.optInt("homeTeamId");
@@ -218,11 +233,11 @@ public class Fixture implements Parcelable {
 	}
 
 	public Integer getGoalsHomeTeam() {
-		return mGoalsHomeTeam;
+		return mGoalsHomeTeam >= 0 ? mGoalsHomeTeam : 0;
 	}
 
 	public Integer getGoalsAwayTeam() {
-		return mGoalsAwayTeam;
+		return mGoalsAwayTeam >= 0 ? mGoalsAwayTeam : 0;
 	}
 
 	@Override

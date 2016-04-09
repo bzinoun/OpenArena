@@ -16,6 +16,7 @@
 	<color name="fixtures_list_background">#FAFAFA</color>
 	<color name="fixtures_list_background_pressed">#E0E0E0</color>
 	<color name="fixtures_list_item_result_background">#A5D6A7</color>
+	<color name="fixtures_list_item_result_scheduled_background">#81D4FA</color>
 	<color name="fixtures_list_item_header_background">#EEEEEE</color>
 
 	<color name="fixture_details_result_background">#FFD740</color>

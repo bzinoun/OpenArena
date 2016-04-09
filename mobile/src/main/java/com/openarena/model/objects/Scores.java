@@ -68,7 +68,7 @@ public class Scores implements Parcelable {
 			scores = new Scores();
 			scores.mSoccerSeasonID = scoresCursor.getInt(col_soccerSeasonId);
 			scores.mRank = scoresCursor.getInt(col_rank);
-			scores.mTeam= scoresCursor.getString(col_team);
+			scores.mTeam = scoresCursor.getString(col_team);
 			scores.mTeamId = scoresCursor.getInt(col_teamId);
 			scores.mPlayedGames = scoresCursor.getInt(col_playedGames);
 			scores.mCrestURL = scoresCursor.getString(col_crestURL);
@@ -98,7 +98,7 @@ public class Scores implements Parcelable {
 				Scores scores = new Scores();
 				scores.mSoccerSeasonID = scoresCursor.getInt(col_soccerSeasonId);
 				scores.mRank = scoresCursor.getInt(col_rank);
-				scores.mTeam= scoresCursor.getString(col_team);
+				scores.mTeam = scoresCursor.getString(col_team);
 				scores.mTeamId = scoresCursor.getInt(col_teamId);
 				scores.mPlayedGames = scoresCursor.getInt(col_playedGames);
 				scores.mCrestURL = scoresCursor.getString(col_crestURL);
@@ -119,7 +119,7 @@ public class Scores implements Parcelable {
 			Scores scores = new Scores();
 			scores.mSoccerSeasonID = soccerSeasonId;
 			scores.mRank = o.optInt("rank");
-			scores.mTeam= o.optString("team");
+			scores.mTeam = o.optString("team");
 			scores.mTeamId = o.optInt("teamId");
 			scores.mPlayedGames = o.optInt("playedGames");
 			scores.mCrestURL = o.optString("crestURI");
@@ -133,7 +133,7 @@ public class Scores implements Parcelable {
 	}
 
 	@Nullable
-	public static ArrayList<Scores> parseArray(int soccerSeasonId,JSONArray array) {
+	public static ArrayList<Scores> parseArray(int soccerSeasonId, JSONArray array) {
 		if (array != null) {
 			ArrayList<Scores> list = new ArrayList<>();
 			int count = array.length();

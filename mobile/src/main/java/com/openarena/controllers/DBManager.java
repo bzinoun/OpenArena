@@ -9,6 +9,7 @@ import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
 import com.openarena.model.objects.League;
+import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.util.DBConst;
@@ -64,6 +65,17 @@ public class DBManager {
 		return list;
 	}
 
+	@Nullable
+	public static ArrayList<Player> getPlayerList(int teamId) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_PLAYERS,
+				new String[] {DBConst.TEAM_ID},
+				new String[] {String.valueOf(teamId)});
+		ArrayList<Player> list = Player.parseArray(cursor);
+		if (cursor != null) cursor.close();
+		return list;
+	}
+
 	public static League getLeague(int id) {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_LEAGUES,
@@ -106,12 +118,22 @@ public class DBManager {
 
 	public static Team getTeam(int team_id) {
 		Cursor cursor = sSQLHelper.getAll(
-				DBConst.TABLE_TEAM,
+				DBConst.TABLE_TEAMS,
 				new String[] {DBConst.ID},
 				new String[] {String.valueOf(team_id)});
 		Team team = Team.parse(cursor);
 		if (cursor != null) cursor.close();
 		return team;
+	}
+
+	public static Player getPlayer(int player_id) {
+		Cursor cursor = sSQLHelper.getAll(
+				DBConst.TABLE_PLAYERS,
+				new String[] {DBConst.ID},
+				new String[] {String.valueOf(player_id)});
+		Player player = Player.parse(cursor);
+		if (cursor != null) cursor.close();
+		return player;
 	}
 
 	public static void setLeaguesList(ArrayList<League> list) {
@@ -134,6 +156,14 @@ public class DBManager {
 		if (list != null && !list.isEmpty()) {
 			for (Scores scores : list) {
 				setScores(scores);
+			}
+		}
+	}
+
+	public static void setPlayersList(ArrayList<Player> list) {
+		if (list != null && !list.isEmpty()) {
+			for (Player player : list) {
+				setPlayer(player);
 			}
 		}
 	}
@@ -270,17 +300,47 @@ public class DBManager {
 			data.put(DBConst.CREST_URL, team.getCrestURL());
 
 			Cursor cursor = sSQLHelper.getAll(
-					DBConst.TABLE_TEAM,
+					DBConst.TABLE_TEAMS,
 					new String[] {DBConst.ID},
 					new String[] {String.valueOf(team.getID())});
 			if (cursor.moveToFirst()) {
 				sSQLHelper.update(
-						DBConst.TABLE_TEAM,
+						DBConst.TABLE_TEAMS,
 						data, new String[] {DBConst.ID},
 						new String[] {String.valueOf(team.getID())});
 			}
 			else {
-				sSQLHelper.insert(DBConst.TABLE_TEAM, data);
+				sSQLHelper.insert(DBConst.TABLE_TEAMS, data);
+			}
+			cursor.close();
+		}
+	}
+
+	public static void setPlayer(Player player) {
+		if (player != null) {
+			ContentValues data = new ContentValues();
+			data.put(DBConst.TEAM_ID, player.getTeamID());
+			data.put(DBConst.ID, player.getID());
+			data.put(DBConst.NAME, player.getName());
+			data.put(DBConst.POSITION, player.getPosition());
+			data.put(DBConst.JERSEY_NUMBER, player.getJerseyNumber());
+			data.put(DBConst.DATE_OF_BIRTH, player.getDateOfBirth());
+			data.put(DBConst.NATIONALITY, player.getNationality());
+			data.put(DBConst.CONTRACT_UNTIL, player.getContractUntil());
+			data.put(DBConst.MARKET_VALUE, player.getMarketValue());
+
+			Cursor cursor = sSQLHelper.getAll(
+					DBConst.TABLE_PLAYERS,
+					new String[] {DBConst.ID},
+					new String[] {String.valueOf(player.getID())});
+			if (cursor.moveToFirst()) {
+				sSQLHelper.update(
+						DBConst.TABLE_PLAYERS,
+						data, new String[] {DBConst.ID},
+						new String[] {String.valueOf(player.getID())});
+			}
+			else {
+				sSQLHelper.insert(DBConst.TABLE_PLAYERS, data);
 			}
 			cursor.close();
 		}
