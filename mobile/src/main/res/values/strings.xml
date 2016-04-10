@@ -28,9 +28,13 @@
 	<string name="scores_head_points">P</string>
 	<string name="scores_sort_dialog_title">Categories</string>
 
+	<string name="team_button_fixtures">Fixtures</string>
+	<string name="team_button_players">Players</string>
+
 	<string name="option_refresh">Refresh</string>
 	<string name="option_sort">Sort</string>
 	<string name="option_score_table">Score table</string>
+
 	<string name="context_head_select_matchday">Select matchday</string>
 
 	<!-- CONST resources -->

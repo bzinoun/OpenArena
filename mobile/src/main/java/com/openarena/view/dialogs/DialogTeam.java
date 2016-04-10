@@ -1,17 +1,12 @@
-package com.openarena.view.fragments;
+package com.openarena.view.dialogs;
 
-import android.app.Fragment;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,9 +20,9 @@ import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.util.UI;
 
-public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
+public class DialogTeam extends DialogFragment implements Controller.OnGetTeam {
 
-	public static final String TAG = "FragmentTeam";
+	public static final String TAG = "DialogTeam";
 
 	private FrameLayout mProgressContent;
 	private LinearLayout mErrorContent;
@@ -36,14 +31,15 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 	private TextView mName;
 	private TextView mShortName;
 	private TextView mSquadMarketValue;
-	private Snackbar mSnackbar;
+	private Button mFixtures;
+	private Button mPlayers;
 	private Controller mController;
 	private Scores mScores;
 	private Team mTeam;
 	private boolean mIsShow;
 
-	public static FragmentTeam getInstance(@Nullable Bundle data) {
-		FragmentTeam fragment = new FragmentTeam();
+	public static DialogTeam getInstance(@Nullable Bundle data) {
+		DialogTeam fragment = new DialogTeam();
 		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
 	}
@@ -51,6 +47,7 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setStyle(DialogTeam.STYLE_NO_TITLE, R.style.AppTheme_AlertDialog);
 		setHasOptionsMenu(true);
 		if (mController == null) mController = Controller.getInstance();
 		if (mScores == null) mScores = getArguments().getParcelable("scores");
@@ -61,7 +58,7 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_team, container, false);
+		View view = inflater.inflate(R.layout.dialog_team, container, false);
 		setupUI(view);
 		showContent();
 		mIsShow = true;
@@ -78,10 +75,8 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 		if (mName != null) mName = null;
 		if (mShortName != null) mShortName = null;
 		if (mSquadMarketValue != null) mSquadMarketValue = null;
-		if (mSnackbar != null) {
-			mSnackbar.dismiss();
-			mSnackbar = null;
-		}
+		if (mFixtures != null) mFixtures = null;
+		if (mPlayers != null) mPlayers = null;
 		mIsShow = false;
 	}
 
@@ -100,47 +95,11 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_team, menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		switch (id) {
-			case R.id.action_refresh:
-				loadData();
-				break;
-
-			case R.id.action_score_table:
-				Snackbar.make(getActivity().findViewById(R.id.main_container), "score table", Snackbar.LENGTH_SHORT).show();
-				break;
-
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
-
-	@Override
 	public void onError(int code) {
 		if (mIsShow) {
-			UI.hide(mEmptyContent, mProgressContent, mIcon, mName, mShortName, mSquadMarketValue);
+			UI.hide(mEmptyContent, mProgressContent, mIcon, mName,
+					mShortName, mSquadMarketValue, mFixtures, mPlayers);
 			UI.show(mErrorContent);
-			mSnackbar = Snackbar.make(
-					getActivity().findViewById(R.id.main_container),
-					R.string.snackbar_result_null_text,
-					Snackbar.LENGTH_INDEFINITE)
-					.setAction(
-							R.string.snackbar_result_null_action,
-							new View.OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									loadData();
-								}
-							}
-					);
-			mSnackbar.show();
 		}
 	}
 
@@ -149,7 +108,7 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 		if (mIsShow) {
 			mTeam = data;
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
-			UI.show(mIcon, mName, mShortName, mSquadMarketValue);
+			UI.show(mIcon, mName, mShortName, mSquadMarketValue, mFixtures, mPlayers);
 			ImageLoader.getInstance().displayImage(
 					mTeam.getCrestURL(),
 					mIcon,
@@ -160,15 +119,10 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 			mName.setText(mTeam.getName());
 			mShortName.setText(mTeam.getShortName());
 			mSquadMarketValue.setText(mTeam.getSquadMarketValue());
-			if (mSnackbar != null) mSnackbar.dismiss();
 		}
 	}
 
 	private void setupUI(View view) {
-		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-		if (toolbar != null) {
-			toolbar.setTitle(mScores.getTeam());
-		}
 		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
 		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
 		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
@@ -176,14 +130,17 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 		mName = (TextView) view.findViewById(R.id.name);
 		mShortName = (TextView) view.findViewById(R.id.short_name);
 		mSquadMarketValue = (TextView) view.findViewById(R.id.squad_market_value);
-		UI.hide(mErrorContent, mEmptyContent, mProgressContent, mIcon, mName, mShortName, mSquadMarketValue);
+		mFixtures = (Button) view.findViewById(R.id.button_fixtures);
+		mPlayers = (Button) view.findViewById(R.id.button_players);
+		UI.hide(mErrorContent, mEmptyContent, mProgressContent,
+				mIcon, mName, mShortName, mSquadMarketValue, mFixtures, mPlayers);
 	}
 
 	private void showContent() {
 		if (mTeam == null) loadData();
 		else {
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
-			UI.show(mIcon, mName, mShortName, mSquadMarketValue);
+			UI.show(mIcon, mName, mShortName, mSquadMarketValue, mFixtures, mPlayers);
 			ImageLoader.getInstance().displayImage(mTeam.getCrestURL(), mIcon);
 			mName.setText(mTeam.getName());
 			mShortName.setText(mTeam.getShortName());
@@ -192,7 +149,8 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 	}
 
 	private void loadData() {
-		UI.hide(mErrorContent, mEmptyContent, mIcon, mName, mShortName, mSquadMarketValue);
+		UI.hide(mErrorContent, mEmptyContent, mIcon, mName,
+				mShortName, mSquadMarketValue, mFixtures, mPlayers);
 		UI.show(mProgressContent);
 		if (mController != null) mController.getTeam(getActivity(), mScores.getTeamId(), this);
 	}

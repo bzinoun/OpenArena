@@ -64,22 +64,32 @@
 	</RelativeLayout>
 
 	<LinearLayout
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		android:orientation="horizontal">
 
-		<TextView
+		<Button
+			android:id="@+id/button_fixtures"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:padding="16dp"
-			tools:text="Fixtures"/>
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			android:background="@drawable/team_button_background"
+			android:text="@string/team_button_fixtures"
+			android:textColor="@color/team_button"/>
 
-		<TextView
+		<Button
+			android:id="@+id/button_players"
 			android:layout_width="wrap_content"
-			android:padding="16dp"
 			android:layout_height="wrap_content"
-			tools:text="Players"/>
+			android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+			android:background="@drawable/team_button_background"
+			android:text="@string/team_button_players"
+			android:textColor="@color/team_button"/>
 
 	</LinearLayout>
 
