@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.openarena.R;
 import com.openarena.controllers.Controller;
@@ -149,7 +150,13 @@ public class FragmentTeam extends Fragment implements Controller.OnGetTeam {
 			mTeam = data;
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 			UI.show(mIcon, mName, mShortName, mSquadMarketValue);
-			ImageLoader.getInstance().displayImage(mTeam.getCrestURL(), mIcon);
+			ImageLoader.getInstance().displayImage(
+					mTeam.getCrestURL(),
+					mIcon,
+					new DisplayImageOptions.Builder()
+							.showImageOnFail(R.drawable.ic_player)
+							.build()
+			);
 			mName.setText(mTeam.getName());
 			mShortName.setText(mTeam.getShortName());
 			mSquadMarketValue.setText(mTeam.getSquadMarketValue());
