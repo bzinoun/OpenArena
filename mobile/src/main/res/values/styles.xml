@@ -18,10 +18,23 @@
 		<item name="android:textColorSecondary">@color/toolbar_title</item>
 	</style>
 
-	<style name="AppTheme.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+	<style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorAccent">@color/accent</item>
 		<item name="android:textColorPrimary">@color/primary</item>
 		<item name="android:background">@color/window_background</item>
+	</style>
+
+	<style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+		<item name="android:paddingLeft">8dp</item>
+		<item name="android:paddingRight">8dp</item>
+		<item name="android:layout_marginLeft">8dp</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">36dp</item>
+		<item name="android:gravity">center</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:minWidth">88dp</item>
+		<item name="android:textColor">@color/button_text</item>
+		<item name="android:background">@drawable/button_background</item>
 	</style>
 
 </resources>

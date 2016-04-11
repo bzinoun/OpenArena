@@ -9,5 +9,7 @@ public class Const {
 	public static final int EVENT_CODE_SELECT_LEAGUE = 1;
 	public static final int EVENT_CODE_SELECT_FIXTURE = 2;
 	public static final int EVENT_CODE_SELECT_SCORES = 4;
-	public static final int EVENT_CODE_SHOW_SCORES_TABLE = 8;
+	public static final int EVENT_CODE_SELECT_FIXTURES = 8;
+	public static final int EVENT_CODE_SELECT_PLAYERS = 16;
+	public static final int EVENT_CODE_SHOW_SCORES_TABLE = 32;
 }

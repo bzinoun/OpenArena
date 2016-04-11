@@ -30,7 +30,8 @@
 	<color name="scores_dialog_item_background">@color/primary</color>
 	<color name="scores_dialog_item_background_pressed">@color/primary_dark</color>
 
-	<color name="team_button">#FFF</color>
+	<color name="button_text">@color/primary</color>
+	<color name="button_pressed">#999999</color>
 
 	<color name="window_background">#E0E0E0</color>
 	<color name="window_background_pressed">#CACACA</color>

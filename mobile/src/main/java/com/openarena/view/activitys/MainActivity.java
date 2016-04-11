@@ -89,19 +89,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				data.putParcelable("scores", event.getScores());
 				DialogTeam dialog = DialogTeam.getInstance(data);
 				dialog.show(mFragmentManager, DialogTeam.TAG);
-				/*if (mFragmentManager.findFragmentByTag(DialogTeam.TAG) == null) {
-					Bundle data = new Bundle();
-					data.putParcelable("scores", event.getScores());
-					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, DialogTeam.getInstance(data))
-							.addToBackStack(DialogTeam.TAG)
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-				}*/
 				break;
 
 			default:
-				L.e(MainActivity.class, "default value");
+				L.e(MainActivity.class, "new event code");
 		}
 	}
 

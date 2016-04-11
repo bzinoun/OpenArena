@@ -246,7 +246,7 @@ public class FragmentScores extends Fragment
 				mDialog.dismiss();
 			}
 		});
-		mDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog)
+		mDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog)
 				.setTitle(getString(R.string.scores_sort_dialog_title))
 				.setView(view)
 				.create();

@@ -1,95 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
-
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:paddingBottom="8dp"
-		android:paddingTop="8dp">
-
-		<ImageView
-			android:id="@+id/icon"
-			android:layout_width="80dp"
-			android:layout_height="80dp"
-			android:layout_marginLeft="16dp"
-			android:layout_marginStart="16dp"
-			android:src="@drawable/ic_sad_cup"/>
-
-		<TextView
-			android:id="@+id/name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_toEndOf="@+id/icon"
-			android:layout_toRightOf="@+id/icon"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:textColor="#444"
-			android:textSize="24sp"
-			tools:text="Liverpool"/>
-
-		<TextView
-			android:id="@+id/short_name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignLeft="@+id/name"
-			android:layout_alignStart="@+id/name"
-			android:layout_below="@+id/name"
-			android:layout_toEndOf="@+id/icon"
-			android:layout_toRightOf="@+id/icon"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:textColor="#888"
-			android:textSize="16sp"
-			tools:text="Liverpool"/>
-
-		<TextView
-			android:id="@+id/squad_market_value"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/short_name"
-			android:layout_toEndOf="@+id/icon"
-			android:layout_toRightOf="@+id/icon"
-			android:gravity="end"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:textColor="#AAA"
-			android:textSize="16sp"
-			tools:text="100,100,900 $"/>
-
-	</RelativeLayout>
+	android:minWidth="280dp"
+	android:minHeight="100dp"
+	android:layout_height="match_parent">
 
 	<LinearLayout
-		android:paddingTop="8dp"
-		android:paddingBottom="8dp"
+		android:id="@+id/content"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center_horizontal"
-		android:orientation="horizontal">
+		android:orientation="vertical">
 
-		<Button
-			android:id="@+id/button_fixtures"
-			android:layout_width="wrap_content"
+		<RelativeLayout
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp"
-			android:background="@drawable/team_button_background"
-			android:text="@string/team_button_fixtures"
-			android:textColor="@color/team_button"/>
+			android:padding="24dp">
 
-		<Button
-			android:id="@+id/button_players"
-			android:layout_width="wrap_content"
+			<ImageView
+				android:id="@+id/icon"
+				android:layout_width="80dp"
+				android:layout_height="80dp"
+				android:src="@drawable/ic_sad_cup"/>
+
+			<TextView
+				android:id="@+id/name"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_toEndOf="@+id/icon"
+				android:layout_toRightOf="@+id/icon"
+				android:paddingLeft="16dp"
+				android:textColor="#444"
+				android:textSize="20sp"
+				tools:text="Liverpool"/>
+
+			<TextView
+				android:id="@+id/short_name"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/name"
+				android:layout_alignStart="@+id/name"
+				android:layout_below="@+id/name"
+				android:layout_toEndOf="@+id/icon"
+				android:layout_toRightOf="@+id/icon"
+				android:paddingLeft="16dp"
+				android:paddingRight="16dp"
+				android:textColor="#888"
+				android:textSize="16sp"
+				tools:text="Liverpool"/>
+
+			<TextView
+				android:id="@+id/squad_market_value"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/short_name"
+				android:layout_toEndOf="@+id/icon"
+				android:layout_toRightOf="@+id/icon"
+				android:gravity="end"
+				android:paddingLeft="16dp"
+				android:paddingRight="16dp"
+				android:textColor="#AAA"
+				android:textSize="16sp"
+				tools:text="100,100,900 $"/>
+
+		</RelativeLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp"
-			android:background="@drawable/team_button_background"
-			android:text="@string/team_button_players"
-			android:textColor="@color/team_button"/>
+			android:gravity="center_horizontal|end"
+			android:orientation="horizontal"
+			android:padding="8dp">
+
+			<Button
+				android:id="@+id/button_fixtures"
+				style="@style/AppTheme.Button"
+				android:text="@string/team_button_fixtures"/>
+
+			<Button
+				android:id="@+id/button_players"
+				style="@style/AppTheme.Button"
+				android:text="@string/team_button_players"/>
+
+		</LinearLayout>
 
 	</LinearLayout>
 
@@ -99,4 +93,4 @@
 
 	<include layout="@layout/content_error"/>
 
-</LinearLayout>
+</FrameLayout>
