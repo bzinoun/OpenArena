@@ -32,7 +32,7 @@
 				android:layout_toRightOf="@+id/icon"
 				android:paddingLeft="16dp"
 				android:textColor="#444"
-				android:textSize="20sp"
+				android:textSize="18sp"
 				tools:text="Liverpool"/>
 
 			<TextView
@@ -61,7 +61,7 @@
 				android:paddingLeft="16dp"
 				android:paddingRight="16dp"
 				android:textColor="#AAA"
-				android:textSize="16sp"
+				android:textSize="14sp"
 				tools:text="100,100,900 $"/>
 
 		</RelativeLayout>
