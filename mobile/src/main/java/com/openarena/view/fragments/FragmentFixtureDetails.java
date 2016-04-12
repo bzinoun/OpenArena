@@ -144,12 +144,12 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 
 	@Override
 	public void onItemClick(View view, int position) {
-
+		setupHeader(mAdapter.getItem(position));
 	}
 
 	@Override
 	public void onItemLongClick(View view, int position) {
-
+		
 	}
 
 	@Override
@@ -226,22 +226,26 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	}
 
 	private void showContent() {
-		mHome.setText(mFixture.getHomeTeamName());
-		mAway.setText(mFixture.getAwayTeamName());
-		if (mFixture.getStatus() != Fixture.TIMED) {
-			mResult.setText(String.format(
-					getString(R.string.fixture_details_result),
-					mFixture.getGoalsHomeTeam(),
-					mFixture.getGoalsAwayTeam()));
-		}
-		else {
-			mResult.setText(getString(R.string.fixture_details_empty_result));
-		}
+		setupHeader(mFixture);
 		if (mAdapter == null) loadData();
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
 			UI.show(mRecyclerView, mHeader);
 			mRecyclerView.setAdapter(mAdapter);
+		}
+	}
+
+	private void setupHeader(Fixture fixture) {
+		mHome.setText(fixture.getHomeTeamName());
+		mAway.setText(fixture.getAwayTeamName());
+		if (fixture.getStatus() != Fixture.TIMED) {
+			mResult.setText(String.format(
+					getString(R.string.fixture_details_result),
+					fixture.getGoalsHomeTeam(),
+					fixture.getGoalsAwayTeam()));
+		}
+		else {
+			mResult.setText(getString(R.string.fixture_details_empty_result));
 		}
 	}
 
