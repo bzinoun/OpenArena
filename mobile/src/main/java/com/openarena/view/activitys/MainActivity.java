@@ -15,6 +15,7 @@ import com.openarena.view.fragments.FragmentFixtureDetails;
 import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentFixturesTeam;
 import com.openarena.view.fragments.FragmentLeagues;
+import com.openarena.view.fragments.FragmentPlayers;
 import com.openarena.view.fragments.FragmentScores;
 import com.openarena.view.dialogs.DialogTeam;
 
@@ -93,7 +94,15 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SELECT_PLAYERS:
-				L.i(MainActivity.class, "EVENT_CODE_SELECT_PLAYERS");
+				if (mFragmentManager.findFragmentByTag(FragmentPlayers.TAG) == null) {
+					Bundle data5 = new Bundle();
+					data5.putParcelable("team", event.getTeam());
+					mFragmentManager.beginTransaction()
+							.replace(R.id.main_container, FragmentPlayers.getInstance(data5))
+							.addToBackStack(FragmentPlayers.TAG)
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+				}
 				break;
 
 			case Const.EVENT_CODE_SELECT_FIXTURES:
@@ -109,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			default:
-				L.e(MainActivity.class, "new event code");
+				L.e(MainActivity.class, "new event code->" + code);
 		}
 	}
 

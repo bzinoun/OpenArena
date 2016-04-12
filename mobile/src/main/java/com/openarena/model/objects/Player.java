@@ -84,14 +84,14 @@ public class Player implements Parcelable {
 	public static ArrayList<Player> parseArray(Cursor playerCursor) {
 		if (playerCursor.moveToFirst()) {
 			int col_teamId = playerCursor.getColumnIndex(DBConst.TEAM_ID);
-			int col_id = playerCursor.getColumnIndex(DBConst.SOCCER_SEASON_ID);
-			int col_name = playerCursor.getColumnIndex(DBConst.RANK);
-			int col_position = playerCursor.getColumnIndex(DBConst.TEAM);
-			int col_jerseyNumber = playerCursor.getColumnIndex(DBConst.TEAM_ID);
-			int col_dateOfBirth = playerCursor.getColumnIndex(DBConst.PLAYED_GAMES);
-			int col_nationality = playerCursor.getColumnIndex(DBConst.CREST_URL);
-			int col_contractUntil = playerCursor.getColumnIndex(DBConst.POINTS);
-			int col_marketValue = playerCursor.getColumnIndex(DBConst.GOALS);
+			int col_id = playerCursor.getColumnIndex(DBConst.ID);
+			int col_name = playerCursor.getColumnIndex(DBConst.NAME);
+			int col_position = playerCursor.getColumnIndex(DBConst.POSITION);
+			int col_jerseyNumber = playerCursor.getColumnIndex(DBConst.JERSEY_NUMBER);
+			int col_dateOfBirth = playerCursor.getColumnIndex(DBConst.DATE_OF_BIRTH);
+			int col_nationality = playerCursor.getColumnIndex(DBConst.NATIONALITY);
+			int col_contractUntil = playerCursor.getColumnIndex(DBConst.CONTRACT_UNTIL);
+			int col_marketValue = playerCursor.getColumnIndex(DBConst.MARKET_VALUE);
 			ArrayList<Player> list = new ArrayList<>();
 			do {
 				Player player = new Player();

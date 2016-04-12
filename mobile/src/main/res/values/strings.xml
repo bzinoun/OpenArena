@@ -35,6 +35,8 @@
 	<string name="option_sort">Sort</string>
 	<string name="option_score_table">Score table</string>
 
+	<string name="players_title">Players</string>
+
 	<string name="context_head_select_matchday">Select matchday</string>
 
 	<!-- CONST resources -->

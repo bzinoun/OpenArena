@@ -324,7 +324,7 @@ public class Controller {
 		});
 	}
 
-	public void getPlayers(
+	public void getListOfPlayers(
 			final Context context,
 			final int teamId,
 			final OnGetPlayers callback) {
