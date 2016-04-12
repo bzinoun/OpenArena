@@ -22,7 +22,7 @@
 				android:id="@+id/icon"
 				android:layout_width="80dp"
 				android:layout_height="80dp"
-				android:src="@drawable/ic_sad_cup"/>
+				android:src="@drawable/ic_player"/>
 
 			<TextView
 				android:id="@+id/name"
@@ -61,7 +61,7 @@
 				android:paddingLeft="16dp"
 				android:paddingRight="16dp"
 				android:textColor="#AAA"
-				android:textSize="14sp"
+				android:textSize="12sp"
 				tools:text="100,100,900 $"/>
 
 		</RelativeLayout>

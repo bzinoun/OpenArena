@@ -122,9 +122,9 @@ public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, 
 							.showImageOnFail(R.drawable.ic_player)
 							.build()
 			);
-			mName.setText(mTeam.getName());
-			mShortName.setText(mTeam.getShortName());
-			mSquadMarketValue.setText(mTeam.getSquadMarketValue());
+			if (mTeam.getName() != null) mName.setText(mTeam.getName());
+			if (mTeam.getShortName() != null) mShortName.setText(mTeam.getShortName());
+			if (mTeam.getSquadMarketValue() != null) mSquadMarketValue.setText(mTeam.getSquadMarketValue());
 		}
 	}
 
@@ -133,12 +133,12 @@ public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, 
 		int id = v.getId();
 		switch (id) {
 			case R.id.button_players:
-				mListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_PLAYERS));
+				if (mListener != null) mListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_PLAYERS));
 				dismiss();
 				break;
 
 			case R.id.button_fixtures:
-				mListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURES));
+				if (mListener != null) mListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURES));
 				dismiss();
 				break;
 
@@ -168,10 +168,16 @@ public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, 
 		else {
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 			UI.show(mContent);
-			ImageLoader.getInstance().displayImage(mTeam.getCrestURL(), mIcon);
-			mName.setText(mTeam.getName());
-			mShortName.setText(mTeam.getShortName());
-			mSquadMarketValue.setText(mTeam.getSquadMarketValue());
+			ImageLoader.getInstance().displayImage(
+					mTeam.getCrestURL(),
+					mIcon,
+					new DisplayImageOptions.Builder()
+							.showImageOnFail(R.drawable.ic_player)
+							.build()
+			);
+			if (mTeam.getName() != null) mName.setText(mTeam.getName());
+			if (mTeam.getShortName() != null) mShortName.setText(mTeam.getShortName());
+			if (mTeam.getSquadMarketValue() != null) mSquadMarketValue.setText(mTeam.getSquadMarketValue());
 		}
 	}
 
