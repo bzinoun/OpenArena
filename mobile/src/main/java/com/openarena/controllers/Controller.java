@@ -338,7 +338,7 @@ public class Controller {
 						callback.onSuccess(dbList);
 					}
 				});
-				String result = Api.getPlayers(context, teamId);
+				String result = Api.getTeamPlayers(context, teamId);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("players");
@@ -356,6 +356,60 @@ public class Controller {
 							@Override
 							public void run() {
 								callback.onError(Const.ERROR_CODE_RESULT_NULL);
+							}
+						});
+					} catch (JSONException e) {
+						L.e(Controller.class, e.toString());
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError(Const.ERROR_CODE_PARSE_ERROR);
+							}
+						});
+					}
+				}
+				else mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						callback.onError(Const.ERROR_CODE_RESULT_NULL);
+					}
+				});
+			}
+		});
+	}
+
+	public void getListOfTeamFixtures(
+			final Context context,
+			final int teamId,
+			final OnGetFixtures callback) {
+		sExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+//				final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(soccerseasonId, matchday);
+//				if (dbList != null) mHandler.post(new Runnable() {
+//					@Override
+//					public void run() {
+//						callback.onSuccess(dbList);
+//					}
+//				});
+				String result = Api.getTeamFixtures(context, teamId);
+				if (result != null) {
+					try {
+						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
+						final ArrayList<Fixture> list = Fixture.parseArray(array);
+						if (list != null && !list.isEmpty()) {
+							DBManager.setFixturesList(list);
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									callback.onSuccess(list);
+								}
+							});
+						}
+						else mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onError(Const.ERROR_CODE_RESULT_EMPTY);
 							}
 						});
 					} catch (JSONException e) {

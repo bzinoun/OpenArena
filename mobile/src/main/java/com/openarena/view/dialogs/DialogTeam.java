@@ -61,7 +61,10 @@ public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, 
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(
+			LayoutInflater inflater,
+			ViewGroup container,
+			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.dialog_team, container, false);
 		setupUI(view);
 		if (mListener == null) mListener = (EventListener) getActivity();
@@ -124,7 +127,9 @@ public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, 
 			);
 			if (mTeam.getName() != null) mName.setText(mTeam.getName());
 			if (mTeam.getShortName() != null) mShortName.setText(mTeam.getShortName());
-			if (mTeam.getSquadMarketValue() != null) mSquadMarketValue.setText(mTeam.getSquadMarketValue());
+			if (mTeam.getSquadMarketValue() != null) {
+				mSquadMarketValue.setText(mTeam.getSquadMarketValue());
+			}
 		}
 	}
 
@@ -133,12 +138,20 @@ public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, 
 		int id = v.getId();
 		switch (id) {
 			case R.id.button_players:
-				if (mListener != null) mListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_PLAYERS));
+				if (mListener != null) {
+					mListener.onEvent(
+							new EventData(Const.EVENT_CODE_SELECT_PLAYERS).setTeam(mTeam)
+					);
+				}
 				dismiss();
 				break;
 
 			case R.id.button_fixtures:
-				if (mListener != null) mListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURES));
+				if (mListener != null) {
+					mListener.onEvent(
+							new EventData(Const.EVENT_CODE_SELECT_FIXTURES).setTeam(mTeam)
+					);
+				}
 				dismiss();
 				break;
 

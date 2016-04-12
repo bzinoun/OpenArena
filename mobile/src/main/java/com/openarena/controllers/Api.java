@@ -64,7 +64,24 @@ public class Api {
 		return connection.request(request.toString());
 	}
 
-	public static String getPlayers(Context context, int teamId) {
+	public static String getTeamFixtures(Context context, int teamId) {
+		return getTeamFixtures(context, teamId, null);
+	}
+
+	public static String getTeamFixtures(Context context, int teamId, @Nullable String filter) {
+		Connection connection = getConnection(context);
+		StringBuilder request = new StringBuilder()
+				.append(getBaseUri())
+				.append("teams/")
+				.append(String.valueOf(teamId))
+				.append("/fixtures");
+		if (filter != null) request.append("?")
+				.append(filter);
+		else request.append("?timeFrame=n7");
+		return connection.request(request.toString());
+	}
+
+	public static String getTeamPlayers(Context context, int teamId) {
 		Connection connection = getConnection(context);
 		StringBuilder request = new StringBuilder()
 				.append(getBaseUri())

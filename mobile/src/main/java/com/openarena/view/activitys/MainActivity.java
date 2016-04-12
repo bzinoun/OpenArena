@@ -13,6 +13,7 @@ import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.view.fragments.FragmentFixtureDetails;
 import com.openarena.view.fragments.FragmentFixtures;
+import com.openarena.view.fragments.FragmentFixturesTeam;
 import com.openarena.view.fragments.FragmentLeagues;
 import com.openarena.view.fragments.FragmentScores;
 import com.openarena.view.dialogs.DialogTeam;
@@ -50,10 +51,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		switch (code) {
 			case Const.EVENT_CODE_SELECT_LEAGUE:
 				if (mFragmentManager.findFragmentByTag(FragmentFixtures.TAG) == null) {
-					Bundle data = new Bundle();
-					data.putParcelable("league", event.getLeague());
+					Bundle data1 = new Bundle();
+					data1.putParcelable("league", event.getLeague());
 					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, FragmentFixtures.getInstance(data))
+							.replace(R.id.main_container, FragmentFixtures.getInstance(data1))
 							.addToBackStack(FragmentFixtures.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -62,10 +63,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 
 			case Const.EVENT_CODE_SELECT_FIXTURE:
 				if (mFragmentManager.findFragmentByTag(FragmentFixtureDetails.TAG) == null) {
-					Bundle data = new Bundle();
-					data.putParcelable("fixture", event.getFixture());
+					Bundle data2 = new Bundle();
+					data2.putParcelable("fixture", event.getFixture());
 					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, FragmentFixtureDetails.getInstance(data))
+							.replace(R.id.main_container, FragmentFixtureDetails.getInstance(data2))
 							.addToBackStack(FragmentFixtureDetails.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -74,10 +75,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 
 			case Const.EVENT_CODE_SHOW_SCORES_TABLE:
 				if (mFragmentManager.findFragmentByTag(FragmentScores.TAG) == null) {
-					Bundle data = new Bundle();
-					data.putParcelable("league", event.getLeague());
+					Bundle data3 = new Bundle();
+					data3.putParcelable("league", event.getLeague());
 					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, FragmentScores.getInstance(data))
+							.replace(R.id.main_container, FragmentScores.getInstance(data3))
 							.addToBackStack(FragmentScores.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -85,10 +86,26 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SELECT_SCORES:
-				Bundle data = new Bundle();
-				data.putParcelable("scores", event.getScores());
-				DialogTeam dialog = DialogTeam.getInstance(data);
+				Bundle data4 = new Bundle();
+				data4.putParcelable("scores", event.getScores());
+				DialogTeam dialog = DialogTeam.getInstance(data4);
 				dialog.show(mFragmentManager, DialogTeam.TAG);
+				break;
+
+			case Const.EVENT_CODE_SELECT_PLAYERS:
+				L.i(MainActivity.class, "EVENT_CODE_SELECT_PLAYERS");
+				break;
+
+			case Const.EVENT_CODE_SELECT_FIXTURES:
+				if (mFragmentManager.findFragmentByTag(FragmentFixturesTeam.TAG) == null) {
+					Bundle data6 = new Bundle();
+					data6.putParcelable("team", event.getTeam());
+					mFragmentManager.beginTransaction()
+							.replace(R.id.main_container, FragmentFixturesTeam.getInstance(data6))
+							.addToBackStack(FragmentFixturesTeam.TAG)
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+				}
 				break;
 
 			default:

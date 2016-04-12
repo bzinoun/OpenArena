@@ -3,10 +3,10 @@ package com.openarena.model.objects;
 public class EventData {
 
 	private int mCode;
-	private int mID;
 	private League mLeague;
 	private Fixture mFixture;
 	private Scores mScores;
+	private Team mTeam;
 
 	public EventData(int code) {
 		mCode = code;
@@ -14,10 +14,6 @@ public class EventData {
 
 	public int gecCode() {
 		return mCode;
-	}
-
-	public int getID() {
-		return mID;
 	}
 
 	public League getLeague() {
@@ -32,9 +28,8 @@ public class EventData {
 		return mScores;
 	}
 
-	public EventData setID(int id) {
-		mID = id;
-		return this;
+	public Team getTeam() {
+		return mTeam;
 	}
 
 	public EventData setLeague(League league) {
@@ -49,6 +44,11 @@ public class EventData {
 
 	public EventData setScores(Scores scores) {
 		mScores = scores;
+		return this;
+	}
+
+	public EventData setTeam(Team team) {
+		mTeam = team;
 		return this;
 	}
 
