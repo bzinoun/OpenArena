@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -18,6 +21,7 @@ import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.PlayersAdapter;
+import com.openarena.model.comparators.ComparatorPlayers;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.EventData;
@@ -53,6 +57,7 @@ public class FragmentPlayers extends Fragment
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 		if (mTeam == null) mTeam = getArguments().getParcelable("team");
 		if (savedInstanceState != null) {
 			ArrayList<Player> list = savedInstanceState.getParcelableArrayList("list");
@@ -107,6 +112,25 @@ public class FragmentPlayers extends Fragment
 	}
 
 	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_players, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		switch (id) {
+			case R.id.action_refresh:
+				loadData();
+				break;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+
+	@Override
 	public void onError(int code) {
 		if (mIsShow && (mAdapter == null || mAdapter.getList().isEmpty())) {
 			if (code == Const.ERROR_CODE_RESULT_EMPTY) {
@@ -140,6 +164,7 @@ public class FragmentPlayers extends Fragment
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 			UI.show(mRecyclerView);
 			if (mSnackbar != null) mSnackbar.dismiss();
+			ComparatorPlayers.sortByJerseyNumber(data);
 			if (mAdapter == null) {
 				mAdapter = new PlayersAdapter(data);
 				mRecyclerView.setAdapter(mAdapter);

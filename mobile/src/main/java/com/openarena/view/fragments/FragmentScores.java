@@ -229,28 +229,30 @@ public class FragmentScores extends Fragment
 	}
 
 	private void showSortDialog() {
-		View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_scores_sort, null, false);
-		view.findViewById(R.id.played_games).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ComparatorScores.sortByPlayedGames(mAdapter.getList());
-				mAdapter.notifyDataSetChanged();
-				mDialog.dismiss();
-			}
-		});
-		view.findViewById(R.id.goals).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ComparatorScores.sortByGoals(mAdapter.getList());
-				mAdapter.notifyDataSetChanged();
-				mDialog.dismiss();
-			}
-		});
-		mDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog)
-				.setTitle(getString(R.string.scores_sort_dialog_title))
-				.setView(view)
-				.create();
-		mDialog.show();
+		if (!mAdapter.getList().isEmpty()) {
+			View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_scores_sort, null, false);
+			view.findViewById(R.id.played_games).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ComparatorScores.sortByPlayedGames(mAdapter.getList());
+					mAdapter.notifyDataSetChanged();
+					mDialog.dismiss();
+				}
+			});
+			view.findViewById(R.id.goals).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ComparatorScores.sortByGoals(mAdapter.getList());
+					mAdapter.notifyDataSetChanged();
+					mDialog.dismiss();
+				}
+			});
+			mDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog)
+					.setTitle(getString(R.string.scores_sort_dialog_title))
+					.setView(view)
+					.create();
+			mDialog.show();
+		}
 	}
 
 }
