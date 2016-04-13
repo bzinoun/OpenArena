@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class FragmentFixtureDetails extends Fragment implements OnItemClickListener, Controller.OnGetFixtureDetails {
+public class FragmentFixtureInfo extends Fragment implements OnItemClickListener, Controller.OnGetFixtureDetails {
 
 	public static final String TAG = "FixtureFragment";
 
@@ -53,8 +53,8 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 	private Fixture mFixture;
 	private boolean mIsShow;
 
-	public static FragmentFixtureDetails getInstance(@Nullable Bundle data) {
-		FragmentFixtureDetails fragment = new FragmentFixtureDetails();
+	public static FragmentFixtureInfo getInstance(@Nullable Bundle data) {
+		FragmentFixtureInfo fragment = new FragmentFixtureInfo();
 		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
 	}
@@ -72,7 +72,7 @@ public class FragmentFixtureDetails extends Fragment implements OnItemClickListe
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_fixture_details, container, false);
+		View view = inflater.inflate(R.layout.fragment_fixture_info, container, false);
 		setupUI(view);
 		if (mEventListener == null) mEventListener = (EventListener) getActivity();
 		if (mController == null) mController = Controller.getInstance();

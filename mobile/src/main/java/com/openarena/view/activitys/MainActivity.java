@@ -11,7 +11,7 @@ import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.util.Const;
 import com.openarena.util.L;
-import com.openarena.view.fragments.FragmentFixtureDetails;
+import com.openarena.view.fragments.FragmentFixtureInfo;
 import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentFixturesTeam;
 import com.openarena.view.fragments.FragmentLeagues;
@@ -63,12 +63,12 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SELECT_FIXTURE:
-				if (mFragmentManager.findFragmentByTag(FragmentFixtureDetails.TAG) == null) {
+				if (mFragmentManager.findFragmentByTag(FragmentFixtureInfo.TAG) == null) {
 					Bundle data2 = new Bundle();
 					data2.putParcelable("fixture", event.getFixture());
 					mFragmentManager.beginTransaction()
-							.replace(R.id.main_container, FragmentFixtureDetails.getInstance(data2))
-							.addToBackStack(FragmentFixtureDetails.TAG)
+							.replace(R.id.main_container, FragmentFixtureInfo.getInstance(data2))
+							.addToBackStack(FragmentFixtureInfo.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}

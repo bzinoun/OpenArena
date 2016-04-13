@@ -1,12 +1,12 @@
 <resources>
 	<string name="app_name">Open arena</string>
 
-	<string name="snackbar_result_null_text">No internet connection</string>
-	<string name="snackbar_result_null_action">refresh</string>
+	<string name="snackbar_result_null_text">I knocked, but heard no response</string>
+	<string name="snackbar_result_null_action">Refresh</string>
 	<string name="error_content_text">Something wrong</string>
 	<string name="empty_content_text">Nothing to show</string>
 
-	<string name="leagues_title">Leagues list</string>
+	<string name="leagues_title">Leagues</string>
 	<string name="leagues_subtitle">2015 – 2016</string>
 
 	<string name="fixtures_matchday">Matchday %1$d</string>
@@ -14,7 +14,7 @@
 	<string name="fixtures_list_item_header_today">Today</string>
 	<string name="fixtures_list_item_header_tomorrow">Tomorrow</string>
 
-	<string name="fixture_details_title">Fixture details</string>
+	<string name="fixture_details_title">Details</string>
 	<string name="fixture_details_result">%1$d : %2$d</string>
 	<string name="fixture_details_empty_result">- : -</string>
 	<string name="fixture_details_head2head">Head2head</string>
