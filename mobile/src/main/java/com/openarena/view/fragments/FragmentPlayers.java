@@ -20,6 +20,7 @@ import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.PlayersAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
+import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Team;
 import com.openarena.util.Const;
@@ -150,7 +151,12 @@ public class FragmentPlayers extends Fragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-
+		if (mEventListener != null) {
+			mEventListener.onEvent(
+					new EventData(Const.EVENT_CODE_SELECT_PLAYER_INFO)
+							.setPlayer(mAdapter.getItem(position))
+			);
+		}
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class PlayersAdapter
 	public PlayersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = LayoutInflater
 				.from(parent.getContext())
-				.inflate(R.layout.item_players, parent, false);
+				.inflate(R.layout.item_player, parent, false);
 		return new PlayersViewHolder(view);
 	}
 

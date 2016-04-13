@@ -202,7 +202,7 @@ public class FragmentFixtures extends Fragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE)
+		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_FIXTURE_INFO)
 				.setFixture(mAdapter.getItem(position)));
 	}
 

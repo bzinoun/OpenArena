@@ -7,6 +7,7 @@ public class EventData {
 	private Fixture mFixture;
 	private Scores mScores;
 	private Team mTeam;
+	private Player mPlayer;
 
 	public EventData(int code) {
 		mCode = code;
@@ -32,6 +33,10 @@ public class EventData {
 		return mTeam;
 	}
 
+	public Player getPlayer() {
+		return mPlayer;
+	}
+
 	public EventData setLeague(League league) {
 		mLeague = league;
 		return this;
@@ -49,6 +54,11 @@ public class EventData {
 
 	public EventData setTeam(Team team) {
 		mTeam = team;
+		return this;
+	}
+
+	public EventData setPlayer(Player player) {
+		mPlayer = player;
 		return this;
 	}
 

@@ -23,7 +23,7 @@
 		android:layout_height="40dp"
 		android:layout_gravity="center_vertical|end"
 		android:gravity="center"
-		android:textColor="#9E9E9E"
+		android:textColor="@color/players_list_item_jersey"
 		android:background="@drawable/ic_jersey"
 		android:textSize="12sp"
 		tools:text="40"/>

@@ -30,6 +30,8 @@
 	<color name="scores_dialog_item_background">@color/primary</color>
 	<color name="scores_dialog_item_background_pressed">@color/primary_dark</color>
 
+	<color name="players_list_item_jersey">#9E9E9E</color>
+
 	<color name="button_text">@color/primary</color>
 	<color name="button_pressed">#999999</color>
 

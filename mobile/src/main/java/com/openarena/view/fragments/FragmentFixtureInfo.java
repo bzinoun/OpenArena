@@ -36,7 +36,7 @@ import java.util.Locale;
 
 public class FragmentFixtureInfo extends Fragment implements OnItemClickListener, Controller.OnGetFixtureDetails {
 
-	public static final String TAG = "FixtureFragment";
+	public static final String TAG = "FragmentFixtureInfo";
 
 	private RecyclerView mRecyclerView;
 	private FrameLayout mProgressContent;

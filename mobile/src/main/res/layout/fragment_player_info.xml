@@ -1,90 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
-
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="8dp"
-		android:layout_marginRight="8dp"
-		android:layout_marginTop="8dp"
-		android:background="@drawable/fixture_teams_background">
-
-		<TextView
-			android:id="@+id/result"
-			android:layout_width="@dimen/fixture_details_result_size"
-			android:layout_height="@dimen/fixture_details_result_size"
-			android:layout_centerInParent="true"
-			android:background="@drawable/fixture_result_background"
-			android:gravity="center"
-			android:textColor="@color/fixture_details_result_text"
-			android:textSize="@dimen/fixture_details_result_text_size"
-			tools:text="2 : 3"/>
-
-		<TextView
-			android:id="@+id/home"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@id/result"
-			android:layout_toStartOf="@id/result"
-			android:paddingLeft="8dp"
-			android:paddingRight="8dp"
-			android:textColor="@color/fixture_details_teams_text"
-			android:textSize="16sp"
-			tools:text="Home team"/>
-
-		<TextView
-			android:id="@+id/away"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:layout_toEndOf="@id/result"
-			android:layout_toRightOf="@id/result"
-			android:gravity="end"
-			android:paddingLeft="8dp"
-			android:paddingRight="8dp"
-			android:textColor="@color/fixture_details_teams_text"
-			android:textSize="16sp"
-			tools:text="Away team"/>
-
-	</RelativeLayout>
-
+	android:padding="16dp">
 
 	<TextView
-		android:id="@+id/header"
+		android:id="@+id/jersey"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:background="@drawable/ic_jersey"
+		android:gravity="center"
+		android:textColor="@color/players_list_item_jersey"
+		android:textSize="20sp"
+		tools:text="42"/>
+
+	<LinearLayout
+		android:layout_toRightOf="@+id/jersey"
+		android:layout_toEndOf="@+id/jersey"
+		android:layout_marginLeft="16dp"
+		android:layout_marginStart="16dp"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="@dimen/fixtures_list_margin"
-		android:layout_marginRight="@dimen/fixtures_list_margin"
-		android:layout_marginTop="@dimen/fixtures_list_margin"
-		android:background="@drawable/fixture_details_head2head_background"
-		android:paddingLeft="@dimen/horizontal_padding"
-		android:paddingRight="@dimen/horizontal_padding"
-		android:paddingTop="@dimen/fixtures_list_margin"
-		android:paddingBottom="@dimen/fixtures_list_margin"
-		android:textColor="@color/fixture_details_head2head_text"
-		android:text="@string/fixture_details_head2head"/>
+		android:orientation="vertical"
+		android:layout_height="wrap_content">
 
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/recycler_view"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_marginBottom="@dimen/fixtures_list_margin"
-		android:layout_marginLeft="@dimen/fixtures_list_margin"
-		android:layout_marginRight="@dimen/fixtures_list_margin"
-		android:background="@drawable/fixture_details_head2head_list_background"
-		android:paddingBottom="@dimen/fixtures_list_vertical_padding"
-		android:paddingTop="@dimen/fixtures_list_vertical_padding"/>
+		<TextView
+			android:id="@+id/name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			tools:text="Fernando Tores"/>
 
-	<include layout="@layout/content_progress"/>
+		<TextView
+			android:id="@+id/position"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="16sp"
+			tools:text="goalkeeper"/>
 
-	<include layout="@layout/content_empty"/>
+		<TextView
+			android:id="@+id/nationality"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="16sp"
+			tools:text="Germany"/>
 
-	<include layout="@layout/content_error"/>
+		<TextView
+			android:id="@+id/market_value"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="16sp"
+			tools:text="100,000$"/>
 
-</LinearLayout>
+		<TextView
+			android:id="@+id/date_of_birth"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="16sp"
+			tools:text="12.12.1884"/>
+
+		<TextView
+			android:id="@+id/contract_until"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="16sp"
+			tools:text="12.12.2017"/>
+
+	</LinearLayout>
+
+</RelativeLayout>

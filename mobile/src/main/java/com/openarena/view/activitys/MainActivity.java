@@ -15,6 +15,7 @@ import com.openarena.view.fragments.FragmentFixtureInfo;
 import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentFixturesTeam;
 import com.openarena.view.fragments.FragmentLeagues;
+import com.openarena.view.fragments.FragmentPlayerInfo;
 import com.openarena.view.fragments.FragmentPlayers;
 import com.openarena.view.fragments.FragmentScores;
 import com.openarena.view.dialogs.DialogTeam;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				}
 				break;
 
-			case Const.EVENT_CODE_SELECT_FIXTURE:
+			case Const.EVENT_CODE_SELECT_FIXTURE_INFO:
 				if (mFragmentManager.findFragmentByTag(FragmentFixtureInfo.TAG) == null) {
 					Bundle data2 = new Bundle();
 					data2.putParcelable("fixture", event.getFixture());
@@ -112,6 +113,18 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					mFragmentManager.beginTransaction()
 							.replace(R.id.main_container, FragmentFixturesTeam.getInstance(data6))
 							.addToBackStack(FragmentFixturesTeam.TAG)
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+				}
+				break;
+
+			case Const.EVENT_CODE_SELECT_PLAYER_INFO:
+				if (mFragmentManager.findFragmentByTag(FragmentPlayerInfo.TAG) == null) {
+					Bundle data7 = new Bundle();
+					data7.putParcelable("player", event.getPlayer());
+					mFragmentManager.beginTransaction()
+							.replace(R.id.main_container, FragmentPlayerInfo.getInstance(data7))
+							.addToBackStack(FragmentPlayerInfo.TAG)
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 				}
