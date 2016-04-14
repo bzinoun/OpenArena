@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
@@ -28,7 +27,6 @@ import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
-
 import java.util.ArrayList;
 
 public class FragmentLeagues extends Fragment

@@ -9,10 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.openarena.R;
 import com.openarena.model.objects.Player;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

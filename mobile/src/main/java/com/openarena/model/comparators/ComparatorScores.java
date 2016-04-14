@@ -1,7 +1,6 @@
 package com.openarena.model.comparators;
 
 import com.openarena.model.objects.Scores;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

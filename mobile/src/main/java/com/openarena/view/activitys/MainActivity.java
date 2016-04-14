@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import com.openarena.R;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
@@ -171,10 +170,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	private void showContent() {
 		if (mFragmentManager.findFragmentByTag(FragmentLeagues.TAG) == null) {
 			mFragmentManager.beginTransaction()
-					.replace(
-							R.id.main_container,
-							FragmentLeagues.getInstance(null),
-							FragmentLeagues.TAG)
+					.replace(R.id.main_container, FragmentLeagues.getInstance(null))
 					.commit();
 		}
 	}

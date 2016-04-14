@@ -1,6 +1,7 @@
 package com.openarena.util;
 
 public class DBConst {
+
 	public static final String TABLE_LEAGUES = "table_leagues";
 	public static final String TABLE_FIXTURES = "table_fixtures";
 	public static final String TABLE_HEAD2HEAD = "table_head2head";
