@@ -14,8 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.RecyclerViewItemTouchListener;
@@ -26,6 +28,7 @@ import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
+
 import java.util.ArrayList;
 
 public class FragmentLeagues extends Fragment
@@ -160,6 +163,9 @@ public class FragmentLeagues extends Fragment
 			if (mAdapter == null) {
 				mAdapter = new LeaguesAdapter(data);
 				mRecyclerView.setAdapter(mAdapter);
+				mRecyclerView.startAnimation(
+						AnimationUtils.loadAnimation(getActivity(), R.anim.leagues_fade_in)
+				);
 			} else {
 				mAdapter.changeData(data);
 			}
