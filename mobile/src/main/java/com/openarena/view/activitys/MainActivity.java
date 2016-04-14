@@ -1,9 +1,12 @@
 package com.openarena.view.activitys;
 
-import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import com.openarena.R;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setupUI();
-		mFragmentManager = getFragmentManager();
+		mFragmentManager = getSupportFragmentManager();
 	}
 
 	@Override
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	@Override
 	public void onBackPressed() {
 		if (mFragmentManager.getBackStackEntryCount() > 0) mFragmentManager.popBackStack();
-		else super.onBackPressed();
+		else showFinishDialog();
+
 	}
 
 	@Override
@@ -60,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					data1.putParcelable("league", event.getLeague());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
-									R.animator.fragment_fade_in,
-									R.animator.fragment_fade_out,
-									R.animator.fragment_fade_pop_in,
-									R.animator.fragment_fade_pop_out)
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentFixtures.getInstance(data1))
 							.addToBackStack(FragmentFixtures.TAG)
 							.commit();
@@ -76,10 +80,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					data2.putParcelable("fixture", event.getFixture());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
-									R.animator.fragment_fade_in,
-									R.animator.fragment_fade_out,
-									R.animator.fragment_fade_pop_in,
-									R.animator.fragment_fade_pop_out)
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentFixtureInfo.getInstance(data2))
 							.addToBackStack(FragmentFixtureInfo.TAG)
 							.commit();
@@ -92,10 +96,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					data3.putParcelable("league", event.getLeague());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
-									R.animator.fragment_fade_in,
-									R.animator.fragment_fade_out,
-									R.animator.fragment_fade_pop_in,
-									R.animator.fragment_fade_pop_out)
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentScores.getInstance(data3))
 							.addToBackStack(FragmentScores.TAG)
 							.commit();
@@ -115,10 +119,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					data5.putParcelable("team", event.getTeam());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
-									R.animator.fragment_fade_in,
-									R.animator.fragment_fade_out,
-									R.animator.fragment_fade_pop_in,
-									R.animator.fragment_fade_pop_out)
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentPlayers.getInstance(data5))
 							.addToBackStack(FragmentPlayers.TAG)
 							.commit();
@@ -131,10 +135,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					data6.putParcelable("team", event.getTeam());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
-									R.animator.fragment_fade_in,
-									R.animator.fragment_fade_out,
-									R.animator.fragment_fade_pop_in,
-									R.animator.fragment_fade_pop_out)
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentFixturesTeam.getInstance(data6))
 							.addToBackStack(FragmentFixturesTeam.TAG)
 							.commit();
@@ -147,10 +151,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					data7.putParcelable("player", event.getPlayer());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
-									R.animator.fragment_fade_in,
-									R.animator.fragment_fade_out,
-									R.animator.fragment_fade_pop_in,
-									R.animator.fragment_fade_pop_out)
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentPlayerInfo.getInstance(data7))
 							.addToBackStack(FragmentPlayerInfo.TAG)
 							.commit();
@@ -165,6 +169,20 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	private void setupUI() {
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(mToolbar);
+	}
+
+	private void showFinishDialog() {
+		AlertDialog dialog = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+				.setTitle(R.string.dialog_exit_title)
+				.setPositiveButton(R.string.dialog_exit_positive, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				})
+				.setNegativeButton(R.string.dialog_exit_negative, null)
+				.create();
+		dialog.show();
 	}
 
 	private void showContent() {

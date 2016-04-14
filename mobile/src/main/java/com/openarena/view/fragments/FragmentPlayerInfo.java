@@ -1,6 +1,5 @@
 package com.openarena.view.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -9,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.openarena.R;
+import com.openarena.model.AbstractFragment;
 import com.openarena.model.objects.Player;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class FragmentPlayerInfo extends Fragment {
+public class FragmentPlayerInfo extends AbstractFragment {
 
 	public static final String TAG = "FragmentPlayerInfo";
 

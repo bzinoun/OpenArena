@@ -1,6 +1,5 @@
 package com.openarena.view.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -18,8 +17,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.openarena.R;
 import com.openarena.controllers.Controller;
+import com.openarena.model.AbstractFragment;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.interfaces.EventListener;
@@ -29,9 +30,10 @@ import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
+
 import java.util.ArrayList;
 
-public class FragmentFixtures extends Fragment
+public class FragmentFixtures extends AbstractFragment
 		implements Controller.OnGetFixtures, OnItemClickListener {
 
 	public static final String TAG = "FragmentFixtures";
@@ -212,7 +214,7 @@ public class FragmentFixtures extends Fragment
 	}
 
 	private void setupUI(View view) {
-		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+		ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 		if (toolbar != null) {
 			toolbar.setTitle(mLeague.getCaption());
 			toolbar.setSubtitle(null);

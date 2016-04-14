@@ -1,6 +1,5 @@
 package com.openarena.view.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -17,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
 import com.openarena.R;
 import com.openarena.controllers.Controller;
+import com.openarena.model.AbstractFragment;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.ScoresAdapter;
 import com.openarena.model.comparators.ComparatorScores;
@@ -29,9 +30,10 @@ import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
 import com.openarena.util.UI;
+
 import java.util.ArrayList;
 
-public class FragmentScores extends Fragment
+public class FragmentScores extends AbstractFragment
 		implements Controller.OnGetScores, OnItemClickListener {
 
 	public static final String TAG = "FragmentScores";

@@ -39,6 +39,10 @@
 
 	<string name="context_head_select_matchday">Select matchday</string>
 
+	<string name="dialog_exit_title">Do you exit</string>
+	<string name="dialog_exit_positive">Yes</string>
+	<string name="dialog_exit_negative">No</string>
+
 	<!-- CONST resources -->
 	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>
 	<string name="api_response_control_mini">minified</string>

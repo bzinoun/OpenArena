@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="accent">#FFD740</color>
+	<color name="accent1">#FFD740</color>
+	<color name="accent">#FF6D00</color>
 	<color name="alert_content">#BDBDBD</color>
 	<color name="primary">#0F9D58</color>
 	<color name="primary_dark">#0B8043</color>
@@ -19,7 +20,7 @@
 	<color name="fixtures_list_item_result_scheduled_background">#81D4FA</color>
 	<color name="fixtures_list_item_header_background">#EEEEEE</color>
 
-	<color name="fixture_details_result_background">#FFD740</color>
+	<color name="fixture_details_result_background">#FF6D00</color>
 	<color name="fixture_details_teams_background">#BDBDBD</color>
 	<color name="fixture_details_result_text">#222</color>
 	<color name="fixture_details_teams_text">#333</color>

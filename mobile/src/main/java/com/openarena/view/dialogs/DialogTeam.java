@@ -1,8 +1,8 @@
 package com.openarena.view.dialogs;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.openarena.R;
@@ -23,7 +24,7 @@ import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.util.UI;
 
-public class DialogTeam extends DialogFragment implements Controller.OnGetTeam, View.OnClickListener {
+public class DialogTeam extends AppCompatDialogFragment implements Controller.OnGetTeam, View.OnClickListener {
 
 	public static final String TAG = "DialogTeam";
 
