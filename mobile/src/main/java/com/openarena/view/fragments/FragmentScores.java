@@ -88,7 +88,10 @@ public class FragmentScores extends Fragment
 		if (mEmptyContent != null) mEmptyContent = null;
 		if (mErrorContent != null) mErrorContent = null;
 		if (mProgressContent != null) mProgressContent = null;
-		if (mDialog != null) mDialog = null;
+		if (mDialog != null) {
+			mDialog.dismiss();
+			mDialog = null;
+		}
 		if (mSnackbar != null) {
 			mSnackbar.dismiss();
 			mSnackbar = null;
@@ -229,7 +232,7 @@ public class FragmentScores extends Fragment
 	}
 
 	private void showSortDialog() {
-		if (!mAdapter.getList().isEmpty()) {
+		if (mAdapter != null) {
 			View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_scores_sort, null, false);
 			view.findViewById(R.id.played_games).setOnClickListener(new View.OnClickListener() {
 				@Override
