@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.openarena.R;
 import com.openarena.model.AbstractRecyclerAdapter;
 import com.openarena.model.objects.Scores;
+
 import java.util.ArrayList;
 
 public class ScoresAdapter extends AbstractRecyclerAdapter<Scores, ScoresAdapter.ScoresViewHolder> {
@@ -24,7 +26,8 @@ public class ScoresAdapter extends AbstractRecyclerAdapter<Scores, ScoresAdapter
 
 	@Override
 	public ScoresViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_scores, parent, false);
+		View view = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.item_scores, parent, false);
 		return new ScoresViewHolder(view);
 	}
 
