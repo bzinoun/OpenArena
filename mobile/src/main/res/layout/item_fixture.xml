@@ -2,20 +2,20 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_height="wrap_content"
 	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
 	android:orientation="vertical">
 
 	<TextView
 		android:id="@+id/header"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="@color/fixtures_list_item_header_background"
+		android:paddingBottom="4dp"
 		android:paddingLeft="16dp"
 		android:paddingRight="16dp"
 		android:paddingTop="4dp"
-		android:paddingBottom="4dp"
-		android:textColor="#222"
-		android:background="@color/fixtures_list_item_header_background"
+		android:textColor="@color/fixtures_list_item_header"
 		tools:text="Header"/>
 
 	<RelativeLayout
@@ -36,8 +36,8 @@
 				android:layout_height="match_parent"
 				android:layout_gravity="center_vertical"
 				android:gravity="center"
+				android:textColor="@color/fixtures_list_item_result"
 				android:visibility="gone"
-				android:textColor="@color/fixtures_list_text"
 				tools:text="21:30"/>
 
 			<TextView
@@ -45,13 +45,13 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
+				android:background="@drawable/fixtures_list_item_result_background"
+				android:gravity="center"
+				android:paddingBottom="4dp"
 				android:paddingLeft="8dp"
 				android:paddingRight="8dp"
 				android:paddingTop="4dp"
-				android:paddingBottom="4dp"
-				android:background="@drawable/fixtures_list_item_result_background"
-				android:gravity="center"
-				android:textColor="@color/fixtures_list_text"
+				android:textColor="@color/fixtures_list_item_result"
 				tools:text="1 : 2"/>
 
 		</FrameLayout>
@@ -65,7 +65,7 @@
 			android:layout_toStartOf="@id/result_layout"
 			android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
 			android:paddingRight="@dimen/fixtures_list_item_horizontal_padding"
-			android:textColor="@color/fixtures_list_text"
+			android:textColor="@color/fixtures_list_item_name"
 			android:textSize="@dimen/fixtures_list_item_team_size"
 			tools:text="Home team name"/>
 
@@ -80,7 +80,7 @@
 			android:gravity="end"
 			android:paddingLeft="@dimen/fixtures_list_item_horizontal_padding"
 			android:paddingRight="@dimen/fixtures_list_item_horizontal_padding"
-			android:textColor="@color/fixtures_list_text"
+			android:textColor="@color/fixtures_list_item_name"
 			android:textSize="@dimen/fixtures_list_item_team_size"
 			tools:text="Away team name"/>
 

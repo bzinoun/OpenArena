@@ -12,7 +12,7 @@
 		android:layout_marginLeft="8dp"
 		android:layout_marginRight="8dp"
 		android:layout_marginTop="8dp"
-		android:background="@drawable/fixture_teams_background">
+		android:background="@drawable/fixture_info_team_background">
 
 		<TextView
 			android:id="@+id/result"
@@ -21,7 +21,7 @@
 			android:layout_centerInParent="true"
 			android:background="@drawable/fixture_result_background"
 			android:gravity="center"
-			android:textColor="@color/fixture_details_result_text"
+			android:textColor="@color/fixture_info_result_text"
 			android:textSize="@dimen/fixture_details_result_text_size"
 			tools:text="2 : 3"/>
 
@@ -34,7 +34,7 @@
 			android:layout_toStartOf="@id/result"
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"
-			android:textColor="@color/fixture_details_teams_text"
+			android:textColor="@color/fixture_info_teams_text"
 			android:textSize="16sp"
 			tools:text="Home team"/>
 
@@ -48,7 +48,7 @@
 			android:gravity="end"
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"
-			android:textColor="@color/fixture_details_teams_text"
+			android:textColor="@color/fixture_info_teams_text"
 			android:textSize="16sp"
 			tools:text="Away team"/>
 
@@ -63,12 +63,12 @@
 		android:layout_marginRight="@dimen/fixtures_list_margin"
 		android:layout_marginTop="@dimen/fixtures_list_margin"
 		android:background="@drawable/fixture_details_head2head_background"
+		android:paddingBottom="@dimen/fixtures_list_margin"
 		android:paddingLeft="@dimen/horizontal_padding"
 		android:paddingRight="@dimen/horizontal_padding"
 		android:paddingTop="@dimen/fixtures_list_margin"
-		android:paddingBottom="@dimen/fixtures_list_margin"
-		android:textColor="@color/fixture_details_head2head_text"
-		android:text="@string/fixture_details_head2head"/>
+		android:text="@string/fixture_details_head2head"
+		android:textColor="@color/fixture_info_head2head_text"/>
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler_view"

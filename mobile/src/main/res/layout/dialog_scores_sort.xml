@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:gravity="center"
-	android:paddingTop="16dp"
+	android:orientation="horizontal"
 	android:paddingBottom="48dp"
-	android:orientation="horizontal">
+	android:paddingTop="16dp">
 
 	<TextView
 		android:id="@+id/played_games"
 		android:layout_width="@dimen/scores_dialog_sort_item_size"
 		android:layout_height="@dimen/scores_dialog_sort_item_size"
-		android:background="@drawable/dialog_scores_item_background"
-		android:gravity="center"
 		android:layout_marginLeft="8dp"
 		android:layout_marginRight="8dp"
+		android:background="@drawable/dialog_scores_item_background"
+		android:gravity="center"
+		android:text="@string/scores_head_played_games"
 		android:textColor="@color/scores_dialog_item_text"
-		android:textSize="@dimen/scores_dialog_sort_item_text"
-		android:text="@string/scores_head_played_games"/>
+		android:textSize="@dimen/scores_dialog_sort_item_text"/>
 
 	<TextView
 		android:id="@+id/goals"
 		android:layout_width="@dimen/scores_dialog_sort_item_size"
 		android:layout_height="@dimen/scores_dialog_sort_item_size"
-		android:background="@drawable/dialog_scores_item_background"
-		android:gravity="center"
 		android:layout_marginLeft="8dp"
 		android:layout_marginRight="8dp"
+		android:background="@drawable/dialog_scores_item_background"
+		android:gravity="center"
+		android:text="@string/scores_head_goals"
 		android:textColor="@color/scores_dialog_item_text"
-		android:textSize="@dimen/scores_dialog_sort_item_text"
-		android:text="@string/scores_head_goals"/>
+		android:textSize="@dimen/scores_dialog_sort_item_text"/>
 
 </LinearLayout>

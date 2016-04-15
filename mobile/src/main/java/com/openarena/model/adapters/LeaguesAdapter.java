@@ -1,25 +1,26 @@
 package com.openarena.model.adapters;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.openarena.R;
 import com.openarena.model.AbstractRecyclerAdapter;
 import com.openarena.model.interfaces.OnItemTouchAdapter;
 import com.openarena.model.objects.League;
+
 import java.util.ArrayList;
 
 public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapter.LeagueViewHolder> implements OnItemTouchAdapter {
 
-	public LeaguesAdapter(ArrayList<League> list) {
-		super(list);
-	}
+	private Resources mResources;
 
-	public LeaguesAdapter(ArrayList<League> list, RecyclerView recyclerView) {
-		super(list, recyclerView);
+	public LeaguesAdapter(Resources resources, ArrayList<League> list) {
+		super(list);
+		mResources = resources;
 	}
 
 	@Override
@@ -31,20 +32,19 @@ public class LeaguesAdapter extends AbstractRecyclerAdapter<League, LeaguesAdapt
 	@Override
 	public void onBindViewHolder(LeagueViewHolder holder, int position) {
 		League item = mList.get(position);
-		//temp image
-		holder.mIcon.setImageResource(R.drawable.ic_alert_circle_outline);
 		holder.mName.setText(item.getCaption());
+		holder.mMatchday.setText(String.format(mResources.getString(R.string.leagues_list_item_matchday), item.getCurrentMatchday(), item.getNumberOfMatchdays()));
 	}
 
 	public static class LeagueViewHolder extends RecyclerView.ViewHolder {
 
-		private ImageView mIcon;
 		private TextView mName;
+		private TextView mMatchday;
 
 		public LeagueViewHolder(View itemView) {
 			super(itemView);
-			mIcon = (ImageView) itemView.findViewById(R.id.icon);
 			mName = (TextView) itemView.findViewById(R.id.name);
+			mMatchday = (TextView) itemView.findViewById(R.id.matchday);
 		}
 	}
 

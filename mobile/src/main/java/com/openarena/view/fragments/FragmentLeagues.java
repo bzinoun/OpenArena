@@ -58,7 +58,7 @@ public class FragmentLeagues extends AbstractFragment
 		setHasOptionsMenu(true);
 		if (savedInstanceState != null) {
 			ArrayList<League> list = savedInstanceState.getParcelableArrayList("list");
-			if (list != null && !list.isEmpty()) mAdapter = new LeaguesAdapter(list);
+			if (list != null && !list.isEmpty()) mAdapter = new LeaguesAdapter(getResources(), list);
 		}
 	}
 
@@ -161,7 +161,7 @@ public class FragmentLeagues extends AbstractFragment
 			UI.show(mRecyclerView);
 			if (mSnackbar != null) mSnackbar.dismiss();
 			if (mAdapter == null) {
-				mAdapter = new LeaguesAdapter(data);
+				mAdapter = new LeaguesAdapter(getResources(), data);
 				mRecyclerView.setAdapter(mAdapter);
 				mRecyclerView.startAnimation(
 						AnimationUtils.loadAnimation(getActivity(), R.anim.leagues_fade_in)

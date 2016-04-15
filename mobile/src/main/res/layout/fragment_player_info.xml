@@ -17,34 +17,34 @@
 		tools:text="42"/>
 
 	<LinearLayout
-		android:layout_toRightOf="@+id/jersey"
-		android:layout_toEndOf="@+id/jersey"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_marginLeft="16dp"
 		android:layout_marginStart="16dp"
-		android:layout_width="wrap_content"
-		android:orientation="vertical"
-		android:layout_height="wrap_content">
+		android:layout_toEndOf="@+id/jersey"
+		android:layout_toRightOf="@+id/jersey"
+		android:orientation="vertical">
 
 		<TextView
 			android:id="@+id/name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			tools:text="Fernando Tores"/>
+			tools:text="Player name"/>
 
 		<TextView
 			android:id="@+id/position"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="goalkeeper"/>
+			tools:text="position"/>
 
 		<TextView
 			android:id="@+id/nationality"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="Germany"/>
+			tools:text="Nationality"/>
 
 		<TextView
 			android:id="@+id/market_value"

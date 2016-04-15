@@ -8,6 +8,7 @@
 
 	<string name="leagues_title">Leagues</string>
 	<string name="leagues_subtitle">2015 – 2016</string>
+	<string name="leagues_list_item_matchday">%1$d/%2$d</string>
 
 	<string name="fixtures_matchday">Matchday %1$d</string>
 	<string name="fixtures_list_item_result">%1$d : %2$d</string>
