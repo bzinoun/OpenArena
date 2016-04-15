@@ -39,7 +39,7 @@
 
 	<string name="context_head_select_matchday">Select matchday</string>
 
-	<string name="dialog_exit_title">Do you exit</string>
+	<string name="dialog_exit_title">Do you want to exit?</string>
 	<string name="dialog_exit_positive">Yes</string>
 	<string name="dialog_exit_negative">No</string>
 

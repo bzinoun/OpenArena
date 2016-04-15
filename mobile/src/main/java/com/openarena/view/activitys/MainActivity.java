@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 
 	@Override
 	public void onBackPressed() {
-		if (mFragmentManager.getBackStackEntryCount() > 0) mFragmentManager.popBackStack();
-		else showFinishDialog();
-
+		if (!mFragmentManager.popBackStackImmediate()) {
+			showFinishDialog();
+		}
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				.setPositiveButton(R.string.dialog_exit_positive, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						finish();
+						supportFinishAfterTransition();
 					}
 				})
 				.setNegativeButton(R.string.dialog_exit_negative, null)
@@ -188,7 +188,10 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	private void showContent() {
 		if (mFragmentManager.findFragmentByTag(FragmentLeagues.TAG) == null) {
 			mFragmentManager.beginTransaction()
-					.replace(R.id.main_container, FragmentLeagues.getInstance(null))
+					.replace(
+							R.id.main_container,
+							FragmentLeagues.getInstance(null),
+							FragmentLeagues.TAG)
 					.commit();
 		}
 	}
