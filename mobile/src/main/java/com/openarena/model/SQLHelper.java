@@ -234,7 +234,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 	 * @param where array where
 	 * @param arguments array arguments
 	 */
-	public void removeAll(String tableName, String[] where, String[] arguments) {
+	public void remove(String tableName, String[] where, String[] arguments) {
 		StringBuilder sb = null;
 		if (where != null) {
 			sb = new StringBuilder();
@@ -254,6 +254,12 @@ public class SQLHelper extends SQLiteOpenHelper {
 	 */
 	public void removeAll(String tableName) {
 		getWritableDatabase().delete(tableName, null, null);
+	}
+
+	public Cursor query(String table_name, String[] columns, String where,
+						String[] arguments, String group_by, String having, String order_by) {
+		return getReadableDatabase()
+				.query(table_name, columns, where, arguments, group_by, having, order_by);
 	}
 
 }
