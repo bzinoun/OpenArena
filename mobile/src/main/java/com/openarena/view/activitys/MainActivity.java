@@ -23,8 +23,11 @@ import com.openarena.view.fragments.FragmentScores;
 
 public class MainActivity extends AppCompatActivity implements EventListener {
 
+	private static final int TIME_TO_EXIT = 400;
+
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
+	private long mLastBack;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,17 +44,19 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	}
 
 	@Override
-	public void onBackPressed() {
-		if (!mFragmentManager.popBackStackImmediate()) {
-			showFinishDialog();
-		}
-	}
-
-	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (mToolbar != null) mToolbar = null;
 		if (mFragmentManager != null) mFragmentManager = null;
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (mLastBack + TIME_TO_EXIT > System.currentTimeMillis()) {
+			showFinishDialog();
+		}
+		else if (!mFragmentManager.popBackStackImmediate())	showFinishDialog();
+		mLastBack = System.currentTimeMillis();
 	}
 
 	@Override
