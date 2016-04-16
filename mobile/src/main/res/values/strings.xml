@@ -33,6 +33,8 @@
 	<string name="team_button_players">Players</string>
 
 	<string name="option_refresh">Refresh</string>
+	<string name="option_today">Today</string>
+	<string name="option_notify">Notify</string>
 	<string name="option_sort">Sort</string>
 	<string name="option_score_table">Score table</string>
 

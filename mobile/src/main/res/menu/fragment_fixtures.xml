@@ -4,15 +4,15 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
-		android:id="@+id/action_refresh"
-		android:icon="@drawable/ic_refresh"
+		android:id="@+id/action_today"
+		android:icon="@drawable/ic_calendar_today"
 		android:orderInCategory="100"
-		android:title="@string/option_refresh"
+		android:title="@string/option_today"
 		app:showAsAction="ifRoom"/>
 
 	<item
 		android:id="@+id/action_score_table"
-		android:icon="@drawable/ic_view_module"
+		android:icon="@drawable/ic_view_list"
 		android:orderInCategory="100"
 		android:title="@string/option_score_table"
 		app:showAsAction="ifRoom"/>

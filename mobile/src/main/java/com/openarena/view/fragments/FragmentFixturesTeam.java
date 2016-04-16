@@ -45,6 +45,8 @@ public class FragmentFixturesTeam extends AbstractFragment
 	private EventListener mEventListener;
 	private Snackbar mSnackbar;
 	private Team mTeam;
+	private Menu mMenu;
+	private boolean mNotify;
 	private boolean mIsShow;
 
 	public static FragmentFixturesTeam getInstance(@Nullable Bundle data) {
@@ -85,6 +87,7 @@ public class FragmentFixturesTeam extends AbstractFragment
 		if (mEmptyContent != null) mEmptyContent = null;
 		if (mErrorContent != null) mErrorContent = null;
 		if (mProgressContent != null) mProgressContent = null;
+		if (mMenu != null) mMenu = null;
 		if (mSnackbar != null) {
 			mSnackbar.dismiss();
 			mSnackbar = null;
@@ -111,19 +114,24 @@ public class FragmentFixturesTeam extends AbstractFragment
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_fixtures, menu);
+		inflater.inflate(R.menu.fragment_fixtures_team, menu);
+		mMenu = menu;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.action_refresh:
-				loadData(mTeam.getID());
-				break;
-
-			case R.id.action_score_table:
-
+			case R.id.action_notify:
+				//loadData(mTeam.getID());
+				if (!mNotify) {
+					mMenu.findItem(R.id.action_notify).setIcon(R.drawable.ic_bell);
+					mNotify = true;
+				}
+				else {
+					mMenu.findItem(R.id.action_notify).setIcon(R.drawable.ic_bell_outline);
+					mNotify = false;
+				}
 				break;
 
 			default:

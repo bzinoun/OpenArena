@@ -55,14 +55,16 @@ public class FixturesAdapter
 					R.string.fixtures_list_item_result),
 					item.getGoalsHomeTeam(),
 					item.getGoalsAwayTeam()));
-			if (item.getStatus() != Fixture.SCHEDULED) {
+			holder.mResult.setBackgroundResource(
+					R.drawable.fixtures_list_item_result_background);
+			/*if (item.getStatus() != Fixture.SCHEDULED) {
 				holder.mResult.setBackgroundResource(
 						R.drawable.fixtures_list_item_result_background);
 			}
 			else {
 				holder.mResult.setBackgroundResource(
 						R.drawable.fixtures_list_item_result_scheduled_background);
-			}
+			}*/
 		}
 		else {
 			UI.hide(holder.mResult);
