@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
+
 import com.openarena.model.SQLHelper;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
@@ -12,6 +13,7 @@ import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.util.DBConst;
+
 import java.util.ArrayList;
 
 public class DBManager {
@@ -35,7 +37,7 @@ public class DBManager {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_FIXTURES,
 				new String[] {DBConst.SOCCER_SEASON_ID, DBConst.MATCHDAY},
-				new String[] {String.valueOf(soccerseasonId), String.valueOf(matchday)}, DBConst.DATE, false);
+				new String[] {String.valueOf(soccerseasonId), String.valueOf(matchday)});// , DBConst.DATE, false
 		ArrayList<Fixture> list = Fixture.parseArray(cursor);
 		if (cursor != null) cursor.close();
 		return list;
@@ -46,7 +48,7 @@ public class DBManager {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_FIXTURES,
 				new String[] {DBConst.SOCCER_SEASON_ID},
-				new String[] {String.valueOf(soccerseasonId)}, DBConst.DATE, true);
+				new String[] {String.valueOf(soccerseasonId)}); // , DBConst.DATE, true
 		ArrayList<Fixture> list = Fixture.parseArray(cursor);
 		if (cursor != null) cursor.close();
 		return list;
@@ -57,7 +59,7 @@ public class DBManager {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_SCORES,
 				new String[] {DBConst.SOCCER_SEASON_ID},
-				new String[] {String.valueOf(soccerseasonId)}, DBConst.POINTS, true);
+				new String[] {String.valueOf(soccerseasonId)}); // , DBConst.POINTS, true
 		ArrayList<Scores> list = Scores.parseArray(cursor);
 		if (cursor != null) cursor.close();
 		return list;

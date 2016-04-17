@@ -7,6 +7,19 @@ import java.util.Comparator;
 
 public class ComparatorScores {
 
+	public static void sortByPoints(ArrayList<Scores> list) {
+		Collections.sort(list, new Comparator<Scores>() {
+			@Override
+			public int compare(Scores lhs, Scores rhs) {
+				int first = lhs.getPoints();
+				int next = rhs.getPoints();
+				if (first > next) return -1;
+				else if (first < next) return 1;
+				else return 0;
+			}
+		});
+	}
+
 	public static void sortByPlayedGames(ArrayList<Scores> list) {
 		Collections.sort(list, new Comparator<Scores>() {
 			@Override

@@ -29,12 +29,13 @@ import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.League;
 import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
+import com.openarena.util.L;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
 
 public class FragmentScores extends AbstractFragment
-		implements Controller.OnGetScores, OnItemClickListener {
+		implements Controller.OnGetScores, View.OnClickListener, OnItemClickListener {
 
 	public static final String TAG = "FragmentScores";
 
@@ -131,7 +132,7 @@ public class FragmentScores extends AbstractFragment
 				break;
 
 			case R.id.action_sort:
-				showSortDialog();
+				if (mDialog == null) showSortDialog();
 				break;
 
 			default:
@@ -180,6 +181,29 @@ public class FragmentScores extends AbstractFragment
 				mAdapter.changeData(data);
 			}
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+			case R.id.played_games:
+				ComparatorScores.sortByPlayedGames(mAdapter.getList());
+				break;
+
+			case R.id.goals:
+				ComparatorScores.sortByGoals(mAdapter.getList());
+				break;
+
+			case R.id.refresh:
+				ComparatorScores.sortByPoints(mAdapter.getList());
+				break;
+
+			default:
+				L.e(FragmentScores.class, "default id");
+		}
+		mDialog.dismiss();
+		mAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -234,22 +258,9 @@ public class FragmentScores extends AbstractFragment
 	private void showSortDialog() {
 		if (mAdapter != null) {
 			View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_scores_sort, null, false);
-			view.findViewById(R.id.played_games).setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					ComparatorScores.sortByPlayedGames(mAdapter.getList());
-					mAdapter.notifyDataSetChanged();
-					mDialog.dismiss();
-				}
-			});
-			view.findViewById(R.id.goals).setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					ComparatorScores.sortByGoals(mAdapter.getList());
-					mAdapter.notifyDataSetChanged();
-					mDialog.dismiss();
-				}
-			});
+			view.findViewById(R.id.played_games).setOnClickListener(this);
+			view.findViewById(R.id.goals).setOnClickListener(this);
+			view.findViewById(R.id.refresh).setOnClickListener(this);
 			mDialog = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog)
 					.setTitle(getString(R.string.scores_sort_dialog_title))
 					.setView(view)

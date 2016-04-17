@@ -164,7 +164,6 @@ public class FragmentPlayers extends AbstractFragment
 			UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 			UI.show(mRecyclerView);
 			if (mSnackbar != null) mSnackbar.dismiss();
-			ComparatorPlayers.sortByJerseyNumber(data);
 			if (mAdapter == null) {
 				mAdapter = new PlayersAdapter(data);
 				mRecyclerView.setAdapter(mAdapter);

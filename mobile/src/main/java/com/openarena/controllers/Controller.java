@@ -2,6 +2,9 @@ package com.openarena.controllers;
 
 import android.content.Context;
 import android.os.Handler;
+
+import com.openarena.model.comparators.ComparatorFixtures;
+import com.openarena.model.comparators.ComparatorPlayers;
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
@@ -11,9 +14,11 @@ import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.util.Const;
 import com.openarena.util.L;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -116,18 +121,22 @@ public class Controller {
 			@Override
 			public void run() {
 				final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(soccerseasonId, matchday);
-				if (dbList != null) mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onSuccess(dbList);
-					}
-				});
+				if (dbList != null) {
+					ComparatorFixtures.sortByDate(dbList);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onSuccess(dbList);
+						}
+					});
+				}
 				String result = Api.getFixturesByMatchday(context, soccerseasonId, matchday);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
 						final ArrayList<Fixture> list = Fixture.parseArray(array);
 						if (list != null && !list.isEmpty()) {
+							ComparatorFixtures.sortByDate(list);
 							DBManager.setFixturesList(list);
 							mHandler.post(new Runnable() {
 								@Override
@@ -332,23 +341,27 @@ public class Controller {
 			@Override
 			public void run() {
 				final ArrayList<Player> dbList = DBManager.getPlayerList(teamId);
-				if (dbList != null) mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onSuccess(dbList);
-					}
-				});
+				if (dbList != null) {
+					ComparatorPlayers.sortByJerseyNumber(dbList);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onSuccess(dbList);
+						}
+					});
+				}
 				String result = Api.getTeamPlayers(context, teamId);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("players");
-						final ArrayList<Player> players = Player.parseArray(teamId, array);
-						if (players != null && !players.isEmpty()) {
-							DBManager.setPlayersList(players);
+						final ArrayList<Player> list = Player.parseArray(teamId, array);
+						if (list != null && !list.isEmpty()) {
+							ComparatorPlayers.sortByJerseyNumber(list);
+							DBManager.setPlayersList(list);
 							mHandler.post(new Runnable() {
 								@Override
 								public void run() {
-									callback.onSuccess(players);
+									callback.onSuccess(list);
 								}
 							});
 						}
