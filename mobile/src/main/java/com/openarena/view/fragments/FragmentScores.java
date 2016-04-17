@@ -132,7 +132,7 @@ public class FragmentScores extends AbstractFragment
 				break;
 
 			case R.id.action_sort:
-				if (mDialog == null) showSortDialog();
+				if (mDialog == null || !mDialog.isShowing()) showSortDialog();
 				break;
 
 			default:

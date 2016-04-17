@@ -5,8 +5,10 @@
 	<color name="alert_content">#BDBDBD</color>
 	<color name="primary">#0F9D58</color>
 	<color name="primary_dark">#0B8043</color>
-	<color name="text_primary">#FFF</color>
-	<color name="text_secondary">#C8E6C9</color>
+	<color name="text_primary">#000</color>
+	<color name="text_secondary">#303030</color>
+	<color name="toolbar_primary">#FFF</color>
+	<color name="toolbar_secondary">#C8E6C9</color>
 
 	<color name="leagues_list_item_name">#000</color>
 	<color name="leagues_list_item_matchday">#555</color>

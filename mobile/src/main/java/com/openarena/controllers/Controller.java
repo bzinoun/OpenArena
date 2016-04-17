@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.openarena.model.comparators.ComparatorFixtures;
 import com.openarena.model.comparators.ComparatorPlayers;
+import com.openarena.model.comparators.ComparatorScores;
 import com.openarena.model.interfaces.OnResultListener;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
@@ -179,18 +180,22 @@ public class Controller {
 			@Override
 			public void run() {
 				final ArrayList<Scores> dbList = DBManager.getScoresList(soccerSeasonId);
-				if (dbList != null) mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onSuccess(dbList);
-					}
-				});
+				if (dbList != null) {
+					ComparatorScores.sortByPoints(dbList);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onSuccess(dbList);
+						}
+					});
+				}
 				String result = Api.getScores(context, soccerSeasonId);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("standing");
 						final ArrayList<Scores> list = Scores.parseArray(soccerSeasonId, array);
 						if (list != null && !list.isEmpty()) {
+							ComparatorScores.sortByPoints(list);
 							DBManager.setScoresList(list);
 							mHandler.post(new Runnable() {
 								@Override

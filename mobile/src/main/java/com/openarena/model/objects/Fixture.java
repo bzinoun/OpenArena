@@ -173,6 +173,10 @@ public class Fixture implements Parcelable {
 			if (result != null) {
 				fixture.mGoalsHomeTeam = result.optInt("goalsHomeTeam", -1);
 				fixture.mGoalsAwayTeam = result.optInt("goalsAwayTeam", -1);
+				// FIXME: 17.04.2016 it my fix to this API
+				if (fixture.mGoalsHomeTeam >= 0 && fixture.getGoalsAwayTeam() >= 0) {
+					fixture.mStatus = FINISHED;
+				}
 			}
 			return fixture;
 		}
@@ -233,11 +237,11 @@ public class Fixture implements Parcelable {
 	}
 
 	public Integer getGoalsHomeTeam() {
-		return mGoalsHomeTeam >= 0 ? mGoalsHomeTeam : 0;
+		return mGoalsHomeTeam;
 	}
 
 	public Integer getGoalsAwayTeam() {
-		return mGoalsAwayTeam >= 0 ? mGoalsAwayTeam : 0;
+		return mGoalsAwayTeam;
 	}
 
 	@Override

@@ -48,9 +48,7 @@ public class FixturesAdapter
 		Fixture item = mList.get(position);
 		holder.mHomeTeamName.setText(item.getHomeTeamName());
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
-		int goalsHomeTeam = item.getGoalsHomeTeam(),
-				goalsAwayTeam = item.getGoalsAwayTeam();
-		if (goalsHomeTeam >= 0 && goalsAwayTeam >= 0) {
+		if (item.getStatus() != Fixture.TIMED) {
 			UI.hide(holder.mDate);
 			UI.show(holder.mResult);
 			holder.mResult.setText(String.format(mResources.getString(
