@@ -109,6 +109,7 @@ public class FragmentAbout extends AbstractFragment
 				getString(R.string.about_github),
 				getString(R.string.link_github))
 		);
+		// FIXME: 17.04.2016
 		/*list.add(new Link(
 				R.drawable.ic_facebook_box,
 				getString(R.string.about_facebook),
