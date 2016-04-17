@@ -122,7 +122,7 @@ public class FragmentFixtureInfo extends AbstractFragment
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_fixture_details, menu);
+		inflater.inflate(R.menu.fragment_fixture_info, menu);
 	}
 
 	@Override
@@ -137,6 +137,14 @@ public class FragmentFixtureInfo extends AbstractFragment
 				mEventListener.onEvent(
 						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
 								.setLeague(DBManager.getLeague(mFixture.getSoccerSeasonID())));
+				break;
+
+			case R.id.action_settings:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
+				break;
+
+			case R.id.action_about:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_ABOUT));
 				break;
 
 			default:

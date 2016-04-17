@@ -21,7 +21,6 @@ import com.openarena.controllers.Controller;
 import com.openarena.model.AbstractFragment;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.PlayersAdapter;
-import com.openarena.model.comparators.ComparatorPlayers;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.EventData;
@@ -122,6 +121,14 @@ public class FragmentPlayers extends AbstractFragment
 		switch (id) {
 			case R.id.action_refresh:
 				loadData();
+				break;
+
+			case R.id.action_settings:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
+				break;
+
+			case R.id.action_about:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_ABOUT));
 				break;
 
 			default:

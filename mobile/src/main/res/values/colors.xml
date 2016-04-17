@@ -43,6 +43,8 @@
 	<color name="players_list_item_name">#000</color>
 	<color name="players_list_item_jersey">#000</color>
 
+	<color name="about_text">#555</color>
+
 	<color name="button_text">@color/primary</color>
 	<color name="button_pressed">#999</color>
 

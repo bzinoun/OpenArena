@@ -13,6 +13,7 @@ import com.openarena.model.objects.EventData;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.view.dialogs.DialogTeam;
+import com.openarena.view.fragments.FragmentAbout;
 import com.openarena.view.fragments.FragmentFixtureInfo;
 import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentFixturesTeam;
@@ -162,6 +163,24 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 									R.anim.fragment_fade_pop_out)
 							.replace(R.id.main_container, FragmentPlayerInfo.getInstance(data7))
 							.addToBackStack(FragmentPlayerInfo.TAG)
+							.commit();
+				}
+				break;
+
+			case Const.EVENT_CODE_SHOW_SETTINGS:
+				L.e(MainActivity.class, "Settings");
+				break;
+
+			case Const.EVENT_CODE_SHOW_ABOUT:
+				if (mFragmentManager.findFragmentByTag(FragmentAbout.TAG) == null) {
+					mFragmentManager.beginTransaction()
+							.setCustomAnimations(
+									R.anim.fragment_fade_in,
+									R.anim.fragment_fade_out,
+									R.anim.fragment_fade_pop_in,
+									R.anim.fragment_fade_pop_out)
+							.replace(R.id.main_container, FragmentAbout.getInstance(null))
+							.addToBackStack(FragmentAbout.TAG)
 							.commit();
 				}
 				break;

@@ -135,6 +135,14 @@ public class FragmentScores extends AbstractFragment
 				if (mDialog == null || !mDialog.isShowing()) showSortDialog();
 				break;
 
+			case R.id.action_settings:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
+				break;
+
+			case R.id.action_about:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_ABOUT));
+				break;
+
 			default:
 				return super.onOptionsItemSelected(item);
 		}

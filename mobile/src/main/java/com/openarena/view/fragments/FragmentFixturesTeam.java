@@ -123,7 +123,6 @@ public class FragmentFixturesTeam extends AbstractFragment
 		int id = item.getItemId();
 		switch (id) {
 			case R.id.action_notify:
-				//loadData(mTeam.getID());
 				if (!mNotify) {
 					mMenu.findItem(R.id.action_notify).setIcon(R.drawable.ic_bell);
 					mNotify = true;
@@ -132,6 +131,14 @@ public class FragmentFixturesTeam extends AbstractFragment
 					mMenu.findItem(R.id.action_notify).setIcon(R.drawable.ic_bell_outline);
 					mNotify = false;
 				}
+				break;
+
+			case R.id.action_settings:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
+				break;
+
+			case R.id.action_about:
+				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_ABOUT));
 				break;
 
 			default:
