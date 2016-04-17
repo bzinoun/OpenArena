@@ -36,7 +36,7 @@
 	<color name="scores_list_item_text">#888</color>
 	<color name="scores_list_item_name">#444</color>
 	<color name="scores_list_item_points">#000</color>
-	<color name="scores_dialog_item_text">@color/text_primary</color>
+	<color name="scores_dialog_item_text">@color/toolbar_primary</color>
 	<color name="scores_dialog_item_background">@color/primary</color>
 	<color name="scores_dialog_item_background_pressed">@color/primary_dark</color>
 
