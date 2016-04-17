@@ -48,23 +48,16 @@ public class FixturesAdapter
 		Fixture item = mList.get(position);
 		holder.mHomeTeamName.setText(item.getHomeTeamName());
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
-		if (item.getStatus() != Fixture.TIMED) {
+		int goalsHomeTeam = item.getGoalsHomeTeam(),
+				goalsAwayTeam = item.getGoalsAwayTeam();
+		if (goalsHomeTeam >= 0 && goalsAwayTeam >= 0) {
 			UI.hide(holder.mDate);
 			UI.show(holder.mResult);
 			holder.mResult.setText(String.format(mResources.getString(
 					R.string.fixtures_list_item_result),
 					item.getGoalsHomeTeam(),
 					item.getGoalsAwayTeam()));
-			holder.mResult.setBackgroundResource(
-					R.drawable.fixtures_list_item_result_background);
-			/*if (item.getStatus() != Fixture.SCHEDULED) {
-				holder.mResult.setBackgroundResource(
-						R.drawable.fixtures_list_item_result_background);
-			}
-			else {
-				holder.mResult.setBackgroundResource(
-						R.drawable.fixtures_list_item_result_scheduled_background);
-			}*/
+			holder.mResult.setBackgroundResource(R.drawable.fixtures_list_item_result_background);
 		}
 		else {
 			UI.hide(holder.mResult);

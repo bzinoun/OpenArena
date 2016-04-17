@@ -5,8 +5,8 @@
 	<color name="alert_content">#BDBDBD</color>
 	<color name="primary">#0F9D58</color>
 	<color name="primary_dark">#0B8043</color>
-	<color name="toolbar_title">#FFF</color>
-	<color name="toolbar_subtitle">#C8E6C9</color>
+	<color name="text_primary">#FFF</color>
+	<color name="text_secondary">#C8E6C9</color>
 
 	<color name="leagues_list_item_name">#000</color>
 	<color name="leagues_list_item_matchday">#555</color>
@@ -34,7 +34,7 @@
 	<color name="scores_list_item_text">#888</color>
 	<color name="scores_list_item_name">#444</color>
 	<color name="scores_list_item_points">#000</color>
-	<color name="scores_dialog_item_text">#FFF</color>
+	<color name="scores_dialog_item_text">@color/text_primary</color>
 	<color name="scores_dialog_item_background">@color/primary</color>
 	<color name="scores_dialog_item_background_pressed">@color/primary_dark</color>
 
@@ -42,7 +42,7 @@
 	<color name="players_list_item_jersey">#000</color>
 
 	<color name="button_text">@color/primary</color>
-	<color name="button_pressed">#999999</color>
+	<color name="button_pressed">#999</color>
 
 	<color name="window_background">#E0E0E0</color>
 	<color name="window_background_pressed">#CACACA</color>
