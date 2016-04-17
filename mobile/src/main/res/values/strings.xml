@@ -33,7 +33,7 @@
 	<string name="team_button_players">Players</string>
 
 	<string name="about_title">About</string>
-	<string name="about_entry">Hello, this application used the <b>open football API</b>, and below has links on my profiles</string>
+	<string name="about_entry">Hello, this application used the <b>Open football API</b>, and below has links on my profiles</string>
 	<string name="about_version">Build</string>
 
 	<string name="option_settings">Settings</string>

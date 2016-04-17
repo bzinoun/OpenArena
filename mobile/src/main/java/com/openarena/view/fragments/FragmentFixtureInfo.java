@@ -129,9 +129,10 @@ public class FragmentFixtureInfo extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.action_refresh:
+			// FIXME: 17.04.2016
+			/*case R.id.action_refresh:
 				loadData();
-				break;
+				break;*/
 
 			case R.id.action_score_table:
 				mEventListener.onEvent(
