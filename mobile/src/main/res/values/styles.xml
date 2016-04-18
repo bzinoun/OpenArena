@@ -16,7 +16,7 @@
 
 	<style name="AppTheme.Toolbar">
 		<item name="android:textColorPrimary">@color/toolbar_primary</item>
-		<item name="android:textColorSecondary">@color/toolbar_primary</item>
+		<item name="android:textColorSecondary">@color/toolbar_secondary</item>
 		<item name="colorControlNormal">@color/toolbar_primary</item>
 	</style>
 

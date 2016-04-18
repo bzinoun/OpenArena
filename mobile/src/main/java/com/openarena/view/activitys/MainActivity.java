@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
-				L.e(MainActivity.class, "Settings");
+
 				break;
 
 			case Const.EVENT_CODE_SHOW_ABOUT:
@@ -215,8 +215,8 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					.replace(
 							R.id.main_container,
 							FragmentLeagues.getInstance(null),
-							FragmentLeagues.TAG)
-					.commit();
+							FragmentLeagues.TAG
+					).commit();
 		}
 	}
 

@@ -1,10 +1,12 @@
 package com.openarena.view.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import com.openarena.R;
@@ -30,6 +33,7 @@ import com.openarena.util.Const;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class FragmentLeagues extends AbstractFragment
 		implements Controller.OnGetLeagues, OnItemClickListener {
@@ -56,6 +60,7 @@ public class FragmentLeagues extends AbstractFragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		if (mController == null) mController = Controller.getInstance();
 		if (savedInstanceState != null) {
 			ArrayList<League> list = savedInstanceState.getParcelableArrayList("list");
 			if (list != null && !list.isEmpty()) mAdapter = new LeaguesAdapter(getResources(), list);
@@ -70,7 +75,6 @@ public class FragmentLeagues extends AbstractFragment
 		View view = inflater.inflate(R.layout.fragment_leagues, container, false);
 		setupUI(view);
 		if (mEventListener == null) mEventListener = (EventListener) getActivity();
-		if (mController == null) mController = Controller.getInstance();
 		showContent();
 		mIsShow = true;
 		return view;
@@ -143,16 +147,16 @@ public class FragmentLeagues extends AbstractFragment
 				mSnackbar = Snackbar.make(
 						getActivity().findViewById(R.id.main_container),
 						R.string.snackbar_result_null_text,
-						Snackbar.LENGTH_INDEFINITE)
-						.setAction(
-								R.string.snackbar_result_null_action,
-								new View.OnClickListener() {
-									@Override
-									public void onClick(View v) {
-										loadData();
-									}
-								}
-						);
+						Snackbar.LENGTH_INDEFINITE
+				).setAction(
+						R.string.snackbar_result_null_action,
+						new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								loadData();
+							}
+						}
+				);
 				mSnackbar.show();
 			}
 		}
@@ -179,7 +183,8 @@ public class FragmentLeagues extends AbstractFragment
 	@Override
 	public void onItemClick(View view, int position) {
 		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_LEAGUE)
-				.setLeague(mAdapter.getItem(position)));
+				.setLeague(mAdapter.getItem(position))
+		);
 	}
 
 	@Override
@@ -191,17 +196,30 @@ public class FragmentLeagues extends AbstractFragment
 		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 		if (toolbar != null) {
 			toolbar.setTitle(getString(R.string.leagues_title));
-			toolbar.setSubtitle(R.string.leagues_subtitle);
+			int year = Calendar.getInstance().get(Calendar.YEAR);
+			toolbar.setSubtitle(String.format(getString(R.string.leagues_subtitle), year - 1, year));
 		}
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-		mRecyclerView.setLayoutManager(new LinearLayoutManager(
-				getActivity(),
-				LinearLayoutManager.VERTICAL,
-				false));
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			mRecyclerView.setLayoutManager(new GridLayoutManager(
+					getActivity(),
+					2,
+					GridLayout.VERTICAL,
+					false)
+			);
+		}
+		else {
+			mRecyclerView.setLayoutManager(new LinearLayoutManager(
+					getActivity(),
+					LinearLayoutManager.VERTICAL,
+					false)
+			);
+		}
 		mRecyclerView.addOnItemTouchListener(new RecyclerViewItemTouchListener(
 				getActivity(),
 				mRecyclerView,
-				this));
+				this)
+		);
 		mRecyclerView.setHasFixedSize(true);
 		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
 		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);

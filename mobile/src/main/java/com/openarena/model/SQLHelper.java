@@ -10,7 +10,7 @@ import com.openarena.util.DBConst;
 public class SQLHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "openarena.ApplicationDB";
-	private static final int DB_VERSION = 1;
+	private static final int DB_VERSION = 2;
 
 	private static volatile SQLHelper sInstance;
 
@@ -35,16 +35,16 @@ public class SQLHelper extends SQLiteOpenHelper {
 		String params1 = DBConst.ID + " INTEGER NOT NULL," +
 				DBConst.CAPTION + " TEXT," +
 				DBConst.LEAGUE + " TEXT," +
-				DBConst.YEAR + " INTEGER," +
+				DBConst.YEAR + " NUMERIC," +
 				DBConst.CURRENT_MATCHDAY + " INTEGER," +
 				DBConst.NUMBER_OF_MATCHDAYS + " INTEGER," +
 				DBConst.NUMBER_OF_TEAMS + " INTEGER," +
 				DBConst.NUMBER_OF_GAMES + " INTEGER," +
-				DBConst.LAST_UPDATED + " INTEGER";
+				DBConst.LAST_UPDATED + " NUMERIC";
 
 		String params2 = DBConst.ID + " INTEGER NOT NULL," +
 				DBConst.SOCCER_SEASON_ID + " INTEGER," +
-				DBConst.DATE + " INTEGER," +
+				DBConst.DATE + " NUMERIC," +
 				DBConst.STATUS + " INTEGER," +
 				DBConst.MATCHDAY + " INTEGER," +
 				DBConst.HOME_TEAM_ID + " INTEGER NOT NULL," +
@@ -56,8 +56,8 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 		String params3 = DBConst.FIXTURE_ID + " INTEGER NOT NULL," +
 				DBConst.COUNT + " INTEGER," +
-				DBConst.TIME_FRAME_START + " INTEGER," +
-				DBConst.TIME_FRAME_END + " INTEGER," +
+				DBConst.TIME_FRAME_START + " NUMERIC," +
+				DBConst.TIME_FRAME_END + " NUMERIC," +
 				DBConst.HOME_TEAM_WINS + " INTEGER," +
 				DBConst.AWAY_TEAM_WINS + " INTEGER," +
 				DBConst.DRAWS + " INTEGER";
@@ -74,7 +74,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 				DBConst.GOAL_DIFFERENCE + " INTEGER";
 
 		String params5 = DBConst.ID + " INTEGER NOT NULL," +
-				DBConst.IS_FAVORITE + " INTEGER," +
+				DBConst.IS_FAVORITE + " NUMERIC," +
 				DBConst.NAME + " TEXT," +
 				DBConst.SHORT_NAME + " TEXT," +
 				DBConst.SQUAD_MARKET_VALUE + " TEXT," +
@@ -85,9 +85,9 @@ public class SQLHelper extends SQLiteOpenHelper {
 				DBConst.NAME + " TEXT," +
 				DBConst.POSITION + " TEXT," +
 				DBConst.JERSEY_NUMBER + " INTEGER," +
-				DBConst.DATE_OF_BIRTH + " INTEGER," +
+				DBConst.DATE_OF_BIRTH + " NUMERIC," +
 				DBConst.NATIONALITY + " TEXT," +
-				DBConst.CONTRACT_UNTIL + " INTEGER," +
+				DBConst.CONTRACT_UNTIL + " NUMERIC," +
 				DBConst.MARKET_VALUE + " TEXT";
 
 		createTable(db, DBConst.TABLE_LEAGUES, params1);
