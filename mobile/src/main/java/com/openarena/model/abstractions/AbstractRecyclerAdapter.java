@@ -1,10 +1,12 @@
-package com.openarena.model;
+package com.openarena.model.abstractions;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
+
+import com.openarena.model.RecyclerViewTouchHelperCallback;
 import com.openarena.model.interfaces.OnItemTouchAdapter;
 import com.openarena.util.L;
 import java.util.ArrayList;

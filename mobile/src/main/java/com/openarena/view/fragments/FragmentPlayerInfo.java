@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.openarena.R;
-import com.openarena.model.AbstractFragment;
+import com.openarena.model.abstractions.AbstractFragment;
 import com.openarena.model.objects.Player;
 
 import java.text.SimpleDateFormat;

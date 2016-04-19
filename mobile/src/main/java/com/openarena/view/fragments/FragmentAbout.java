@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.openarena.BuildConfig;
 import com.openarena.R;
-import com.openarena.model.AbstractFragment;
+import com.openarena.model.abstractions.AbstractFragment;
 import com.openarena.model.adapters.LinksAdapter;
 import com.openarena.model.objects.Link;
 import com.openarena.util.L;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.openarena.R;
-import com.openarena.model.AbstractRecyclerAdapter;
+import com.openarena.model.abstractions.AbstractRecyclerAdapter;
 import com.openarena.model.objects.Fixture;
 import com.openarena.util.UI;
 import java.text.DateFormat;

@@ -48,6 +48,12 @@
 	<color name="button_text">@color/primary</color>
 	<color name="button_pressed">#999</color>
 
+	<color name="intro_indicator_selected">@color/accent</color>
+	<color name="intro_indicator_unselected">@color/primary_dark</color>
+	<color name="intro_page1">#0F9D58</color>
+	<color name="intro_page2">#0f549d</color>
+	<color name="intro_page3">#9d830f</color>
+
 	<color name="window_background">#E0E0E0</color>
 	<color name="window_background_pressed">#CACACA</color>
 </resources>

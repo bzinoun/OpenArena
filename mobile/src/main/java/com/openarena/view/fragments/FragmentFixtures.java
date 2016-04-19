@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.openarena.R;
 import com.openarena.controllers.Controller;
-import com.openarena.model.AbstractFragment;
+import com.openarena.model.abstractions.AbstractFragment;
 import com.openarena.model.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.interfaces.EventListener;

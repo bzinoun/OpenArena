@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.openarena.R;
-import com.openarena.model.AbstractRecyclerAdapter;
+import com.openarena.model.abstractions.AbstractRecyclerAdapter;
 import com.openarena.model.interfaces.OnItemTouchAdapter;
 import com.openarena.model.objects.League;
 

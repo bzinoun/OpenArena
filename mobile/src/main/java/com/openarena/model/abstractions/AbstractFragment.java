@@ -1,4 +1,4 @@
-package com.openarena.model;
+package com.openarena.model.abstractions;
 
 import android.support.v4.app.Fragment;
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.openarena.R;
-import com.openarena.model.AbstractRecyclerAdapter;
+import com.openarena.model.abstractions.AbstractRecyclerAdapter;
 import com.openarena.model.objects.Scores;
 
 import java.util.ArrayList;

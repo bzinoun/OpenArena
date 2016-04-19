@@ -1,6 +1,7 @@
 package com.openarena.view.activitys;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -23,8 +24,6 @@ import com.openarena.view.fragments.FragmentPlayers;
 import com.openarena.view.fragments.FragmentScores;
 
 public class MainActivity extends AppCompatActivity implements EventListener {
-
-	private static final int TIME_TO_EXIT = 400;
 
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 
 	@Override
 	public void onBackPressed() {
-		if (mLastBack + TIME_TO_EXIT > System.currentTimeMillis()) {
+		if (mLastBack + Const.TIME_TO_EXIT > System.currentTimeMillis()) {
 			showFinishDialog();
 		}
 		else if (!mFragmentManager.popBackStackImmediate())	showFinishDialog();
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
-
+				startActivity(new Intent(this, IntroActivity.class));
 				break;
 
 			case Const.EVENT_CODE_SHOW_ABOUT:
