@@ -1,4 +1,4 @@
-package com.openarena.model;
+package com.openarena.model.listeners;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

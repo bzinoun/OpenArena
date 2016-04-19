@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.abstractions.AbstractFragment;
-import com.openarena.model.RecyclerViewItemTouchListener;
+import com.openarena.model.listeners.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.LeaguesAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
