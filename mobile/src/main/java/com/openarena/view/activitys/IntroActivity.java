@@ -109,15 +109,17 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 			for (int i = 0; i < count; i++) {
 				ImageView indicator = new ImageView(this);
 				indicator.setLayoutParams(params);
+				if (i == 0) indicator.setBackgroundResource(R.drawable.indicator_selected);
+				else indicator.setBackgroundResource(R.drawable.indicator_unselected);
 				mIndicators[i] = indicator;
 				layoutIndicators.addView(indicator);
 			}
 		}
 		mViewPager.addOnPageChangeListener(new OnIntroSwipeListener(this, mViewPager, mAdapter, mIndicators) {
 			@Override
-			public void pageChanged(int position) {
-				mNextButton.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
-				mFinishButton.setVisibility(position == 2 ? View.VISIBLE : View.GONE);
+			public void pageChanged(int position, int count) {
+				mNextButton.setVisibility(position == count - 1 ? View.GONE : View.VISIBLE);
+				mFinishButton.setVisibility(position == count - 1 ? View.VISIBLE : View.GONE);
 			}
 		});
 	}

@@ -62,13 +62,13 @@ public abstract class OnIntroSwipeListener implements ViewPager.OnPageChangeList
 					ContextCompat.getColor(mActivity, mAdapter.getColor(position))
 			);
 		}
-		pageChanged(position);
+		pageChanged(position, mCount);
 	}
 
 	@Override
 	public void onPageScrollStateChanged(int state) {}
 
-	abstract public void pageChanged(int position);
+	abstract public void pageChanged(int position, int count);
 
 	void updateIndicators(int position) {
 		for (int i = 0; i < mIndicators.length; i++) {
