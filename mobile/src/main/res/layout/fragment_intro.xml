@@ -33,7 +33,7 @@
 			android:paddingBottom="@dimen/horizontal_padding"
 			android:textSize="24sp"
 			android:textStyle="bold"
-			android:visibility="visible"
+			android:textColor="@color/intro_title"
 			tools:text="Title"/>
 
 		<TextView
@@ -42,7 +42,7 @@
 			android:layout_height="wrap_content"
 			android:gravity="center"
 			android:textSize="18sp"
-			android:visibility="visible"
+			android:textColor="@color/intro_subtitle"
 			tools:text="Some subtitle"/>
 
 	</LinearLayout>

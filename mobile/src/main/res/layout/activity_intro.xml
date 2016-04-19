@@ -29,16 +29,14 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="start|center"
 			android:text="@string/intro_skip"
-			android:textColor="#FFF"/>
+			android:textColor="@color/intro_button"/>
 
 		<LinearLayout
 			android:id="@+id/layout_indicators"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
-			android:orientation="horizontal">
-
-		</LinearLayout>
+			android:orientation="horizontal"/>
 
 		<Button
 			android:id="@+id/button_finish"
@@ -47,7 +45,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="end|center"
 			android:text="@string/intro_finish"
-			android:textColor="#FFF"
+			android:textColor="@color/intro_button"
 			android:visibility="gone"/>
 
 		<Button
@@ -57,7 +55,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="end|center"
 			android:text="@string/intro_next"
-			android:textColor="#FFF"/>
+			android:textColor="@color/intro_button"/>
 
 	</FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
