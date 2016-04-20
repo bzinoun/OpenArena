@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.openarena.R;
+import com.openarena.model.IntroPageTransformer;
 import com.openarena.model.abstractions.AbstractFragmentIntro;
 import com.openarena.model.adapters.IntroPagerAdapter;
 import com.openarena.model.listeners.OnIntroSwipeListener;
@@ -81,17 +82,20 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 		if (mAdapter == null) {
 			mAdapter = new IntroPagerAdapter(getSupportFragmentManager());
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
+					0,
 					"Title1",
 					"Subtitle1",
-					R.mipmap.ic_launcher), R.color.intro_page1);
+					R.drawable.im_open_arena), R.color.intro_page1);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
+					1,
 					"Title2",
 					"Subtitle2",
-					R.mipmap.ic_launcher), R.color.intro_page2);
+					R.drawable.im_open_arena), R.color.intro_page2);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					"Title3",
-					"Subtitle3",
-					R.mipmap.ic_launcher), R.color.intro_page3);
+					2,
+					"Get started",
+					null,
+					R.drawable.im_open_arena), R.color.intro_page3);
 		}
 		mViewPager.setAdapter(mAdapter);
 	}
@@ -126,6 +130,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 				mFinishButton.setVisibility(position == count - 1 ? View.VISIBLE : View.GONE);
 			}
 		});
+		mViewPager.setPageTransformer(false, new IntroPageTransformer());
 	}
 
 }

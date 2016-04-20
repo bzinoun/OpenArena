@@ -18,21 +18,24 @@ public class AbstractFragmentIntro extends Fragment {
 	private static final String VIEW_ID = "view_id";
 	private static final String TITLE = "title";
 	private static final String SUBTITLE = "subtitle";
+	private static final String POSITION = "position";
 
 	protected ImageView mImage;
 	protected TextView mTitle, mSubtitle;
 	protected boolean mIsCustomLayout;
-	protected int mViewId;
+	protected int mViewId, mPosition;
 	protected String mTitleStr, mSubtitleStr;
 
 	public static AbstractFragmentIntro getInstance(
+			int position,
 			@Nullable String title,
 			@Nullable String subtitle,
 			int imageId) {
-		return  getInstance(title, subtitle, imageId, false);
+		return  getInstance(position, title, subtitle, imageId, false);
 	}
 
 	public static AbstractFragmentIntro getInstance(
+			int position,
 			@Nullable String title,
 			@Nullable String subtitle,
 			int viewId,
@@ -40,13 +43,14 @@ public class AbstractFragmentIntro extends Fragment {
 
 		// FIXME: 20.04.2016
 		isCustomLayout = false;
-		
+
 		AbstractFragmentIntro fragment = new AbstractFragmentIntro();
 		Bundle data = new Bundle();
-		data.putBoolean(IS_CUSTOM_LAYOUT, isCustomLayout);
+		data.putInt(POSITION, position);
 		data.putInt(VIEW_ID, viewId);
 		data.putString(TITLE, title);
 		data.putString(SUBTITLE, subtitle);
+		data.putBoolean(IS_CUSTOM_LAYOUT, isCustomLayout);
 		fragment.setArguments(data);
 		return fragment;
 	}
@@ -58,6 +62,7 @@ public class AbstractFragmentIntro extends Fragment {
 		mViewId = getArguments().getInt(VIEW_ID);
 		mTitleStr = getArguments().getString(TITLE);
 		mSubtitleStr = getArguments().getString(SUBTITLE);
+		mPosition = getArguments().getInt(POSITION);
 	}
 
 	@Override
@@ -66,6 +71,7 @@ public class AbstractFragmentIntro extends Fragment {
 			ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_intro, container, false);
+		view.setTag(mPosition);
 		setupUI(view);
 		return view;
 	}
