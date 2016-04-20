@@ -81,17 +81,17 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 		if (mAdapter == null) {
 			mAdapter = new IntroPagerAdapter(getSupportFragmentManager());
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					R.mipmap.ic_launcher,
 					"Title1",
-					"Subtitle1"), R.color.intro_page1);
+					"Subtitle1",
+					R.mipmap.ic_launcher), R.color.intro_page1);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					R.mipmap.ic_launcher,
 					"Title2",
-					"Subtitle2"), R.color.intro_page2);
+					"Subtitle2",
+					R.mipmap.ic_launcher), R.color.intro_page2);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					R.mipmap.ic_launcher,
 					"Title3",
-					"Subtitle3"), R.color.intro_page3);
+					"Subtitle3",
+					R.mipmap.ic_launcher), R.color.intro_page3);
 		}
 		mViewPager.setAdapter(mAdapter);
 	}
@@ -115,7 +115,11 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 				layoutIndicators.addView(indicator);
 			}
 		}
-		mViewPager.addOnPageChangeListener(new OnIntroSwipeListener(this, mViewPager, mAdapter, mIndicators) {
+		mViewPager.addOnPageChangeListener(new OnIntroSwipeListener(
+				this,
+				mViewPager,
+				mAdapter,
+				mIndicators) {
 			@Override
 			public void pageChanged(int position, int count) {
 				mNextButton.setVisibility(position == count - 1 ? View.GONE : View.VISIBLE);
@@ -123,7 +127,5 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 			}
 		});
 	}
-
-
 
 }

@@ -14,20 +14,39 @@ import com.openarena.util.UI;
 
 public class AbstractFragmentIntro extends Fragment {
 
+	private static final String IS_CUSTOM_LAYOUT = "is_custom_layout";
+	private static final String VIEW_ID = "view_id";
+	private static final String TITLE = "title";
+	private static final String SUBTITLE = "subtitle";
+
 	protected ImageView mImage;
 	protected TextView mTitle, mSubtitle;
-	protected int mImageId;
+	protected boolean mIsCustomLayout;
+	protected int mViewId;
 	protected String mTitleStr, mSubtitleStr;
 
 	public static AbstractFragmentIntro getInstance(
-			int imageId,
 			@Nullable String title,
-			@Nullable String subtitle) {
+			@Nullable String subtitle,
+			int imageId) {
+		return  getInstance(title, subtitle, imageId, false);
+	}
+
+	public static AbstractFragmentIntro getInstance(
+			@Nullable String title,
+			@Nullable String subtitle,
+			int viewId,
+			boolean isCustomLayout) {
+
+		// FIXME: 20.04.2016
+		isCustomLayout = false;
+		
 		AbstractFragmentIntro fragment = new AbstractFragmentIntro();
 		Bundle data = new Bundle();
-		data.putInt("imageId", imageId);
-		data.putString("title", title);
-		data.putString("subtitle", subtitle);
+		data.putBoolean(IS_CUSTOM_LAYOUT, isCustomLayout);
+		data.putInt(VIEW_ID, viewId);
+		data.putString(TITLE, title);
+		data.putString(SUBTITLE, subtitle);
 		fragment.setArguments(data);
 		return fragment;
 	}
@@ -35,9 +54,10 @@ public class AbstractFragmentIntro extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mImageId = getArguments().getInt("imageId");
-		mTitleStr = getArguments().getString("title");
-		mSubtitleStr = getArguments().getString("subtitle");
+		mIsCustomLayout = getArguments().getBoolean(IS_CUSTOM_LAYOUT);
+		mViewId = getArguments().getInt(VIEW_ID);
+		mTitleStr = getArguments().getString(TITLE);
+		mSubtitleStr = getArguments().getString(SUBTITLE);
 	}
 
 	@Override
@@ -59,13 +79,10 @@ public class AbstractFragmentIntro extends Fragment {
 	}
 
 	private void setupUI(View view) {
-		mImage = (ImageView) view.findViewById(R.id.image);
 		mTitle = (TextView) view.findViewById(R.id.title);
 		mSubtitle = (TextView) view.findViewById(R.id.subtitle);
-		if (mImageId > 0) {
-			mImage.setImageResource(mImageId);
-			UI.show(mImage);
-		}
+		mImage = (ImageView) view.findViewById(R.id.image);
+
 		if (mTitleStr != null) {
 			mTitle.setText(mTitleStr);
 			UI.show(mTitle);
@@ -74,6 +91,9 @@ public class AbstractFragmentIntro extends Fragment {
 			mSubtitle.setText(mSubtitleStr);
 			UI.show(mSubtitle);
 		}
-
+		if (!mIsCustomLayout) {
+			mImage.setImageResource(mViewId);
+			UI.show(mImage);
+		}
 	}
 }
