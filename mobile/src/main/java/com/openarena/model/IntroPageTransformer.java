@@ -38,12 +38,11 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 
 				if (mPagePosition == 2) {
 					mImage.setAlpha(1.0f - mAbsPosition * 1.5f);
-					mImage.setTranslationX(mPageWidthTimesPosition * 0.8f);
+					mImage.setTranslationX(-mPageWidthTimesPosition * 0.8f);
 				}
 
 				if (position < 0) {
 					//out
-					mImage.setTranslationY(-mPageHeightTimesPosition * 0.1f);
 				} else {
 					//in
 					mImage.setTranslationY(mPageHeightTimesPosition * 0.1f);

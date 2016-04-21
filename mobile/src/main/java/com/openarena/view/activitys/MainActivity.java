@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		setContentView(R.layout.activity_main);
 		setupUI();
 		mFragmentManager = getSupportFragmentManager();
-		PreferencesManager.from(this).setBoolean(Const.SUBMITTED, false).commit();
 		mSubmitted = PreferencesManager.from(this).getBoolean(Const.SUBMITTED, false);
 	}
 
