@@ -20,6 +20,7 @@
 		android:gravity="center_horizontal"
 		android:paddingLeft="8dp"
 		android:paddingRight="8dp"
+		android:textSize="@dimen/scores_table_text_size"
 		android:textColor="@color/scores_list_item_text"
 		tools:text="1"/>
 
@@ -45,12 +46,14 @@
 		android:layout_width="@dimen/scores_table_played_games_width"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
+		android:textSize="@dimen/scores_table_text_size"
 		android:textColor="@color/scores_list_item_text"
 		tools:text="60"/>
 
 	<TextView
 		android:id="@+id/goals"
 		android:layout_width="@dimen/scores_table_goals_width"
+		android:textSize="@dimen/scores_table_text_size"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		android:textColor="@color/scores_list_item_text"
@@ -59,6 +62,7 @@
 	<TextView
 		android:id="@+id/against_difference"
 		android:layout_width="@dimen/scores_table_against_difference_width"
+		android:textSize="@dimen/scores_table_text_size"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		android:textColor="@color/scores_list_item_text"
@@ -67,6 +71,7 @@
 	<TextView
 		android:id="@+id/points"
 		android:layout_width="@dimen/scores_table_points_width"
+		android:textSize="@dimen/scores_table_text_size"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		android:textColor="@color/scores_list_item_points"

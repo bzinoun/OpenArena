@@ -56,12 +56,28 @@ public class FixturesAdapter
 					item.getGoalsHomeTeam(),
 					item.getGoalsAwayTeam()));
 			holder.mResult.setBackgroundResource(R.drawable.fixtures_list_item_result_background);
+			int goalsHomeTeam = item.getGoalsHomeTeam();
+			int goalsAwayTeam = item.getGoalsAwayTeam();
+			if (goalsHomeTeam > goalsAwayTeam) {
+				holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_win_name));
+				holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_lose_name));
+			}
+			else if (goalsHomeTeam < goalsAwayTeam) {
+				holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_win_name));
+				holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_lose_name));
+			}
+			else {
+				holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_draw_name));
+				holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_draw_name));
+			}
 		}
 		else {
 			UI.hide(holder.mResult);
 			UI.show(holder.mDate);
 			DateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 			holder.mDate.setText(format.format(new Date(item.getDate())));
+			holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_name));
+			holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_name));
 		}
 
 		mDate.setTime(item.getDate());

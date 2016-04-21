@@ -22,6 +22,9 @@
 	<color name="fixtures_list_item_header">#000</color>
 	<color name="fixtures_list_item_header_background">#EEEEEE</color>
 	<color name="fixtures_list_item_name">#555</color>
+	<color name="fixtures_list_item_win_name">#66BB6A</color>
+	<color name="fixtures_list_item_lose_name">#EF5350</color>
+	<color name="fixtures_list_item_draw_name">#29B6F6</color>
 	<color name="fixtures_list_item_result">#000</color>
 	<color name="fixtures_list_item_result_background">#C8E6C9</color>
 	<color name="fixtures_list_item_result_scheduled_background">#B3E5FC</color>

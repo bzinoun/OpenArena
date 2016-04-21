@@ -35,7 +35,7 @@
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"
 			android:textColor="@color/fixture_info_teams_text"
-			android:textSize="16sp"
+			android:textSize="13sp"
 			tools:text="Home team"/>
 
 		<TextView
@@ -49,26 +49,35 @@
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"
 			android:textColor="@color/fixture_info_teams_text"
-			android:textSize="16sp"
+			android:textSize="13sp"
 			tools:text="Away team"/>
 
 	</RelativeLayout>
 
 
-	<TextView
-		android:id="@+id/header"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="@dimen/fixtures_list_margin"
-		android:layout_marginRight="@dimen/fixtures_list_margin"
-		android:layout_marginTop="@dimen/fixtures_list_margin"
-		android:background="@drawable/fixture_details_head2head_background"
-		android:paddingBottom="@dimen/fixtures_list_margin"
-		android:paddingLeft="@dimen/horizontal_padding"
-		android:paddingRight="@dimen/horizontal_padding"
-		android:paddingTop="@dimen/fixtures_list_margin"
-		android:text="@string/fixture_details_head2head"
-		android:textColor="@color/fixture_info_head2head_text"/>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:id="@+id/header"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="@dimen/fixtures_list_margin"
+			android:layout_marginRight="@dimen/fixtures_list_margin"
+			android:layout_marginTop="@dimen/fixtures_list_margin"
+			android:background="@drawable/fixture_details_head2head_background"
+			android:paddingBottom="@dimen/fixtures_list_margin"
+			android:paddingLeft="@dimen/horizontal_padding"
+			android:paddingRight="@dimen/horizontal_padding"
+			android:paddingTop="@dimen/fixtures_list_margin"
+			android:text="@string/fixture_details_head2head"
+			android:textSize="12sp"
+			android:textColor="@color/fixture_info_head2head_text"/>
+
+
+
+	</RelativeLayout>
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler_view"
