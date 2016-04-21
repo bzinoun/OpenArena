@@ -8,7 +8,7 @@
 
 	<string name="intro_skip">Skip</string>
 	<string name="intro_next">Next</string>
-	<string name="intro_finish">Finish</string>
+	<string name="intro_start">Start</string>
 
 	<string name="leagues_title">Leagues</string>
 	<string name="leagues_subtitle">%1$d - %2$d</string>
@@ -55,6 +55,13 @@
 	<string name="dialog_exit_title">Do you want to exit?</string>
 	<string name="dialog_exit_positive">Yes</string>
 	<string name="dialog_exit_negative">No</string>
+
+	<!-- Tutorial -->
+	<string name="intro_page1_title">Title1</string>
+	<string name="intro_page1_subtitle">Subtitle1</string>
+	<string name="intro_page2_title">Title2</string>
+	<string name="intro_page2_subtitle">Subtitle2</string>
+	<string name="intro_page3_title">Get started!</string>
 
 	<!-- CONST resources -->
 	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>

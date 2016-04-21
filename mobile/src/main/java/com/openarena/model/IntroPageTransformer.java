@@ -7,61 +7,63 @@ import com.openarena.R;
 
 public class IntroPageTransformer implements ViewPager.PageTransformer {
 
-	public IntroPageTransformer() {
-
-	}
+	View mTitle, mSubtitle, mImage;
+	int mPagePosition, mPageWidth, mPageHeight;
+	float mPageWidthTimesPosition, mPageHeightTimesPosition, mAbsPosition;
 
 	@Override
 	public void transformPage(View page, float position) {
-		int pagePosition = (int) page.getTag();
-		int pageWidth = page.getWidth();
-		float pageWidthTimesPosition = pageWidth * position;
-		float absPosition = Math.abs(position);
-
-		// Now it's time for the effects
+		setVars(page, position);
 		if (position <= -1.0f || position >= 1.0f) {
-
-			// The page is not visible. This is a good place to stop
-			// any potential work / animations you may have running.
-
+			//page not visible
 		} else if (position == 0.0f) {
-
-			// The page is selected. This is a good time to reset Views
-			// after animations as you can't always count on the PageTransformer
-			// callbacks to match up perfectly.
-
+			//page selected
 		} else {
-			View title = page.findViewById(R.id.title);
-			View subtitle = page.findViewById(R.id.subtitle);
-			View image = page.findViewById(R.id.image);
+			//transition
+			mTitle.setAlpha(1.0f - mAbsPosition * 1.8f);
+			mTitle.setTranslationX(-mPageWidthTimesPosition);
+			mSubtitle.setAlpha(1.0f - mAbsPosition * 1.5f);
+			mSubtitle.setTranslationY(0.2f - mAbsPosition);
 
-			title.setAlpha(1.0f - absPosition);
-			title.setTranslationX(-pageWidthTimesPosition);
-			subtitle.setTranslationY(0.2f - absPosition);
+			if (mImage != null) {
+				if (mPagePosition == 0) {
+					mImage.setAlpha(1.0f - mAbsPosition * 1.5f);
+					mImage.setTranslationX(mPageWidthTimesPosition * 0.8f);
+				}
 
-			if (pagePosition == 0 && image != null) {
-				image.setAlpha(1.0f - absPosition);
-				image.setTranslationX(-pageWidthTimesPosition * 0.8f);
-				//image.setTranslationX(-pageWidthTimesPosition * 0.1f);
-				//image.setTranslationY(-pageWidthTimesPosition * 0.1f);
-			}
+				if (mPagePosition == 1) {
+					mImage.setAlpha(1.0f - mAbsPosition * 1.5f);
+					mImage.setTranslationX(-mPageWidthTimesPosition * 0.8f);
+				}
 
-			if (pagePosition == 1 && image != null) {
-				image.setAlpha(1.0f - absPosition);
-				image.setTranslationX(-pageWidthTimesPosition * 0.8f);
-			}
+				if (mPagePosition == 2) {
+					mImage.setAlpha(1.0f - mAbsPosition * 1.5f);
+					mImage.setTranslationX(mPageWidthTimesPosition * 0.8f);
+				}
 
-			if (pagePosition == 2 && image != null) {
-				image.setAlpha(1.0f - absPosition);
-				image.setTranslationX(pageWidthTimesPosition * 1.2f);
-			}
-
-			if (position < 0) {
-				// Create your out animation here
-			} else {
-				// Create your in animation here
+				if (position < 0) {
+					//out
+					mImage.setTranslationY(-mPageHeightTimesPosition * 0.1f);
+				} else {
+					//in
+					mImage.setTranslationY(mPageHeightTimesPosition * 0.1f);
+				}
 			}
 		}
+	}
+
+	private void setVars(View page, float position) {
+		mPagePosition = (int) page.getTag();
+		mPageWidth = page.getWidth();
+		mPageHeight = page.getHeight();
+		mPageWidthTimesPosition = mPageWidth * position;
+		mPageHeightTimesPosition = mPageHeight * position;
+		mAbsPosition = Math.abs(position);
+
+		mImage = page.findViewById(R.id.image);
+		mTitle = page.findViewById(R.id.title);
+		mSubtitle = page.findViewById(R.id.subtitle);
+
 	}
 
 }

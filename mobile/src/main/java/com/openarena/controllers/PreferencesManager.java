@@ -11,7 +11,7 @@ public class PreferencesManager {
 	private SharedPreferences mPref;
 	private SharedPreferences.Editor mEditor;
 
-	public static synchronized PreferencesManager getInstance(Context context) {
+	public static synchronized PreferencesManager from(Context context) {
 		if (sInstance == null) synchronized (PreferencesManager.class){
 			if (sInstance == null) sInstance = new PreferencesManager(context);
 		}

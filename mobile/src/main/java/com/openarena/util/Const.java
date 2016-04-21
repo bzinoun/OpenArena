@@ -2,6 +2,8 @@ package com.openarena.util;
 
 public class Const {
 
+	public static final String SUBMITTED = "submitted";
+
 	public static final int TIME_TO_EXIT = 400;
 
 	public static final int ERROR_CODE_PARSE_ERROR = 1;

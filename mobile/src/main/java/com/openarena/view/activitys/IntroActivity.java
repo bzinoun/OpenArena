@@ -11,25 +11,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.openarena.R;
+import com.openarena.controllers.PreferencesManager;
 import com.openarena.model.IntroPageTransformer;
 import com.openarena.model.abstractions.AbstractFragmentIntro;
 import com.openarena.model.adapters.IntroPagerAdapter;
 import com.openarena.model.listeners.OnIntroSwipeListener;
+import com.openarena.util.Const;
 import com.openarena.util.L;
 
 public class IntroActivity extends AppCompatActivity implements View.OnClickListener {
 
 	private ViewPager mViewPager;
-	private Button mSkipButton, mNextButton, mFinishButton;
+	private Button mSkipButton, mNextButton, mStartButton;
 	private ImageView[] mIndicators;
 	private IntroPagerAdapter mAdapter;
 	private ArgbEvaluator mEvaluator;
+	private IntroPageTransformer mTransformer;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intro);
 		if (mEvaluator == null) mEvaluator = new ArgbEvaluator();
+		if (mTransformer == null) mTransformer = new IntroPageTransformer();
 		setupUI();
 		setupAdapter();
 		setupViewPager();
@@ -40,10 +44,11 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 		super.onDestroy();
 		if (mViewPager != null) mViewPager = null;
 		if (mSkipButton != null) mSkipButton = null;
-		if (mFinishButton != null) mFinishButton = null;
+		if (mStartButton != null) mStartButton = null;
 		if (mNextButton != null) mNextButton = null;
 		if (mAdapter != null) mAdapter = null;
 		if (mEvaluator != null) mEvaluator = null;
+		if (mTransformer != null) mTransformer = null;
 	}
 
 	@Override
@@ -51,15 +56,19 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 		int id = v.getId();
 		switch (id) {
 			case R.id.button_skip:
+				PreferencesManager.from(this).setBoolean(Const.SUBMITTED, true);
 				onBackPressed();
 				break;
 
 			case R.id.button_next:
-				if (mViewPager.getCurrentItem() < mViewPager.getChildCount())
-				mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
+				int current_item = mViewPager.getCurrentItem();
+				int count = mViewPager.getChildCount();
+				if (current_item < count)
+				mViewPager.setCurrentItem(current_item + 1, true);
 				break;
 
 			case R.id.button_finish:
+				PreferencesManager.from(this).setBoolean(Const.SUBMITTED, true).commit();
 				onBackPressed();
 				break;
 
@@ -71,10 +80,10 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 	private void setupUI() {
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mNextButton = (Button) findViewById(R.id.button_next);
-		mFinishButton = (Button) findViewById(R.id.button_finish);
+		mStartButton = (Button) findViewById(R.id.button_finish);
 		Button skipButton = (Button) findViewById(R.id.button_skip);
 		if (mNextButton != null) mNextButton.setOnClickListener(this);
-		if (mFinishButton != null) mFinishButton.setOnClickListener(this);
+		if (mStartButton != null) mStartButton.setOnClickListener(this);
 		if (skipButton != null) skipButton.setOnClickListener(this);
 	}
 
@@ -83,17 +92,17 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 			mAdapter = new IntroPagerAdapter(getSupportFragmentManager());
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
 					0,
-					"Title1",
-					"Subtitle1",
+					getString(R.string.intro_page1_title),
+					getString(R.string.intro_page1_subtitle),
 					R.drawable.im_open_arena), R.color.intro_page1);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
 					1,
-					"Title2",
-					"Subtitle2",
+					getString(R.string.intro_page2_title),
+					getString(R.string.intro_page2_subtitle),
 					R.drawable.im_open_arena), R.color.intro_page2);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
 					2,
-					"Get started",
+					getString(R.string.intro_page3_title),
 					null,
 					R.drawable.im_open_arena), R.color.intro_page3);
 		}
@@ -127,10 +136,10 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 			@Override
 			public void pageChanged(int position, int count) {
 				mNextButton.setVisibility(position == count - 1 ? View.GONE : View.VISIBLE);
-				mFinishButton.setVisibility(position == count - 1 ? View.VISIBLE : View.GONE);
+				mStartButton.setVisibility(position == count - 1 ? View.VISIBLE : View.GONE);
 			}
 		});
-		mViewPager.setPageTransformer(false, new IntroPageTransformer());
+		mViewPager.setPageTransformer(false, mTransformer);
 	}
 
 }

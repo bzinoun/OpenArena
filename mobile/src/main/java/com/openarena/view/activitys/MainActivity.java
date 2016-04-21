@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.openarena.R;
+import com.openarena.controllers.PreferencesManager;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.util.Const;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
 	private long mLastBack;
+	private boolean mSubmitted = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,12 +37,17 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		setContentView(R.layout.activity_main);
 		setupUI();
 		mFragmentManager = getSupportFragmentManager();
+		PreferencesManager.from(this).setBoolean(Const.SUBMITTED, false).commit();
+		mSubmitted = PreferencesManager.from(this).getBoolean(Const.SUBMITTED, false);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showContent();
+		if (mSubmitted) {
+			showContent();
+		}
+		else startActivity(new Intent(this, IntroActivity.class));
 	}
 
 	@Override
@@ -167,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
-				startActivity(new Intent(this, IntroActivity.class));
+				//startActivity(new Intent(this, IntroActivity.class));
 				break;
 
 			case Const.EVENT_CODE_SHOW_ABOUT:

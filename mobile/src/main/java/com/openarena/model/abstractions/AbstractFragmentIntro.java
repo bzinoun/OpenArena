@@ -34,15 +34,13 @@ public class AbstractFragmentIntro extends Fragment {
 		return  getInstance(position, title, subtitle, imageId, false);
 	}
 
-	public static AbstractFragmentIntro getInstance(
+	// FIXME: 21.04.2016
+	private static AbstractFragmentIntro getInstance(
 			int position,
 			@Nullable String title,
 			@Nullable String subtitle,
 			int viewId,
 			boolean isCustomLayout) {
-
-		// FIXME: 20.04.2016
-		isCustomLayout = false;
 
 		AbstractFragmentIntro fragment = new AbstractFragmentIntro();
 		Bundle data = new Bundle();
