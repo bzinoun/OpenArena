@@ -56,7 +56,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 		int id = v.getId();
 		switch (id) {
 			case R.id.button_skip:
-				PreferencesManager.from(this).setBoolean(Const.SUBMITTED, true);
+				PreferencesManager.from(this).setBoolean(Const.SUBMITTED, true).commit();
 				onBackPressed();
 				break;
 

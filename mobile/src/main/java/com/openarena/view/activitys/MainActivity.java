@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
 	private long mLastBack;
-	private boolean mSubmitted = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,13 +36,12 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		setContentView(R.layout.activity_main);
 		setupUI();
 		mFragmentManager = getSupportFragmentManager();
-		mSubmitted = PreferencesManager.from(this).getBoolean(Const.SUBMITTED, false);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (mSubmitted) {
+		if (PreferencesManager.from(this).getBoolean(Const.SUBMITTED, false)) {
 			showContent();
 		}
 		else startActivity(new Intent(this, IntroActivity.class));

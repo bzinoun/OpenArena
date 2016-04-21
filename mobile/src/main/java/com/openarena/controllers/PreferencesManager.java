@@ -2,6 +2,7 @@ package com.openarena.controllers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class PreferencesManager {
 
@@ -19,7 +20,8 @@ public class PreferencesManager {
 	}
 
 	protected PreferencesManager(Context context) {
-		if (mPref == null) mPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+		//if (mPref == null) mPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+		if (mPref == null) mPref = PreferenceManager.getDefaultSharedPreferences(context);
 		if (mEditor == null) mEditor = mPref.edit();
 	}
 
