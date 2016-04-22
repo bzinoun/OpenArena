@@ -2,33 +2,45 @@ package com.openarena.view.activitys;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.openarena.R;
 import com.openarena.controllers.PreferencesManager;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.util.Const;
 import com.openarena.util.L;
+import com.openarena.view.dialogs.DialogPlayerInfo;
 import com.openarena.view.dialogs.DialogTeam;
 import com.openarena.view.fragments.FragmentAbout;
 import com.openarena.view.fragments.FragmentFixtureInfo;
 import com.openarena.view.fragments.FragmentFixtures;
 import com.openarena.view.fragments.FragmentFixturesTeam;
 import com.openarena.view.fragments.FragmentLeagues;
-import com.openarena.view.dialogs.DialogPlayerInfo;
 import com.openarena.view.fragments.FragmentPlayers;
 import com.openarena.view.fragments.FragmentScores;
 
-public class MainActivity extends AppCompatActivity implements EventListener {
+public class MainActivity extends AppCompatActivity
+		implements EventListener, FacebookCallback<Sharer.Result> {
 
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
 	private long mLastBack;
+	private CallbackManager mCallbackManager;
+	private ShareDialog mSharedDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +64,14 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 		super.onDestroy();
 		if (mToolbar != null) mToolbar = null;
 		if (mFragmentManager != null) mFragmentManager = null;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (mCallbackManager != null) {
+			mCallbackManager.onActivityResult(requestCode, resultCode, data);
+		}
 	}
 
 	@Override
@@ -166,7 +186,27 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
+				if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
+				if (mSharedDialog == null) mSharedDialog = new ShareDialog(this);
+				mSharedDialog.registerCallback(mCallbackManager, this);
+
+
 				//startActivity(new Intent(this, IntroActivity.class));
+				ShareLinkContent content = new ShareLinkContent.Builder()
+						.setContentUrl(Uri.parse("https://developers.facebook.com"))
+						.setContentTitle("This is some title (this may be your ads) (:")
+						.setContentDescription("Please, don't worry it's just a creative process (:\n" +
+								"this is a long description")
+						.setImageUrl(Uri.parse("https://raw.githubusercontent.com/TarikW/OpenArena/master/mobile/src/main/res/drawable-xxxhdpi/im_open_arena.png"))
+						.setShareHashtag(new ShareHashtag.Builder()
+								.setHashtag("#TestShare")
+								.build()
+						)
+						.build();
+				//MessageDialog.show(MainActivity.this, content);
+
+				mSharedDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+
 				break;
 
 			case Const.EVENT_CODE_SHOW_ABOUT:
@@ -186,6 +226,21 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 			default:
 				L.e(MainActivity.class, "new event code->" + code);
 		}
+	}
+
+	@Override
+	public void onSuccess(Sharer.Result result) {
+		Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void onCancel() {
+		Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void onError(FacebookException error) {
+		Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
 	}
 
 	private void setupUI() {

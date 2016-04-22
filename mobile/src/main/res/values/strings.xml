@@ -73,6 +73,8 @@
 	<string name="api_response_control_mini">minified</string>
 	<string name="api_response_control_full">full</string>
 
+	<string name="facebook_app_id">1697905660483111</string>
+
 	<string name="about_linkedin">LinkedIn</string>
 	<string name="about_github">GitHub</string>
 	<string name="about_facebook">Facebook</string>
