@@ -29,43 +29,45 @@
 			android:id="@+id/name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textSize="18sp"
+			android:textSize="20sp"
+			android:textStyle="bold"
 			tools:text="Player name"/>
 
 		<TextView
-			android:id="@+id/position"
+			android:id="@+id/date_of_birth"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textSize="16sp"
-			tools:text="position"/>
+			android:textSize="14sp"
+			tools:text="12.12.1884"
+			android:layout_marginBottom="16dp"/>
 
 		<TextView
 			android:id="@+id/nationality"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="Nationality"/>
+			tools:text="Nationality: Country"/>
+
+		<TextView
+			android:id="@+id/position"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="16sp"
+			tools:text="Position: String"/>
 
 		<TextView
 			android:id="@+id/market_value"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="100,000$"/>
-
-		<TextView
-			android:id="@+id/date_of_birth"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textSize="16sp"
-			tools:text="12.12.1884"/>
+			tools:text="Market value: 100,000$"/>
 
 		<TextView
 			android:id="@+id/contract_until"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="12.12.2017"/>
+			tools:text="Contract until: 12.12.2017"/>
 
 	</LinearLayout>
 

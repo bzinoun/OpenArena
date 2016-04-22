@@ -84,13 +84,29 @@ public class FragmentPlayerInfo extends AbstractFragment {
 	}
 
 	private void showContent() {
-		mName.setText(mPlayer.getName());
 		mJersey.setText(String.valueOf(mPlayer.getJerseyNumber()));
-		mPosition.setText(String.valueOf(mPlayer.getPosition()));
-		mNationality.setText(mPlayer.getNationality());
-		mMarketValue.setText(String.valueOf(mPlayer.getMarketValue()));
-		mDateOfBirth.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date(mPlayer.getDateOfBirth())));
-		mContractUntil.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date(mPlayer.getContractUntil())));
+		mName.setText(mPlayer.getName());
+		mDateOfBirth.setText(
+				new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+						.format(new Date(mPlayer.getDateOfBirth()))
+		);
+		mNationality.setText(String.format(
+				getString(R.string.player_info_nationality),
+				mPlayer.getNationality())
+		);
+		mPosition.setText(String.format(
+				getString(R.string.player_info_position),
+				mPlayer.getPosition())
+		);
+		mMarketValue.setText(String.format(
+				getString(R.string.player_info_market_value),
+				mPlayer.getMarketValue())
+		);
+		mContractUntil.setText(String.format(
+				getString(R.string.player_info_contract_until),
+				new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+						.format(new Date(mPlayer.getContractUntil())))
+		);
 	}
 
 }

@@ -49,6 +49,10 @@
 	<string name="option_score_table">Score table</string>
 
 	<string name="players_title">Players</string>
+	<string name="player_info_nationality"><b>Nationality:</b> %1$s</string>
+	<string name="player_info_position"><b>Position:</b> %1$s</string>
+	<string name="player_info_market_value"><b>Market value:</b> %1$s</string>
+	<string name="player_info_contract_until"><b>Contract until:</b> %1$s</string>
 
 	<string name="context_head_select_matchday">Select matchday</string>
 
