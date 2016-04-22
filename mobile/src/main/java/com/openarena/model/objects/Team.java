@@ -46,7 +46,7 @@ public class Team implements Parcelable {
 		Team team = null;
 		if (teamCursor.moveToFirst()) {
 			int col_id = teamCursor.getColumnIndex(DBConst.ID);
-			int col_isFavorite = teamCursor.getColumnIndex(DBConst.IS_FAVORITE);
+			int col_isFavorite = teamCursor.getColumnIndex(DBConst.CAN_FAVORITE);
 			int col_name = teamCursor.getColumnIndex(DBConst.NAME);
 			int col_shortName = teamCursor.getColumnIndex(DBConst.SHORT_NAME);
 			int col_squadMarketValue = teamCursor.getColumnIndex(DBConst.SQUAD_MARKET_VALUE);

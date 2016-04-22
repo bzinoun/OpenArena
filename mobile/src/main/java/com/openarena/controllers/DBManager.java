@@ -201,6 +201,7 @@ public class DBManager {
 	public static void setFixture(Fixture fixture) {
 		if (fixture != null) {
 			ContentValues data = new ContentValues();
+			if (fixture.isChange()) data.put(DBConst.CAN_NOTIFIED, fixture.isNotified());
 			data.put(DBConst.ID, fixture.getID());
 			data.put(DBConst.SOCCER_SEASON_ID, fixture.getSoccerSeasonID());
 			data.put(DBConst.DATE, fixture.getDate());
@@ -293,7 +294,7 @@ public class DBManager {
 		if (team != null) {
 			ContentValues data = new ContentValues();
 			data.put(DBConst.ID, team.getID());
-			if (team.isChanged()) data.put(DBConst.IS_FAVORITE, team.getIsFavorite());
+			if (team.isChanged()) data.put(DBConst.CAN_FAVORITE, team.getIsFavorite());
 			data.put(DBConst.NAME, team.getName());
 			data.put(DBConst.SHORT_NAME, team.getShortName());
 			data.put(DBConst.SQUAD_MARKET_VALUE, team.getSquadMarketValue());

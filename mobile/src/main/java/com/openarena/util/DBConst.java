@@ -19,6 +19,7 @@ public class DBConst {
 	public static final String NUMBER_OF_GAMES = "numberOfGames";
 	public static final String LAST_UPDATED = "lastUpdated";
 
+	public static final String CAN_NOTIFIED = "can_notified";
 	public static final String SOCCER_SEASON_ID = "soccerSeasonId";
 	public static final String DATE = "date";
 	public static final String STATUS = "status";
@@ -48,7 +49,7 @@ public class DBConst {
 	public static final String GOAL_AGAINST = "goal_against";
 	public static final String GOAL_DIFFERENCE = "goal_difference";
 
-	public static final String IS_FAVORITE = "is_favorite";
+	public static final String CAN_FAVORITE = "can_favorite";
 	public static final String NAME = "name";
 	public static final String SHORT_NAME = "short_name";
 	public static final String SQUAD_MARKET_VALUE = "squad_market_value";

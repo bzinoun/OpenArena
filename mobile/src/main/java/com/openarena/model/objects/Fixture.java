@@ -4,11 +4,14 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+
 import com.openarena.util.DBConst;
 import com.openarena.util.L;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ public class Fixture implements Parcelable {
 	public static final int SCHEDULED = 2;
 	public static final int INDEFINITE = 4;
 
+	private boolean mCanNotified;
+	private boolean mCanChange;
 	private int mID;
 	private int mSoccerSeasonID;
 	private long mDate;
@@ -36,6 +41,8 @@ public class Fixture implements Parcelable {
 	protected Fixture() {}
 
 	protected Fixture(Parcel in) {
+		mCanNotified = in.readByte() != 0;
+		mCanChange = in.readByte() != 0;
 		mID = in.readInt();
 		mSoccerSeasonID = in.readInt();
 		mDate = in.readLong();
@@ -65,6 +72,7 @@ public class Fixture implements Parcelable {
 	public static Fixture parse(Cursor fixtureCursor) {
 		Fixture fixture = null;
 		if (fixtureCursor.moveToFirst()) {
+			int col_canNotified = fixtureCursor.getColumnIndex(DBConst.CAN_NOTIFIED);
 			int col_id = fixtureCursor.getColumnIndex(DBConst.ID);
 			int col_soccerSeasonId = fixtureCursor.getColumnIndex(DBConst.SOCCER_SEASON_ID);
 			int col_date = fixtureCursor.getColumnIndex(DBConst.DATE);
@@ -77,6 +85,7 @@ public class Fixture implements Parcelable {
 			int col_goalsHomeTeam = fixtureCursor.getColumnIndex(DBConst.GOALS_HOME_TEAM);
 			int col_goalsAwayTeam = fixtureCursor.getColumnIndex(DBConst.GOALS_AWAY_TEAM);
 			fixture = new Fixture();
+			fixture.mCanNotified = fixtureCursor.getInt(col_canNotified) == 1;
 			fixture.mID = fixtureCursor.getInt(col_id);
 			fixture.mSoccerSeasonID = fixtureCursor.getInt(col_soccerSeasonId);
 			fixture.mDate = fixtureCursor.getLong(col_date);
@@ -95,6 +104,7 @@ public class Fixture implements Parcelable {
 	@Nullable
 	public static ArrayList<Fixture> parseArray(Cursor fixturesCursor) {
 		if (fixturesCursor.moveToFirst()) {
+			int col_canNotified = fixturesCursor.getColumnIndex(DBConst.CAN_NOTIFIED);
 			int col_id = fixturesCursor.getColumnIndex(DBConst.ID);
 			int col_soccerSeasonId = fixturesCursor.getColumnIndex(DBConst.SOCCER_SEASON_ID);
 			int col_date = fixturesCursor.getColumnIndex(DBConst.DATE);
@@ -109,6 +119,7 @@ public class Fixture implements Parcelable {
 			ArrayList<Fixture> list = new ArrayList<>();
 			do {
 				Fixture fixture = new Fixture();
+				fixture.mCanNotified = fixturesCursor.getInt(col_canNotified) == 1;
 				fixture.mID = fixturesCursor.getInt(col_id);
 				fixture.mSoccerSeasonID = fixturesCursor.getInt(col_soccerSeasonId);
 				fixture.mDate = fixturesCursor.getLong(col_date);
@@ -200,6 +211,18 @@ public class Fixture implements Parcelable {
 		else return null;
 	}
 
+	public void setChange() {
+		mCanChange = true;
+	}
+
+	public boolean isChange() {
+		return mCanChange;
+	}
+
+	public boolean isNotified() {
+		return mCanNotified;
+	}
+
 	public int getID() {
 		return mID;
 	}
@@ -252,6 +275,8 @@ public class Fixture implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 
+		dest.writeByte((byte) (mCanNotified ? 1 : 0));
+		dest.writeByte((byte) (mCanChange ? 1 : 0));
 		dest.writeInt(mID);
 		dest.writeInt(mSoccerSeasonID);
 		dest.writeLong(mDate);
