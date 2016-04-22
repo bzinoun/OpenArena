@@ -44,7 +44,7 @@
 	<color name="scores_dialog_item_background_pressed">@color/primary_dark</color>
 
 	<color name="players_list_item_name">#000</color>
-	<color name="players_list_item_jersey">#000</color>
+	<color name="players_list_item_jersey">#5d5d5d</color>
 
 	<color name="about_text">#555</color>
 

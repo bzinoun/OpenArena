@@ -1,23 +1,23 @@
-package com.openarena.view.fragments;
+package com.openarena.view.dialogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.openarena.R;
-import com.openarena.model.abstractions.AbstractFragment;
 import com.openarena.model.objects.Player;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class FragmentPlayerInfo extends AbstractFragment {
+public class DialogPlayerInfo extends AppCompatDialogFragment {
 
 	public static final String TAG = "FragmentPlayerInfo";
 
@@ -30,8 +30,8 @@ public class FragmentPlayerInfo extends AbstractFragment {
 	private TextView mContractUntil;
 	private Player mPlayer;
 
-	public static FragmentPlayerInfo getInstance(@Nullable Bundle data) {
-		FragmentPlayerInfo fragment = new FragmentPlayerInfo();
+	public static DialogPlayerInfo getInstance(@Nullable Bundle data) {
+		DialogPlayerInfo fragment = new DialogPlayerInfo();
 		fragment.setArguments(data == null ? new Bundle() : data);
 		return fragment;
 	}
@@ -39,6 +39,7 @@ public class FragmentPlayerInfo extends AbstractFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setStyle(DialogTeam.STYLE_NO_TITLE, R.style.AppTheme_Dialog);
 		if (mPlayer == null) mPlayer = getArguments().getParcelable("player");
 	}
 
