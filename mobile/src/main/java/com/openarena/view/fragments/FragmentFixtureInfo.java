@@ -134,7 +134,7 @@ public class FragmentFixtureInfo extends AbstractFragment
 				loadData();
 				break;*/
 
-			case R.id.action_score_table:
+			case R.id.action_scores_table:
 				mEventListener.onEvent(
 						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
 								.setLeague(DBManager.getLeague(mFixture.getSoccerSeasonID())));

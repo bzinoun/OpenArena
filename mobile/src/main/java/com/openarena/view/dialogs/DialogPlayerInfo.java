@@ -2,8 +2,6 @@ package com.openarena.view.dialogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 
 import com.openarena.R;
 import com.openarena.model.objects.Player;
+import com.openarena.util.UI;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +44,7 @@ public class DialogPlayerInfo extends AppCompatDialogFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_player_info, container, false);
+		View view = inflater.inflate(R.layout.dialog_player_info, container, false);
 		setupUI(view);
 		showContent();
 		return view;
@@ -70,11 +69,6 @@ public class DialogPlayerInfo extends AppCompatDialogFragment {
 	}
 
 	private void setupUI(View view) {
-		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-		if (toolbar != null) {
-			toolbar.setTitle(mPlayer.getName());
-			toolbar.setSubtitle(null);
-		}
 		mName = (TextView) view.findViewById(R.id.name);
 		mJersey = (TextView) view.findViewById(R.id.jersey);
 		mPosition = (TextView) view.findViewById(R.id.position);
@@ -99,10 +93,13 @@ public class DialogPlayerInfo extends AppCompatDialogFragment {
 				getString(R.string.player_info_position),
 				mPlayer.getPosition())
 		);
-		mMarketValue.setText(String.format(
-				getString(R.string.player_info_market_value),
-				mPlayer.getMarketValue())
-		);
+		if (mPlayer.getMarketValue() != null && !mPlayer.getMarketValue().equals("null")) {
+			mMarketValue.setText(String.format(
+					getString(R.string.player_info_market_value),
+					mPlayer.getMarketValue())
+			);
+			UI.show(mMarketValue);
+		}
 		mContractUntil.setText(String.format(
 				getString(R.string.player_info_contract_until),
 				new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())

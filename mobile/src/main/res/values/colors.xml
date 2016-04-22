@@ -43,7 +43,7 @@
 	<color name="scores_dialog_item_background">@color/primary</color>
 	<color name="scores_dialog_item_background_pressed">@color/primary_dark</color>
 
-	<color name="players_list_item_name">#000</color>
+	<color name="players_list_item_name">#454545</color>
 	<color name="players_list_item_jersey">#5d5d5d</color>
 
 	<color name="about_text">#555</color>
@@ -56,9 +56,9 @@
 	<color name="intro_button">#FFF</color>
 	<color name="intro_indicator_selected">#FFF</color>
 	<color name="intro_indicator_unselected">#BDBDBD</color>
-	<color name="intro_page1">#00695C</color>
+	<color name="intro_page1">#741b00</color>
 	<color name="intro_page2">#00838F</color>
-	<color name="intro_page3">@color/primary</color>
+	<color name="intro_page3">@color/primary_dark</color>
 
 	<color name="window_background">#E0E0E0</color>
 	<color name="window_background_pressed">#CACACA</color>

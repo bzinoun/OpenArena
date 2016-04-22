@@ -11,7 +11,7 @@
 		app:showAsAction="ifRoom"/>-->
 
 	<item
-		android:id="@+id/action_score_table"
+		android:id="@+id/action_scores_table"
 		android:icon="@drawable/ic_view_list"
 		android:orderInCategory="100"
 		android:title="@string/option_score_table"

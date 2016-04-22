@@ -122,11 +122,11 @@ public class FragmentFixtures extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.action_today:
+			case R.id.action_current:
 				loadData(mLeague.getCurrentMatchday());
 				break;
 
-			case R.id.action_score_table:
+			case R.id.action_scores_table:
 				mEventListener.onEvent(
 						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
 								.setLeague(mLeague));
