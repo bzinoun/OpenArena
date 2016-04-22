@@ -100,11 +100,14 @@ public class DialogPlayerInfo extends AppCompatDialogFragment {
 			);
 			UI.show(mMarketValue);
 		}
-		mContractUntil.setText(String.format(
-				getString(R.string.player_info_contract_until),
-				new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-						.format(new Date(mPlayer.getContractUntil())))
-		);
+		if (mPlayer.getContractUntil() > 0) {
+			mContractUntil.setText(String.format(
+					getString(R.string.player_info_contract_until),
+					new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+							.format(new Date(mPlayer.getContractUntil())))
+			);
+			UI.show(mContractUntil);
+		}
 	}
 
 }

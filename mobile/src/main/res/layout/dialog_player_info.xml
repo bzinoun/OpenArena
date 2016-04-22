@@ -37,9 +37,9 @@
 			android:id="@+id/date_of_birth"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
 			android:textSize="14sp"
-			tools:text="12.12.1884"
-			android:layout_marginBottom="16dp"/>
+			tools:text="12.12.1884"/>
 
 		<TextView
 			android:id="@+id/nationality"
@@ -56,20 +56,22 @@
 			tools:text="Position: String"/>
 
 		<TextView
-			android:visibility="gone"
-			tools:visibility="visible"
 			android:id="@+id/market_value"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="Market value: 100,000$"/>
+			android:visibility="gone"
+			tools:text="Market value: 100,000$"
+			tools:visibility="visible"/>
 
 		<TextView
 			android:id="@+id/contract_until"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="Contract until: 12.12.2017"/>
+			android:visibility="gone"
+			tools:text="Contract until: 12.12.2017"
+			tools:visibility="visible"/>
 
 	</LinearLayout>
 
