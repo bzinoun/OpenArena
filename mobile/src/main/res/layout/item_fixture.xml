@@ -38,8 +38,19 @@
 				android:layout_gravity="center_vertical"
 				android:gravity="center"
 				android:textColor="@color/fixtures_list_item_result"
-				android:visibility="gone"
+				android:visibility="visible"
 				tools:text="21:30"/>
+
+			<ImageView
+				android:id="@+id/bell"
+				android:layout_width="12dp"
+				android:src="@drawable/ic_bell"
+				android:layout_height="12dp"
+				android:layout_gravity="end"
+				android:layout_marginTop="4dp"
+				android:layout_marginEnd="4dp"
+				android:visibility="visible"
+				android:layout_marginRight="4dp"/>
 
 			<TextView
 				android:id="@+id/result"
@@ -52,6 +63,7 @@
 				android:paddingLeft="8dp"
 				android:paddingRight="8dp"
 				android:paddingTop="4dp"
+				android:visibility="gone"
 				android:textColor="@color/fixtures_list_item_result"
 				tools:text="1 : 2"/>
 

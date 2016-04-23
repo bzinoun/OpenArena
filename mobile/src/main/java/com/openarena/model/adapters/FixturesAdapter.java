@@ -2,14 +2,19 @@ package com.openarena.model.adapters;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.openarena.R;
 import com.openarena.model.abstractions.AbstractRecyclerAdapter;
 import com.openarena.model.objects.Fixture;
+import com.openarena.util.Const;
 import com.openarena.util.UI;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +54,7 @@ public class FixturesAdapter
 		holder.mHomeTeamName.setText(item.getHomeTeamName());
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
 		if (item.getStatus() != Fixture.TIMED) {
-			UI.hide(holder.mDate);
+			UI.hide(holder.mDate, holder.mBell);
 			UI.show(holder.mResult);
 			holder.mResult.setText(String.format(mResources.getString(
 					R.string.fixtures_list_item_result),
@@ -72,8 +77,9 @@ public class FixturesAdapter
 			}
 		}
 		else {
-			UI.hide(holder.mResult);
+			UI.hide(holder.mResult, holder.mBell);
 			UI.show(holder.mDate);
+			if (item.isNotified()) UI.show(holder.mBell);
 			DateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 			holder.mDate.setText(format.format(new Date(item.getDate())));
 			holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_name));
@@ -115,13 +121,14 @@ public class FixturesAdapter
 		else UI.hide(holder.mHeader);
 	}
 
-	public static class FixturesViewHolder extends RecyclerView.ViewHolder {
+	public static class FixturesViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
 		private TextView mHomeTeamName,
 				mAwayTeamName,
 				mDate,
 				mResult,
 				mHeader;
+		private ImageView mBell;
 
 		public FixturesViewHolder(View itemView) {
 			super(itemView);
@@ -130,6 +137,16 @@ public class FixturesAdapter
 			mDate = (TextView) itemView.findViewById(R.id.date);
 			mResult = (TextView) itemView.findViewById(R.id.result);
 			mHeader = (TextView) itemView.findViewById(R.id.header);
+			mBell = (ImageView) itemView.findViewById(R.id.bell);
+			itemView.setOnCreateContextMenuListener(this);
+		}
+
+		@Override
+		public void onCreateContextMenu(
+				ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+			menu.add(
+					Const.GROUP_FIXTURES, getAdapterPosition(), 0,
+					R.string.context_fixture_notification_on);
 		}
 	}
 }

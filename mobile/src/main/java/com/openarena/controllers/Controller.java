@@ -3,6 +3,7 @@ package com.openarena.controllers;
 import android.content.Context;
 import android.os.Handler;
 
+import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.comparators.ComparatorFixtures;
 import com.openarena.model.comparators.ComparatorPlayers;
 import com.openarena.model.comparators.ComparatorScores;
@@ -30,7 +31,7 @@ public class Controller {
 
 	private static final int NUMBERS_OF_CORES = Runtime.getRuntime().availableProcessors();
 	private static Controller mInstance;
-	private ThreadPoolExecutor sExecutor;
+	private ThreadPoolExecutor mExecutor;
 	private Handler mHandler;
 
 	public static synchronized void init(Context context) {
@@ -39,7 +40,7 @@ public class Controller {
 			if (mInstance == null) {
 				mInstance = new Controller();
 				mInstance.mHandler = new Handler();
-				mInstance.sExecutor = new ThreadPoolExecutor(
+				mInstance.mExecutor = new ThreadPoolExecutor(
 						1,
 						NUMBERS_OF_CORES,
 						5000,
@@ -56,7 +57,7 @@ public class Controller {
 	protected Controller() {}
 
 	public void getListOfLeagues(final Context context, final OnGetLeagues callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
 				final ArrayList<League> dbList = DBManager.getLeaguesList();
@@ -118,19 +119,9 @@ public class Controller {
 			final int soccerseasonId,
 			final int matchday,
 			final OnGetFixtures callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(soccerseasonId, matchday);
-				if (dbList != null) {
-					ComparatorFixtures.sortByDate(dbList);
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.onSuccess(dbList);
-						}
-					});
-				}
 				String result = Api.getFixturesByMatchday(context, soccerseasonId, matchday);
 				if (result != null) {
 					try {
@@ -139,12 +130,16 @@ public class Controller {
 						if (list != null && !list.isEmpty()) {
 							ComparatorFixtures.sortByDate(list);
 							DBManager.setFixturesList(list);
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									callback.onSuccess(list);
-								}
-							});
+							final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(soccerseasonId, matchday);
+							if (dbList != null) {
+								ComparatorFixtures.sortByDate(dbList);
+								mHandler.post(new Runnable() {
+									@Override
+									public void run() {
+										callback.onSuccess(dbList);
+									}
+								});
+							}
 						}
 						else mHandler.post(new Runnable() {
 							@Override
@@ -162,12 +157,24 @@ public class Controller {
 						});
 					}
 				}
-				else mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onError(Const.ERROR_CODE_RESULT_NULL);
+				else {
+					final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(soccerseasonId, matchday);
+					if (dbList != null) {
+						ComparatorFixtures.sortByDate(dbList);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onSuccess(dbList);
+							}
+						});
 					}
-				});
+					else mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onError(Const.ERROR_CODE_RESULT_NULL);
+						}
+					});
+				}
 			}
 		});
 	}
@@ -176,7 +183,7 @@ public class Controller {
 			final Context context,
 			final int soccerSeasonId,
 			final OnGetScores callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
 				final ArrayList<Scores> dbList = DBManager.getScoresList(soccerSeasonId);
@@ -234,7 +241,7 @@ public class Controller {
 			final Context context,
 			final int fixtureId,
 			final OnGetFixtureDetails callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
 				final Head2head dbHead2head = DBManager.getHead2head(fixtureId);
@@ -288,7 +295,7 @@ public class Controller {
 			final Context context,
 			final int teamId,
 			final OnGetTeam callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
 				final Team dbTeam = DBManager.getTeam(teamId);
@@ -342,7 +349,7 @@ public class Controller {
 			final Context context,
 			final int teamId,
 			final OnGetPlayers callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
 				final ArrayList<Player> dbList = DBManager.getPlayerList(teamId);
@@ -400,16 +407,9 @@ public class Controller {
 			final Context context,
 			final int teamId,
 			final OnGetFixtures callback) {
-		sExecutor.execute(new Runnable() {
+		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-//				final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(soccerseasonId, matchday);
-//				if (dbList != null) mHandler.post(new Runnable() {
-//					@Override
-//					public void run() {
-//						callback.onSuccess(dbList);
-//					}
-//				});
 				String result = Api.getTeamFixtures(context, teamId);
 				if (result != null) {
 					try {
@@ -446,6 +446,25 @@ public class Controller {
 						callback.onError(Const.ERROR_CODE_RESULT_NULL);
 					}
 				});
+			}
+		});
+	}
+
+	public void changeNotification(final int position, final FixturesAdapter adapter) {
+		mExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				Fixture fixture = adapter.getItem(position);
+				if (fixture != null) {
+					fixture.setChange();
+					DBManager.setFixture(fixture);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							adapter.notifyItemChanged(position);
+						}
+					});
+				}
 			}
 		});
 	}

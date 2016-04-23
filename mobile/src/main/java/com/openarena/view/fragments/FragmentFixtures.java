@@ -21,14 +21,15 @@ import android.widget.TextView;
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.model.abstractions.AbstractFragment;
-import com.openarena.model.listeners.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
+import com.openarena.model.listeners.RecyclerViewItemTouchListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
 import com.openarena.util.Const;
+import com.openarena.util.L;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
@@ -153,7 +154,7 @@ public class FragmentFixtures extends AbstractFragment
 			case R.id.matchday:
 				menu.setHeaderTitle(getString(R.string.context_head_select_matchday));
 				for (int i = 1; i <= mLeague.getNumberOfMatchdays(); i++) {
-					menu.add(0, i, 0, String.valueOf(i));
+					menu.add(Const.GROUP_MATCHDAYS, i, 0, String.valueOf(i));
 				}
 				break;
 
@@ -164,7 +165,20 @@ public class FragmentFixtures extends AbstractFragment
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		loadData(item.getItemId());
+		int group = item.getGroupId();
+		switch (group) {
+			case Const.GROUP_MATCHDAYS:
+				loadData(item.getItemId());
+				break;
+
+			case Const.GROUP_FIXTURES:
+				mController.changeNotification(item.getItemId(), mAdapter);
+				break;
+
+			default:
+				L.e(FragmentFixtures.class, "default group->" + group);
+				return super.onContextItemSelected(item);
+		}
 		return true;
 	}
 
@@ -218,7 +232,13 @@ public class FragmentFixtures extends AbstractFragment
 
 	@Override
 	public void onItemLongClick(View view, int position) {
+		Fixture fixture = mAdapter.getItem(position);
+		if (fixture != null) {
+			if (fixture.getDate() > System.currentTimeMillis() + 86400000 || fixture.isNotified()) { // one day
 
+				view.showContextMenu();
+			}
+		}
 	}
 
 	private void setupUI(View view) {
@@ -236,6 +256,8 @@ public class FragmentFixtures extends AbstractFragment
 				getActivity(),
 				mRecyclerView,
 				this));
+
+		registerForContextMenu(mRecyclerView);
 		mRecyclerView.setHasFixedSize(true);
 		mMatchday = (TextView) view.findViewById(R.id.matchday);
 		mMatchday.setText(String.format(

@@ -56,6 +56,9 @@
 	<string name="player_info_contract_until"><b>Contract until:</b> %1$s</string>
 
 	<string name="context_head_select_matchday">Select matchday</string>
+	<string name="context_fixture_head">Select action</string>
+	<string name="context_fixture_notification_on">Turned notification</string>
+	<string name="context_fixture_notification_off">Turned off notification</string>
 
 	<string name="dialog_exit_title">Do you want to exit?</string>
 	<string name="dialog_exit_positive">Yes</string>
@@ -83,7 +86,7 @@
 	<string name="link_football_api">http://api.football-data.org</string>
 	<string name="link_linkedin">https://www.linkedin.com/in/tarikw</string>
 	<string name="link_github">https://github.com/TarikW</string>
-	<string name="link_facebook">https://www.facebook.com/useraccesdenied</string>
+	<string name="link_facebook">https://www.facebook.com/social.TarikW</string>
 	<string name="link_google_plus">https://plus.google.com/105322723020726409354</string>
 	<string name="link_google_play">https://play.google.com/store/apps/developer?id=TarikW</string>
 </resources>

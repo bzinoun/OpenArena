@@ -14,7 +14,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.openarena.R;
@@ -189,23 +188,26 @@ public class MainActivity extends AppCompatActivity
 				if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
 				if (mSharedDialog == null) mSharedDialog = new ShareDialog(this);
 				mSharedDialog.registerCallback(mCallbackManager, this);
-
-
 				//startActivity(new Intent(this, IntroActivity.class));
-				ShareLinkContent content = new ShareLinkContent.Builder()
-						.setContentUrl(Uri.parse("https://developers.facebook.com"))
-						.setContentTitle("This is some title (this may be your ads) (:")
-						.setContentDescription("Please, don't worry it's just a creative process (:\n" +
-								"this is a long description")
-						.setImageUrl(Uri.parse("https://raw.githubusercontent.com/TarikW/OpenArena/master/mobile/src/main/res/drawable-xxxhdpi/im_open_arena.png"))
-						.setShareHashtag(new ShareHashtag.Builder()
-								.setHashtag("#TestShare")
-								.build()
-						)
-						.build();
+
+//				ShareLinkContent content = new ShareLinkContent.Builder()
+//						.setContentUrl(Uri.parse("https://developers.facebook.com"))
+//						.setContentTitle("This is some title (this may be your ads) (:")
+//						.setContentDescription("Please, don't worry it's just a creative process" +
+//								" (:\n this is a long description")
+//						.setQuote("This is space for my quote, bla bla bla..")
+//						.setShareHashtag(new ShareHashtag.Builder()
+//								.setHashtag("#TestShare")
+//								.build()
+//						)
+//						.build();
 				//MessageDialog.show(MainActivity.this, content);
 
-				mSharedDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+				ShareLinkContent content = new ShareLinkContent.Builder()
+						.setContentUrl(Uri.parse("https://developers.facebook.com"))
+						.setQuote("This is my some quote, very long quote")
+						.build();
+				mSharedDialog.show(content);
 
 				break;
 

@@ -213,6 +213,7 @@ public class Fixture implements Parcelable {
 
 	public void setChange() {
 		mCanChange = true;
+		mCanNotified = !mCanNotified;
 	}
 
 	public boolean isChange() {

@@ -4,6 +4,9 @@ public class Const {
 
 	public static final String SUBMITTED = "submitted";
 
+	public static final int GROUP_FIXTURES = 1;
+	public static final int GROUP_MATCHDAYS = 2;
+
 	public static final int TIME_TO_EXIT = 400;
 
 	public static final int ERROR_CODE_PARSE_ERROR = 1;
