@@ -99,7 +99,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 					1,
 					getString(R.string.intro_page2_title),
 					getString(R.string.intro_page2_subtitle),
-					R.drawable.im_open_arena), R.color.intro_page2);
+					R.drawable.im_share), R.color.intro_page2);
 			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
 					2,
 					getString(R.string.intro_page3_title),

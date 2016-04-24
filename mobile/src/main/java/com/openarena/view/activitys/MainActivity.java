@@ -2,7 +2,6 @@ package com.openarena.view.activitys;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +13,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.openarena.R;
 import com.openarena.controllers.PreferencesManager;
@@ -185,29 +183,29 @@ public class MainActivity extends AppCompatActivity
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
-				if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
+				startActivity(new Intent(this, IntroActivity.class));
+				/*if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
 				if (mSharedDialog == null) mSharedDialog = new ShareDialog(this);
-				mSharedDialog.registerCallback(mCallbackManager, this);
-				//startActivity(new Intent(this, IntroActivity.class));
+				mSharedDialog.registerCallback(mCallbackManager, this);*/
 
-//				ShareLinkContent content = new ShareLinkContent.Builder()
-//						.setContentUrl(Uri.parse("https://developers.facebook.com"))
-//						.setContentTitle("This is some title (this may be your ads) (:")
-//						.setContentDescription("Please, don't worry it's just a creative process" +
-//								" (:\n this is a long description")
-//						.setQuote("This is space for my quote, bla bla bla..")
-//						.setShareHashtag(new ShareHashtag.Builder()
-//								.setHashtag("#TestShare")
-//								.build()
-//						)
-//						.build();
+				/*ShareLinkContent content = new ShareLinkContent.Builder()
+						.setContentUrl(Uri.parse("https://developers.facebook.com"))
+						.setContentTitle("This is some title (this may be your ads) (:")
+						.setContentDescription("Please, don't worry it's just a creative process" +
+								" (:\n this is a long description")
+						.setQuote("This is space for my quote, bla bla bla..")
+						.setShareHashtag(new ShareHashtag.Builder()
+								.setHashtag("#TestShare")
+								.build()
+						)
+						.build();*/
 				//MessageDialog.show(MainActivity.this, content);
 
-				ShareLinkContent content = new ShareLinkContent.Builder()
+				/*ShareLinkContent content = new ShareLinkContent.Builder()
 						.setContentUrl(Uri.parse("https://developers.facebook.com"))
 						.setQuote("This is my some quote, very long quote")
 						.build();
-				mSharedDialog.show(content);
+				mSharedDialog.show(content);*/
 
 				break;
 

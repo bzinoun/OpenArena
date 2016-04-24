@@ -57,8 +57,7 @@
 
 	<string name="context_head_select_matchday">Select matchday</string>
 	<string name="context_fixture_head">Select action</string>
-	<string name="context_fixture_notification_on">Turned notification</string>
-	<string name="context_fixture_notification_off">Turned off notification</string>
+	<string name="context_fixture_notified">Turned notification</string>
 
 	<string name="dialog_exit_title">Do you want to exit?</string>
 	<string name="dialog_exit_positive">Yes</string>
@@ -67,8 +66,8 @@
 	<!-- Tutorial -->
 	<string name="intro_page1_title">Title1</string>
 	<string name="intro_page1_subtitle">Subtitle1</string>
-	<string name="intro_page2_title">Title2</string>
-	<string name="intro_page2_subtitle">Subtitle2</string>
+	<string name="intro_page2_title">Share</string>
+	<string name="intro_page2_subtitle">Share fixture with friends in Facebook</string>
 	<string name="intro_page3_title">Get started!</string>
 
 	<!-- CONST resources -->

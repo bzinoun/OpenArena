@@ -146,7 +146,7 @@ public class FixturesAdapter
 				ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 			menu.add(
 					Const.GROUP_FIXTURES, getAdapterPosition(), 0,
-					R.string.context_fixture_notification_on);
+					R.string.context_fixture_notified);
 		}
 	}
 }
