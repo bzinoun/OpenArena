@@ -38,7 +38,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 		if (fixture != null) {
 			Notification notification = new NotificationCompat.Builder(context)
 					.setAutoCancel(true)
-					.setSmallIcon(R.mipmap.ic_launcher)
+					.setSmallIcon(R.drawable.im_ball)
 					.setTicker(context.getString(R.string.notification_fixture_ticker))
 					.setContentTitle(String.format(context.getString(
 							R.string.notification_fixture_title),
