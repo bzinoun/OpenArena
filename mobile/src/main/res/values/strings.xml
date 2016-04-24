@@ -63,6 +63,10 @@
 	<string name="dialog_exit_positive">Yes</string>
 	<string name="dialog_exit_negative">No</string>
 
+	<string name="notification_fixture_ticker">With hour begin match</string>
+	<string name="notification_fixture_title">Begin on %1$s</string>
+	<string name="notification_fixture_text">%1$s vs %2$s</string>
+
 	<!-- Tutorial -->
 	<string name="intro_page1_title">Title1</string>
 	<string name="intro_page1_subtitle">Subtitle1</string>

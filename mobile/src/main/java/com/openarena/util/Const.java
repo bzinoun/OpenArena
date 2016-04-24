@@ -3,6 +3,9 @@ package com.openarena.util;
 public class Const {
 
 	public static final String SUBMITTED = "submitted";
+	public static final String ACTION_NOTIFICATION_BROADCAST = ".model.receivers.NotificationBroadcastReceiver";
+
+	public static final int REQUEST_CODE_NOTIFIED_FIXTURE = 1;
 
 	public static final int GROUP_FIXTURES = 1;
 	public static final int GROUP_MATCHDAYS = 2;

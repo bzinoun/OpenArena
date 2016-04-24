@@ -14,6 +14,7 @@ import com.openarena.model.objects.League;
 import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
+import com.openarena.model.receivers.NotificationBroadcastReceiver;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 
@@ -33,6 +34,7 @@ public class Controller {
 	private static Controller mInstance;
 	private ThreadPoolExecutor mExecutor;
 	private Handler mHandler;
+	private NotificationBroadcastReceiver mReceiver;
 
 	public static synchronized void init(Context context) {
 		DBManager.init(context);
@@ -45,7 +47,9 @@ public class Controller {
 						NUMBERS_OF_CORES,
 						5000,
 						TimeUnit.MILLISECONDS,
-						new LinkedBlockingQueue<Runnable>());
+						new LinkedBlockingQueue<Runnable>()
+				);
+				mInstance.mReceiver = new NotificationBroadcastReceiver();
 			}
 		}
 	}
@@ -450,7 +454,7 @@ public class Controller {
 		});
 	}
 
-	public void changeNotification(final int position, final FixturesAdapter adapter) {
+	public void changeNotification(final Context context, final int position, final FixturesAdapter adapter) {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -458,6 +462,7 @@ public class Controller {
 				if (fixture != null) {
 					fixture.setChange();
 					DBManager.setFixture(fixture);
+					mReceiver.setNotifiedFixture(context, fixture, fixture.isNotified());
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {

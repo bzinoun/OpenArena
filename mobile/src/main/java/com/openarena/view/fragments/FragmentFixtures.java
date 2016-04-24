@@ -172,7 +172,7 @@ public class FragmentFixtures extends AbstractFragment
 				break;
 
 			case Const.GROUP_FIXTURES:
-				mController.changeNotification(item.getItemId(), mAdapter);
+				mController.changeNotification(getActivity(), item.getItemId(), mAdapter);
 				break;
 
 			default:
@@ -234,8 +234,7 @@ public class FragmentFixtures extends AbstractFragment
 	public void onItemLongClick(View view, int position) {
 		Fixture fixture = mAdapter.getItem(position);
 		if (fixture != null) {
-			if (fixture.getDate() > System.currentTimeMillis() + 86400000 || fixture.isNotified()) { // one day
-
+			if (fixture.getDate() > System.currentTimeMillis() + 1000 * 60 * 60 || fixture.isNotified()) { // one day
 				view.showContextMenu();
 			}
 		}

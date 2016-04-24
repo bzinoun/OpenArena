@@ -183,6 +183,8 @@ public class MainActivity extends AppCompatActivity
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
+				// FIXME: 24.04.2016
+
 				startActivity(new Intent(this, IntroActivity.class));
 				/*if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
 				if (mSharedDialog == null) mSharedDialog = new ShareDialog(this);
