@@ -123,6 +123,15 @@ public class FragmentFixtures extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
+			case R.id.action_share:
+				if (!mAdapter.getList().isEmpty()) {
+					mEventListener.onEvent(
+							new EventData(Const.EVENT_CODE_SHARE_FIXTURES)
+									.setFixturesList(mAdapter.getList())
+					);
+				}
+				break;
+
 			case R.id.action_current:
 				loadData(mLeague.getCurrentMatchday());
 				break;
@@ -130,7 +139,8 @@ public class FragmentFixtures extends AbstractFragment
 			case R.id.action_scores_table:
 				mEventListener.onEvent(
 						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
-								.setLeague(mLeague));
+								.setLeague(mLeague)
+				);
 				break;
 
 			case R.id.action_settings:

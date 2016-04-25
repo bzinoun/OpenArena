@@ -1,4 +1,4 @@
-package com.openarena.controllers;
+package com.openarena.util;
 
 import android.content.Context;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;

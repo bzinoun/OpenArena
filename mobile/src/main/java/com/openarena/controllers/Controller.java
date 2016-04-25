@@ -410,7 +410,8 @@ public class Controller {
 	}
 
 	public void getListOfTeamFixtures(
-			final Context context, final int soccerseasonId, final int teamId, final OnGetFixtures callback) {
+			final Context context, final int soccerseasonId,
+			final int teamId, final OnGetFixtures callback) {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {

@@ -119,11 +119,6 @@ public class FragmentPlayers extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			// FIXME: 17.04.2016
-			/*case R.id.action_refresh:
-				loadData();
-				break;*/
-
 			case R.id.action_settings:
 				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
 				break;

@@ -129,15 +129,18 @@ public class FragmentFixtureInfo extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			// FIXME: 17.04.2016
-			/*case R.id.action_refresh:
-				loadData();
-				break;*/
+			case R.id.action_share:
+				mEventListener.onEvent(
+						new EventData(Const.EVENT_CODE_SHARE_FIXTURE)
+								.setFixture(mFixture)
+				);
+				break;
 
 			case R.id.action_scores_table:
 				mEventListener.onEvent(
 						new EventData(Const.EVENT_CODE_SHOW_SCORES_TABLE)
-								.setLeague(DBManager.getLeague(mFixture.getSoccerSeasonID())));
+								.setLeague(DBManager.getLeague(mFixture.getSoccerSeasonID()))
+				);
 				break;
 
 			case R.id.action_settings:
@@ -156,7 +159,7 @@ public class FragmentFixtureInfo extends AbstractFragment
 
 	@Override
 	public void onItemClick(View view, int position) {
-		setupHeader(mAdapter.getItem(position));
+		//setupHeader(mAdapter.getItem(position));
 	}
 
 	@Override

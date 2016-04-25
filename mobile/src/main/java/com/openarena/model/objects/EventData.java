@@ -1,5 +1,7 @@
 package com.openarena.model.objects;
 
+import java.util.ArrayList;
+
 public class EventData {
 
 	private int mCode;
@@ -8,6 +10,7 @@ public class EventData {
 	private Scores mScores;
 	private Team mTeam;
 	private Player mPlayer;
+	private ArrayList<Fixture> mFixtures;
 
 	public EventData(int code) {
 		mCode = code;
@@ -37,6 +40,10 @@ public class EventData {
 		return mPlayer;
 	}
 
+	public ArrayList<Fixture> getFixturesList() {
+		return mFixtures;
+	}
+
 	public EventData setLeague(League league) {
 		mLeague = league;
 		return this;
@@ -59,6 +66,11 @@ public class EventData {
 
 	public EventData setPlayer(Player player) {
 		mPlayer = player;
+		return this;
+	}
+
+	public EventData setFixturesList(ArrayList<Fixture> list) {
+		mFixtures = list;
 		return this;
 	}
 

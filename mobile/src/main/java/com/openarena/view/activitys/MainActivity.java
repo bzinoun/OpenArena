@@ -16,8 +16,10 @@ import com.facebook.share.Sharer;
 import com.facebook.share.widget.ShareDialog;
 import com.openarena.R;
 import com.openarena.controllers.PreferencesManager;
+import com.openarena.controllers.SharingManager;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
+import com.openarena.model.objects.Fixture;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.view.dialogs.DialogPlayerInfo;
@@ -29,6 +31,8 @@ import com.openarena.view.fragments.FragmentFixturesTeam;
 import com.openarena.view.fragments.FragmentLeagues;
 import com.openarena.view.fragments.FragmentPlayers;
 import com.openarena.view.fragments.FragmentScores;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 		implements EventListener, FacebookCallback<Sharer.Result> {
@@ -184,32 +188,8 @@ public class MainActivity extends AppCompatActivity
 				break;
 
 			case Const.EVENT_CODE_SHOW_SETTINGS:
-				// FIXME: 24.04.2016
-
+				// FIXME: 25.04.2016
 				startActivity(new Intent(this, IntroActivity.class));
-				/*if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
-				if (mSharedDialog == null) mSharedDialog = new ShareDialog(this);
-				mSharedDialog.registerCallback(mCallbackManager, this);*/
-
-				/*ShareLinkContent content = new ShareLinkContent.Builder()
-						.setContentUrl(Uri.parse("https://developers.facebook.com"))
-						.setContentTitle("This is some title (this may be your ads) (:")
-						.setContentDescription("Please, don't worry it's just a creative process" +
-								" (:\n this is a long description")
-						.setQuote("This is space for my quote, bla bla bla..")
-						.setShareHashtag(new ShareHashtag.Builder()
-								.setHashtag("#TestShare")
-								.build()
-						)
-						.build();*/
-				//MessageDialog.show(MainActivity.this, content);
-
-				/*ShareLinkContent content = new ShareLinkContent.Builder()
-						.setContentUrl(Uri.parse("https://developers.facebook.com"))
-						.setQuote("This is my some quote, very long quote")
-						.build();
-				mSharedDialog.show(content);*/
-
 				break;
 
 			case Const.EVENT_CODE_SHOW_ABOUT:
@@ -223,6 +203,50 @@ public class MainActivity extends AppCompatActivity
 							.replace(R.id.main_container, FragmentAbout.getInstance(null))
 							.addToBackStack(FragmentAbout.TAG)
 							.commit();
+				}
+				break;
+
+			case Const.EVENT_CODE_SHARE_FIXTURE:
+				Fixture fixture = event.getFixture();
+				if (fixture != null) {
+					Intent sendIntent = new Intent(Intent.ACTION_SEND);
+					sendIntent.setType("text/plain");
+					sendIntent.putExtra(
+							Intent.EXTRA_TEXT,
+							SharingManager.getShareFixture(getResources(), fixture)
+					);
+					startActivity(sendIntent);
+				}
+
+				/*if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
+					if (mSharedDialog == null) {
+						mSharedDialog = new ShareDialog(this);
+						mSharedDialog.registerCallback(mCallbackManager, this);
+					}
+					ShareLinkContent content = new ShareLinkContent.Builder()
+							.setContentUrl(Uri.parse("https://developers.facebook.com"))
+							.setContentTitle("This is some title (this may be your ads) (:")
+							.setContentDescription("Please, don't worry it's just a creative process" +
+									" (:\n this is a long description")
+							.setQuote("This is space for my quote, bla bla bla..")
+							.setShareHashtag(new ShareHashtag.Builder()
+									.setHashtag("#TestShare")
+									.build()
+							)
+							.build();
+					mSharedDialog.show(content);*/
+				break;
+
+			case Const.EVENT_CODE_SHARE_FIXTURES:
+				ArrayList<Fixture> fixturesList = event.getFixturesList();
+				if (fixturesList != null && !fixturesList.isEmpty()) {
+					Intent sendIntent = new Intent(Intent.ACTION_SEND);
+					sendIntent.setType("text/plain");
+					sendIntent.putExtra(
+							Intent.EXTRA_TEXT,
+							SharingManager.getShareFixturesList(getResources(), fixturesList)
+					);
+					startActivity(sendIntent);
 				}
 				break;
 

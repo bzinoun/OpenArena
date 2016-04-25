@@ -6,7 +6,7 @@ import android.content.Context;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.openarena.controllers.Configs;
+import com.openarena.util.Configs;
 import com.openarena.controllers.Controller;
 
 public class Starter extends Application {
