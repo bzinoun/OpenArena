@@ -488,9 +488,10 @@ public class Controller {
 			public void run() {
 				Fixture fixture = adapter.getItem(position);
 				if (fixture != null
-						&& fixture.getDate()
+						&& (fixture.getDate()
 						> System.currentTimeMillis() +
-						1000 * 60 * 60 + 1000) { // time for execute my code (:
+						1000 * 60 * 60 + 1000
+						|| fixture.isNotified())) { // time for execute my code (:
 					fixture.setChange();
 					DBManager.setFixture(fixture);
 					mReceiver.setNotifiedFixture(context, fixture, fixture.isNotified());
