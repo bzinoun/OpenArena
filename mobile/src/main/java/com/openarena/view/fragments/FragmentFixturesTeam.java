@@ -25,8 +25,10 @@ import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
+import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.util.Const;
+import com.openarena.util.L;
 import com.openarena.util.UI;
 
 import java.util.ArrayList;
@@ -45,8 +47,8 @@ public class FragmentFixturesTeam extends AbstractFragment
 	private EventListener mEventListener;
 	private Snackbar mSnackbar;
 	private Team mTeam;
+	private Scores mScore;
 	private Menu mMenu;
-	private boolean mNotify;
 	private boolean mIsShow;
 
 	public static FragmentFixturesTeam getInstance(@Nullable Bundle data) {
@@ -60,6 +62,7 @@ public class FragmentFixturesTeam extends AbstractFragment
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (mTeam == null) mTeam = getArguments().getParcelable("team");
+		if (mScore == null) mScore = getArguments().getParcelable("score");
 		if (savedInstanceState != null) {
 			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
 			if (list != null) mAdapter = new FixturesAdapter(getResources(), list);
@@ -110,6 +113,8 @@ public class FragmentFixturesTeam extends AbstractFragment
 		if (mEventListener != null) mEventListener = null;
 		if (mController != null) mController = null;
 		if (mAdapter != null) mAdapter = null;
+		if (mTeam != null) mTeam = null;
+		if (mScore != null) mScore = null;
 	}
 
 	@Override
@@ -122,17 +127,6 @@ public class FragmentFixturesTeam extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.action_notify:
-				if (!mNotify) {
-					mMenu.findItem(R.id.action_notify).setIcon(R.drawable.ic_bell);
-					mNotify = true;
-				}
-				else {
-					mMenu.findItem(R.id.action_notify).setIcon(R.drawable.ic_bell_outline);
-					mNotify = false;
-				}
-				break;
-
 			case R.id.action_settings:
 				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
 				break;
@@ -143,6 +137,21 @@ public class FragmentFixturesTeam extends AbstractFragment
 
 			default:
 				return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		int group = item.getGroupId();
+		switch (group) {
+			case Const.GROUP_FIXTURES:
+				mController.changeNotification(getActivity(), item.getItemId(), mAdapter);
+				break;
+
+			default:
+				L.e(FragmentFixtures.class, "default group->" + group);
+				return super.onContextItemSelected(item);
 		}
 		return true;
 	}
@@ -165,7 +174,7 @@ public class FragmentFixturesTeam extends AbstractFragment
 								new View.OnClickListener() {
 									@Override
 									public void onClick(View v) {
-										loadData(mTeam.getID());
+										loadData(mScore.getSoccerSeasonID(), mTeam.getID());
 									}
 								}
 						);
@@ -197,7 +206,12 @@ public class FragmentFixturesTeam extends AbstractFragment
 
 	@Override
 	public void onItemLongClick(View view, int position) {
-
+		Fixture fixture = mAdapter.getItem(position);
+		if (fixture != null) {
+			if (fixture.getDate() > System.currentTimeMillis() + 1000 * 60 * 60 || fixture.isNotified()) { // one day
+				view.showContextMenu();
+			}
+		}
 	}
 
 	private void setupUI(View view) {
@@ -223,7 +237,7 @@ public class FragmentFixturesTeam extends AbstractFragment
 	}
 
 	private void showContent() {
-		if (mAdapter == null) loadData(mTeam.getID());
+		if (mAdapter == null) loadData(mScore.getSoccerSeasonID(), mTeam.getID());
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
 			UI.show(mRecyclerView);
@@ -231,10 +245,10 @@ public class FragmentFixturesTeam extends AbstractFragment
 		}
 	}
 
-	private void loadData(int teamId) {
+	private void loadData(int soccerseasonId, int teamId) {
 		UI.hide(mRecyclerView, mEmptyContent, mErrorContent);
 		UI.show(mProgressContent);
 		if (mAdapter != null) mAdapter = null;
-		mController.getListOfTeamFixtures(getActivity(), teamId, this);
+		mController.getListOfTeamFixtures(getActivity(), soccerseasonId, teamId, this);
 	}
 }

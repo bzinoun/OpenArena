@@ -44,6 +44,25 @@ public class DBManager {
 	}
 
 	@Nullable
+	public static ArrayList<Fixture> getFixturesListUpcoming(int soccerseasonId, int teamId) {
+		Cursor cursor = sSQLHelper.query(
+				DBConst.TABLE_FIXTURES,
+				null,
+				DBConst.SOCCER_SEASON_ID + "=? AND " +
+						DBConst.DATE + ">? AND (" +
+						DBConst.HOME_TEAM_ID + "=? OR " +
+						DBConst.AWAY_TEAM_ID + "=?)",
+				new String[] {String.valueOf(soccerseasonId),
+						String.valueOf(System.currentTimeMillis()),
+						String.valueOf(teamId),
+						String.valueOf(teamId)},
+				null, null, null);
+		ArrayList<Fixture> list = Fixture.parseArray(cursor);
+		if (cursor != null) cursor.close();
+		return list;
+	}
+
+	@Nullable
 	public static ArrayList<Fixture> getFixturesList(int soccerseasonId) {
 		Cursor cursor = sSQLHelper.getAll(
 				DBConst.TABLE_FIXTURES,

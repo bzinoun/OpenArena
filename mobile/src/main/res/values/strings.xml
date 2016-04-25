@@ -33,7 +33,7 @@
 	<string name="scores_head_points">P</string>
 	<string name="scores_sort_dialog_title">Categories</string>
 
-	<string name="team_button_fixtures">Fixtures</string>
+	<string name="team_button_fixtures">Upcoming matches</string>
 	<string name="team_button_players">Players</string>
 
 	<string name="about_title">About</string>
@@ -57,7 +57,7 @@
 
 	<string name="context_head_select_matchday">Select matchday</string>
 	<string name="context_fixture_head">Select action</string>
-	<string name="context_fixture_notified">Turned notification</string>
+	<string name="context_fixture_notification">Notification</string>
 
 	<string name="dialog_exit_title">Do you want to exit?</string>
 	<string name="dialog_exit_positive">Yes</string>

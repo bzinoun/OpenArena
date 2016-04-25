@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity
 				if (mFragmentManager.findFragmentByTag(FragmentFixturesTeam.TAG) == null) {
 					Bundle data6 = new Bundle();
 					data6.putParcelable("team", event.getTeam());
+					data6.putParcelable("score", event.getScores());
 					mFragmentManager.beginTransaction()
 							.setCustomAnimations(
 									R.anim.fragment_fade_in,

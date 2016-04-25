@@ -223,7 +223,8 @@ public class FragmentScores extends AbstractFragment
 
 	@Override
 	public void onItemLongClick(View view, int position) {
-
+		mEventListener.onEvent(new EventData(Const.EVENT_CODE_SELECT_SCORES)
+				.setScores(mAdapter.getItem(position)));
 	}
 
 	private void setupUI(View view) {

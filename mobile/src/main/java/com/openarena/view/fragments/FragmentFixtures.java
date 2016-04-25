@@ -255,8 +255,6 @@ public class FragmentFixtures extends AbstractFragment
 				getActivity(),
 				mRecyclerView,
 				this));
-
-		registerForContextMenu(mRecyclerView);
 		mRecyclerView.setHasFixedSize(true);
 		mMatchday = (TextView) view.findViewById(R.id.matchday);
 		mMatchday.setText(String.format(

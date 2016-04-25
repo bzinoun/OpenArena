@@ -150,7 +150,9 @@ public class DialogTeam extends AppCompatDialogFragment implements Controller.On
 			case R.id.button_fixtures:
 				if (mListener != null) {
 					mListener.onEvent(
-							new EventData(Const.EVENT_CODE_SELECT_FIXTURES).setTeam(mTeam)
+							new EventData(Const.EVENT_CODE_SELECT_FIXTURES)
+									.setTeam(mTeam)
+									.setScores(mScores)
 					);
 				}
 				dismiss();
