@@ -1,5 +1,6 @@
 package com.openarena.model.adapters;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -10,18 +11,26 @@ import java.util.List;
 
 public class IntroPagerAdapter extends FragmentPagerAdapter{
 
-	private List<AbstractFragmentIntro> mFragments;
+	private List<String> mTitles;
 	private List<Integer> mColors;
+	private List<AbstractFragmentIntro> mFragments;
 
 	public IntroPagerAdapter(FragmentManager fm) {
 		super(fm);
-		mFragments = new ArrayList<>();
+		mTitles = new ArrayList<>();
 		mColors = new ArrayList<>();
+		mFragments = new ArrayList<>();
 	}
 
-	public void addFragment(AbstractFragmentIntro fragment, int color) {
-		mFragments.add(fragment);
+	public void addFragment(@Nullable String title, int color, AbstractFragmentIntro fragment) {
+		mTitles.add(title);
 		mColors.add(color);
+		mFragments.add(fragment);
+	}
+
+	@Override
+	public CharSequence getPageTitle(int position) {
+		return mTitles.get(position);
 	}
 
 	@Override
@@ -29,14 +38,14 @@ public class IntroPagerAdapter extends FragmentPagerAdapter{
 		return mFragments.get(position);
 	}
 
-	public int getColor(int position) {
-		if (!mColors.isEmpty()) return mColors.get(position);
-		else return 0;
-	}
-
 	@Override
 	public int getCount() {
 		if (mFragments != null) return mFragments.size();
+		else return 0;
+	}
+
+	public int getColor(int position) {
+		if (!mColors.isEmpty()) return mColors.get(position);
 		else return 0;
 	}
 

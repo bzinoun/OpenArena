@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.openarena.R;
 import com.openarena.controllers.PreferencesManager;
@@ -18,10 +19,12 @@ import com.openarena.model.adapters.IntroPagerAdapter;
 import com.openarena.model.listeners.OnIntroSwipeListener;
 import com.openarena.util.Const;
 import com.openarena.util.L;
+import com.openarena.util.UI;
 
 public class IntroActivity extends AppCompatActivity implements View.OnClickListener {
 
 	private ViewPager mViewPager;
+	private TextView mTitle;
 	private Button mSkipButton, mNextButton, mStartButton;
 	private ImageView[] mIndicators;
 	private IntroPagerAdapter mAdapter;
@@ -36,12 +39,14 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 		if (mTransformer == null) mTransformer = new IntroPageTransformer();
 		setupUI();
 		setupAdapter();
+		updateTitle((String) mAdapter.getPageTitle(0), 0);
 		setupViewPager();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (mTitle != null) mTitle = null;
 		if (mViewPager != null) mViewPager = null;
 		if (mSkipButton != null) mSkipButton = null;
 		if (mStartButton != null) mStartButton = null;
@@ -78,6 +83,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 	}
 
 	private void setupUI() {
+		mTitle = (TextView) findViewById(R.id.title);
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mNextButton = (Button) findViewById(R.id.button_next);
 		mStartButton = (Button) findViewById(R.id.button_finish);
@@ -90,21 +96,26 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 	private void setupAdapter() {
 		if (mAdapter == null) {
 			mAdapter = new IntroPagerAdapter(getSupportFragmentManager());
-			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					0,
+			mAdapter.addFragment(
 					getString(R.string.intro_page1_title),
-					getString(R.string.intro_page1_subtitle),
-					R.drawable.im_intro_on_pulse), R.color.intro_page1);
-			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					1,
+					R.color.intro_page1,
+					AbstractFragmentIntro.getInstance(
+							0, getString(R.string.intro_page1_subtitle),
+							R.drawable.im_intro_on_pulse)
+			);
+			mAdapter.addFragment(
 					getString(R.string.intro_page2_title),
-					getString(R.string.intro_page2_subtitle),
-					R.drawable.im_intro_share_with_friends), R.color.intro_page2);
-			mAdapter.addFragment(AbstractFragmentIntro.getInstance(
-					2,
-					getString(R.string.intro_page3_title),
-					null,
-					R.drawable.im_intro_get_started), R.color.intro_page3);
+					R.color.intro_page2,
+					AbstractFragmentIntro.getInstance(
+							1, getString(R.string.intro_page2_subtitle),
+							R.drawable.im_intro_share_with_friends)
+			);
+			mAdapter.addFragment(
+					getString(R.string.intro_page3_title), R.color.intro_page3,
+					AbstractFragmentIntro.getInstance(
+							2, null,
+							R.drawable.im_intro_get_started)
+			);
 		}
 		mViewPager.setAdapter(mAdapter);
 	}
@@ -135,11 +146,21 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 				mIndicators) {
 			@Override
 			public void pageChanged(int position, int count) {
+				String title = (String) mAdapter.getPageTitle(position);
+				updateTitle(title, position);
 				mNextButton.setVisibility(position == count - 1 ? View.GONE : View.VISIBLE);
 				mStartButton.setVisibility(position == count - 1 ? View.VISIBLE : View.GONE);
 			}
 		});
 		mViewPager.setPageTransformer(false, mTransformer);
+	}
+
+	private void updateTitle(String title, int position) {
+		if (title == null) UI.hide(mTitle);
+		else {
+			mTitle.setText(title);
+			UI.show(mTitle);
+		}
 	}
 
 }

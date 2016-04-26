@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -10,38 +10,20 @@
 		android:id="@+id/image"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_centerInParent="true"
+		android:layout_gravity="center"
 		android:scaleType="fitCenter"
 		android:visibility="visible"
-		tools:src="@mipmap/ic_launcher"/>
+		tools:src="@drawable/im_intro_get_started"/>
 
-	<LinearLayout
+	<TextView
+		android:id="@+id/subtitle"
+		android:layout_marginTop="60dp"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="top"
-		android:orientation="vertical">
+		android:gravity="center"
+		android:textSize="18sp"
+		android:textColor="@color/intro_subtitle"
+		tools:text="Some subtitle"/>
 
-		<TextView
-			android:id="@+id/title"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:paddingTop="@dimen/horizontal_padding"
-			android:paddingBottom="20dp"
-			android:textSize="24sp"
-			android:textStyle="bold"
-			android:textColor="@color/intro_title"
-			tools:text="Title"/>
 
-		<TextView
-			android:id="@+id/subtitle"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:textSize="18sp"
-			android:textColor="@color/intro_subtitle"
-			tools:text="Some subtitle"/>
-
-	</LinearLayout>
-
-</RelativeLayout>
+</FrameLayout>

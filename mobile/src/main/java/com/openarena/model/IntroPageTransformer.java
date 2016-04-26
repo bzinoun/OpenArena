@@ -7,7 +7,7 @@ import com.openarena.R;
 
 public class IntroPageTransformer implements ViewPager.PageTransformer {
 
-	View mTitle, mSubtitle, mImage;
+	View mSubtitle, mImage;
 	int mPagePosition, mPageWidth, mPageHeight;
 	float mPageWidthTimesPosition, mPageHeightTimesPosition, mAbsPosition;
 
@@ -20,8 +20,6 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 			//page selected
 		} else {
 			//transition
-			mTitle.setAlpha(1.0f - mAbsPosition * 1.8f);
-			mTitle.setTranslationX(-mPageWidthTimesPosition);
 			mSubtitle.setAlpha(1.0f - mAbsPosition * 1.5f);
 			mSubtitle.setTranslationY(0.2f - mAbsPosition);
 
@@ -60,9 +58,7 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 		mAbsPosition = Math.abs(position);
 
 		mImage = page.findViewById(R.id.image);
-		mTitle = page.findViewById(R.id.title);
 		mSubtitle = page.findViewById(R.id.subtitle);
-
 	}
 
 }
