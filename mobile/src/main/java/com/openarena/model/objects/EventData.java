@@ -12,6 +12,7 @@ public class EventData {
 	private Player mPlayer;
 	private ArrayList<Fixture> mFixturesList;
 	private ArrayList<Scores> mScoresList;
+	private ArrayList<Player> mPlayersList;
 
 	public EventData(int code) {
 		mCode = code;
@@ -49,6 +50,10 @@ public class EventData {
 		return mScoresList;
 	}
 
+	public ArrayList<Player> getPlayersList() {
+		return mPlayersList;
+	}
+
 	public EventData setLeague(League league) {
 		mLeague = league;
 		return this;
@@ -81,6 +86,11 @@ public class EventData {
 
 	public EventData setScoresList(ArrayList<Scores> list) {
 		mScoresList = list;
+		return this;
+	}
+
+	public EventData setPlayersList(ArrayList<Player> list) {
+		mPlayersList = list;
 		return this;
 	}
 

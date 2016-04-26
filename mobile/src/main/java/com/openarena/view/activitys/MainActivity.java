@@ -15,7 +15,9 @@ import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
+import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
+import com.openarena.model.objects.Team;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.view.dialogs.DialogPlayerInfo;
@@ -227,6 +229,19 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 					sendIntent.putExtra(
 							Intent.EXTRA_TEXT,
 							SharingManager.getShareScoresTable(getResources(), league2, scoresList));
+					startActivity(sendIntent);
+				}
+				break;
+
+			case Const.EVENT_CODE_SHARE_PLAYERS_LIST:
+				ArrayList<Player> playersList = event.getPlayersList();
+				Team team = event.getTeam();
+				if (team != null && playersList != null) {
+					Intent sendIntent = new Intent(Intent.ACTION_SEND);
+					sendIntent.setType("text/plain");
+					sendIntent.putExtra(
+							Intent.EXTRA_TEXT,
+							SharingManager.getSharePlayersList(getResources(), team, playersList));
 					startActivity(sendIntent);
 				}
 				break;

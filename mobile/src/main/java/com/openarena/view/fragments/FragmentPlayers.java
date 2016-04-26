@@ -119,6 +119,16 @@ public class FragmentPlayers extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
+			case R.id.action_share:
+				if (mAdapter != null && !mAdapter.getList().isEmpty()) {
+					mEventListener.onEvent(
+							new EventData(Const.EVENT_CODE_SHARE_PLAYERS_LIST)
+									.setTeam(mTeam)
+									.setPlayersList(mAdapter.getList())
+					);
+				}
+				break;
+
 			case R.id.action_settings:
 				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
 				break;

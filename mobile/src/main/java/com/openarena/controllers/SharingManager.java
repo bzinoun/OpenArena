@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import com.openarena.R;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.League;
+import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
+import com.openarena.model.objects.Team;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -146,6 +148,23 @@ public class SharingManager {
 					scores.getRank(),
 					scores.getPoints(),
 					scores.getTeam()))
+					.append("\n");
+		}
+		return builder.toString();
+	}
+
+	public static String getSharePlayersList(
+			@NonNull Resources resources, @NonNull Team team, @NonNull ArrayList<Player> list) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(String.format(
+				resources.getString(R.string.share_players_header),
+				team.getName(),
+				team.getShortName()))
+				.append("\n");
+		for (Player player : list) {
+			builder.append(String.format(resources.getString(R.string.share_players_item),
+					player.getJerseyNumber(),
+					player.getName()))
 					.append("\n");
 		}
 		return builder.toString();
