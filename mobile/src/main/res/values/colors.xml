@@ -56,8 +56,8 @@
 	<color name="intro_button">#FFF</color>
 	<color name="intro_indicator_selected">#FFF</color>
 	<color name="intro_indicator_unselected">#BDBDBD</color>
-	<color name="intro_page1">#741b00</color>
-	<color name="intro_page2">#00838F</color>
+	<color name="intro_page1">#607D8B</color>
+	<color name="intro_page2">#1565C0</color>
 	<color name="intro_page3">@color/primary_dark</color>
 
 	<color name="window_background">#F5F5F5</color>

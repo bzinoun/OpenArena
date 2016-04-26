@@ -83,8 +83,8 @@
 	<string name="share_scores_item">%1$d | %2$d | %3$s</string>
 
 	<!-- Tutorial -->
-	<string name="intro_page1_title">Title1</string>
-	<string name="intro_page1_subtitle">Subtitle1</string>
+	<string name="intro_page1_title">On pulse</string>
+	<string name="intro_page1_subtitle">Get information for upcoming events</string>
 	<string name="intro_page2_title">Sharing</string>
 	<string name="intro_page2_subtitle">Share all with friends</string>
 	<string name="intro_page3_title">Get started!</string>
