@@ -1,7 +1,11 @@
 package com.openarena.util;
 
 public class Const {
+	//System
+	public static final boolean IS_DEBUG_MODE = true;
+	public static final String APP_TAG = "TAG";
 
+	//Other
 	public static final String SUBMITTED = "submitted";
 	public static final String ACTION_NOTIFICATION_BROADCAST = ".model.receivers.NotificationBroadcastReceiver";
 
@@ -10,7 +14,7 @@ public class Const {
 	public static final int GROUP_FIXTURES = 1;
 	public static final int GROUP_MATCHDAYS = 2;
 
-	public static final int TIME_TO_EXIT = 400;
+	public static final int TIME_TO_EXIT = 400; //ms
 
 	public static final int ERROR_CODE_PARSE_ERROR = 1;
 	public static final int ERROR_CODE_RESULT_NULL = 2;
@@ -27,5 +31,6 @@ public class Const {
 	public static final int EVENT_CODE_SHOW_ABOUT = 19;
 	public static final int EVENT_CODE_SHARE_FIXTURE = 110;
 	public static final int EVENT_CODE_SHARE_FIXTURES = 111;
+	public static final int EVENT_CODE_SHARE_SCORES = 112;
 
 }

@@ -10,7 +10,8 @@ public class EventData {
 	private Scores mScores;
 	private Team mTeam;
 	private Player mPlayer;
-	private ArrayList<Fixture> mFixtures;
+	private ArrayList<Fixture> mFixturesList;
+	private ArrayList<Scores> mScoresList;
 
 	public EventData(int code) {
 		mCode = code;
@@ -41,7 +42,11 @@ public class EventData {
 	}
 
 	public ArrayList<Fixture> getFixturesList() {
-		return mFixtures;
+		return mFixturesList;
+	}
+
+	public ArrayList<Scores> getScoresList() {
+		return mScoresList;
 	}
 
 	public EventData setLeague(League league) {
@@ -70,7 +75,12 @@ public class EventData {
 	}
 
 	public EventData setFixturesList(ArrayList<Fixture> list) {
-		mFixtures = list;
+		mFixturesList = list;
+		return this;
+	}
+
+	public EventData setScoresList(ArrayList<Scores> list) {
+		mScoresList = list;
 		return this;
 	}
 

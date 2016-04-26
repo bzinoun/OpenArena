@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 
 import com.openarena.R;
 import com.openarena.model.objects.Fixture;
+import com.openarena.model.objects.League;
+import com.openarena.model.objects.Scores;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +16,9 @@ import java.util.Locale;
 
 public class SharingManager {
 
-	public static String getShareFixture(Resources resources, Fixture fixture) {
+	@NonNull
+	public static String getShareFixture(
+			@NonNull Resources resources, @NonNull Fixture fixture) {
 		int goalsHomeTeam = fixture.getGoalsHomeTeam(), goalsAwayTeam = fixture.getGoalsAwayTeam();
 		if (goalsHomeTeam >= 0 && goalsAwayTeam >= 0) {
 			String date = new SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
@@ -53,16 +57,16 @@ public class SharingManager {
 		}
 	}
 
+	@NonNull
 	public static String getShareFixturesList(
-			Resources resources, @NonNull ArrayList<Fixture> list) {
+			@NonNull Resources resources, @NonNull ArrayList<Fixture> list) {
 		StringBuilder builder = new StringBuilder();
 		int goalsHomeTeam, goalsAwayTeam, count;
 		Fixture fixture;
 		Calendar calendar = Calendar.getInstance(), calendarTmp = Calendar.getInstance();
 		Date date = new Date(), dateTmp = new Date();
 		if (!list.isEmpty()) {
-			builder.append("###")
-					.append(String.format(
+			builder.append(String.format(
 							resources.getString(R.string.share_fixtures_matchday),
 							list.get(0).getMatchday()))
 					.append("\n");
@@ -83,25 +87,26 @@ public class SharingManager {
 						!= calendarTmp.get(Calendar.DAY_OF_YEAR))) {
 					dateTmp.setTime(System.currentTimeMillis());
 					calendarTmp.setTime(dateTmp);
-					builder.append("##");
 					if (calendar.get(Calendar.YEAR)
 							== calendarTmp.get(Calendar.YEAR)
 							&&calendar.get(Calendar.DAY_OF_YEAR)
 							== calendarTmp.get(Calendar.DAY_OF_YEAR)) {
 						builder.append(
-								resources.getString(R.string.fixtures_list_item_header_today));
+								resources.getString(R.string.share_fixtures_header_today));
 					}
 					else if (calendar.get(Calendar.YEAR)
 							== calendarTmp.get(Calendar.YEAR)
 							&& calendar.get(Calendar.DAY_OF_YEAR)
 							== calendarTmp.get(Calendar.DAY_OF_YEAR) + 1) {
 						builder.append(
-								resources.getString(R.string.fixtures_list_item_header_tomorrow));
+								resources.getString(R.string.share_fixtures_header_tomorrow));
 					}
 					else {
-						builder.append(
+						builder.append(String.format(
+								resources.getString(R.string.share_fixtures_header_with_date),
 								new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
-										.format(new Date(fixture.getDate())));
+										.format(new Date(fixture.getDate())))
+						);
 					}
 					builder.append("\n");
 				}
@@ -122,6 +127,26 @@ public class SharingManager {
 				}
 				builder.append("\n");
 			}
+		}
+		return builder.toString();
+	}
+
+	@NonNull
+	public static String getShareScoresTable(
+			@NonNull Resources resources, @NonNull League league, @NonNull ArrayList<Scores> list) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(String.format(
+				resources.getString(R.string.share_scores_header),
+				league.getCaption(),
+				league.getCurrentMatchday()))
+				.append("\n");
+		for (Scores scores : list) {
+			builder.append(String.format(
+					resources.getString(R.string.share_scores_item),
+					scores.getRank(),
+					scores.getPoints(),
+					scores.getTeam()))
+					.append("\n");
 		}
 		return builder.toString();
 	}

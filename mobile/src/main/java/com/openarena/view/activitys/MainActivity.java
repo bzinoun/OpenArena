@@ -7,19 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.share.Sharer;
-import com.facebook.share.widget.ShareDialog;
 import com.openarena.R;
 import com.openarena.controllers.PreferencesManager;
 import com.openarena.controllers.SharingManager;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
+import com.openarena.model.objects.League;
+import com.openarena.model.objects.Scores;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.view.dialogs.DialogPlayerInfo;
@@ -34,14 +30,11 @@ import com.openarena.view.fragments.FragmentScores;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
-		implements EventListener, FacebookCallback<Sharer.Result> {
+public class MainActivity extends AppCompatActivity implements EventListener {
 
 	private Toolbar mToolbar;
 	private FragmentManager mFragmentManager;
 	private long mLastBack;
-	private CallbackManager mCallbackManager;
-	private ShareDialog mSharedDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,14 +58,6 @@ public class MainActivity extends AppCompatActivity
 		super.onDestroy();
 		if (mToolbar != null) mToolbar = null;
 		if (mFragmentManager != null) mFragmentManager = null;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (mCallbackManager != null) {
-			mCallbackManager.onActivityResult(requestCode, resultCode, data);
-		}
 	}
 
 	@Override
@@ -217,24 +202,6 @@ public class MainActivity extends AppCompatActivity
 					);
 					startActivity(sendIntent);
 				}
-
-				/*if (mCallbackManager == null) mCallbackManager = CallbackManager.Factory.create();
-					if (mSharedDialog == null) {
-						mSharedDialog = new ShareDialog(this);
-						mSharedDialog.registerCallback(mCallbackManager, this);
-					}
-					ShareLinkContent content = new ShareLinkContent.Builder()
-							.setContentUrl(Uri.parse("https://developers.facebook.com"))
-							.setContentTitle("This is some title (this may be your ads) (:")
-							.setContentDescription("Please, don't worry it's just a creative process" +
-									" (:\n this is a long description")
-							.setQuote("This is space for my quote, bla bla bla..")
-							.setShareHashtag(new ShareHashtag.Builder()
-									.setHashtag("#TestShare")
-									.build()
-							)
-							.build();
-					mSharedDialog.show(content);*/
 				break;
 
 			case Const.EVENT_CODE_SHARE_FIXTURES:
@@ -250,24 +217,22 @@ public class MainActivity extends AppCompatActivity
 				}
 				break;
 
+			case Const.EVENT_CODE_SHARE_SCORES:
+				ArrayList<Scores> scoresList = event.getScoresList();
+				League league = event.getLeague();
+				if (league != null && scoresList != null) {
+					Intent sendIntent = new Intent(Intent.ACTION_SEND);
+					sendIntent.setType("text/plain");
+					sendIntent.putExtra(
+							Intent.EXTRA_TEXT,
+							SharingManager.getShareScoresTable(getResources(), league, scoresList));
+					startActivity(sendIntent);
+				}
+				break;
+
 			default:
 				L.e(MainActivity.class, "new event code->" + code);
 		}
-	}
-
-	@Override
-	public void onSuccess(Sharer.Result result) {
-		Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
-	}
-
-	@Override
-	public void onCancel() {
-		Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
-	}
-
-	@Override
-	public void onError(FacebookException error) {
-		Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
 	}
 
 	private void setupUI() {
