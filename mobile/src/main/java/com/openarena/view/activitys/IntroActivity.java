@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.openarena.R;
 import com.openarena.controllers.PreferencesManager;
 import com.openarena.model.IntroPageTransformer;
-import com.openarena.model.abstractions.AbstractFragmentIntro;
+import com.openarena.view.fragments.FragmentIntro;
 import com.openarena.model.adapters.IntroPagerAdapter;
 import com.openarena.model.listeners.OnIntroSwipeListener;
 import com.openarena.util.Const;
@@ -99,20 +99,20 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 			mAdapter.addFragment(
 					getString(R.string.intro_page1_title),
 					R.color.intro_page1,
-					AbstractFragmentIntro.getInstance(
+					FragmentIntro.getInstance(
 							0, getString(R.string.intro_page1_subtitle),
 							R.drawable.im_intro_on_pulse)
 			);
 			mAdapter.addFragment(
 					getString(R.string.intro_page2_title),
 					R.color.intro_page2,
-					AbstractFragmentIntro.getInstance(
+					FragmentIntro.getInstance(
 							1, getString(R.string.intro_page2_subtitle),
 							R.drawable.im_intro_share_with_friends)
 			);
 			mAdapter.addFragment(
 					getString(R.string.intro_page3_title), R.color.intro_page3,
-					AbstractFragmentIntro.getInstance(
+					FragmentIntro.getInstance(
 							2, null,
 							R.drawable.im_intro_get_started)
 			);

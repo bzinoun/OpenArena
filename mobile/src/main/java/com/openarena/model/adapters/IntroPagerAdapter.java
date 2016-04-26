@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.openarena.model.abstractions.AbstractFragmentIntro;
+import com.openarena.view.fragments.FragmentIntro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class IntroPagerAdapter extends FragmentPagerAdapter{
 
 	private List<String> mTitles;
 	private List<Integer> mColors;
-	private List<AbstractFragmentIntro> mFragments;
+	private List<FragmentIntro> mFragments;
 
 	public IntroPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -22,7 +22,7 @@ public class IntroPagerAdapter extends FragmentPagerAdapter{
 		mFragments = new ArrayList<>();
 	}
 
-	public void addFragment(@Nullable String title, int color, AbstractFragmentIntro fragment) {
+	public void addFragment(@Nullable String title, int color, FragmentIntro fragment) {
 		mTitles.add(title);
 		mColors.add(color);
 		mFragments.add(fragment);
@@ -34,7 +34,7 @@ public class IntroPagerAdapter extends FragmentPagerAdapter{
 	}
 
 	@Override
-	public AbstractFragmentIntro getItem(int position) {
+	public FragmentIntro getItem(int position) {
 		return mFragments.get(position);
 	}
 

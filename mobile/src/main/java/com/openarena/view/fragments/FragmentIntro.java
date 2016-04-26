@@ -1,4 +1,4 @@
-package com.openarena.model.abstractions;
+package com.openarena.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.openarena.R;
 import com.openarena.util.UI;
 
-public class AbstractFragmentIntro extends Fragment {
+public class FragmentIntro extends Fragment {
 
 	private static final String IS_CUSTOM_LAYOUT = "is_custom_layout";
 	private static final String VIEW_ID = "view_id";
@@ -25,7 +25,7 @@ public class AbstractFragmentIntro extends Fragment {
 	protected int mViewId, mPosition;
 	protected String mSubtitleStr;
 
-	public static AbstractFragmentIntro getInstance(
+	public static FragmentIntro getInstance(
 			int position,
 			@Nullable String subtitle,
 			int imageId) {
@@ -33,13 +33,13 @@ public class AbstractFragmentIntro extends Fragment {
 	}
 
 	// FIXME: 21.04.2016
-	private static AbstractFragmentIntro getInstance(
+	private static FragmentIntro getInstance(
 			int position,
 			@Nullable String subtitle,
 			int viewId,
 			boolean isCustomLayout) {
 
-		AbstractFragmentIntro fragment = new AbstractFragmentIntro();
+		FragmentIntro fragment = new FragmentIntro();
 		Bundle data = new Bundle();
 		data.putInt(POSITION, position);
 		data.putInt(VIEW_ID, viewId);
