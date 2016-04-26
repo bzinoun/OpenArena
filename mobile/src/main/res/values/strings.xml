@@ -72,10 +72,10 @@
 	<string name="share_fixture_draw">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - draw</string>
 	<string name="share_fixture_timed">\"%2$s vs %3$s\" begin at %1$s</string>
 
-	<string name="share_fixtures_matchday">### Matchday: %1$d</string>
-	<string name="share_fixtures_header_today">## Today</string>
-	<string name="share_fixtures_header_tomorrow">## Tomorrow</string>
-	<string name="share_fixtures_header_with_date">## %1$s</string>
+	<string name="share_fixtures_header">### %1$s\n## Matchday: %2$d</string>
+	<string name="share_fixtures_separator_today"># Today</string>
+	<string name="share_fixtures_separator_tomorrow"># Tomorrow</string>
+	<string name="share_fixtures_separator_with_date"># %1$s</string>
 	<string name="share_fixtures_finished">%1$s [%3$d:%4$d] %2$s</string>
 	<string name="share_fixtures_timed">%1$s (%3$s) %2$s</string>
 

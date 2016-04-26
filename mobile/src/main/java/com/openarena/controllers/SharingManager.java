@@ -59,7 +59,7 @@ public class SharingManager {
 
 	@NonNull
 	public static String getShareFixturesList(
-			@NonNull Resources resources, @NonNull ArrayList<Fixture> list) {
+			@NonNull Resources resources, @NonNull League league, @NonNull ArrayList<Fixture> list) {
 		StringBuilder builder = new StringBuilder();
 		int goalsHomeTeam, goalsAwayTeam, count;
 		Fixture fixture;
@@ -67,8 +67,8 @@ public class SharingManager {
 		Date date = new Date(), dateTmp = new Date();
 		if (!list.isEmpty()) {
 			builder.append(String.format(
-							resources.getString(R.string.share_fixtures_matchday),
-							list.get(0).getMatchday()))
+							resources.getString(R.string.share_fixtures_header),
+							league.getCaption(), list.get(0).getMatchday()))
 					.append("\n");
 			count = list.size();
 			for (int i = 0; i < count; i++) {
@@ -92,18 +92,18 @@ public class SharingManager {
 							&&calendar.get(Calendar.DAY_OF_YEAR)
 							== calendarTmp.get(Calendar.DAY_OF_YEAR)) {
 						builder.append(
-								resources.getString(R.string.share_fixtures_header_today));
+								resources.getString(R.string.share_fixtures_separator_today));
 					}
 					else if (calendar.get(Calendar.YEAR)
 							== calendarTmp.get(Calendar.YEAR)
 							&& calendar.get(Calendar.DAY_OF_YEAR)
 							== calendarTmp.get(Calendar.DAY_OF_YEAR) + 1) {
 						builder.append(
-								resources.getString(R.string.share_fixtures_header_tomorrow));
+								resources.getString(R.string.share_fixtures_separator_tomorrow));
 					}
 					else {
 						builder.append(String.format(
-								resources.getString(R.string.share_fixtures_header_with_date),
+								resources.getString(R.string.share_fixtures_separator_with_date),
 								new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
 										.format(new Date(fixture.getDate())))
 						);

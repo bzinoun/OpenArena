@@ -126,7 +126,8 @@ public class FragmentFixtures extends AbstractFragment
 			case R.id.action_share:
 				if (!mAdapter.getList().isEmpty()) {
 					mEventListener.onEvent(
-							new EventData(Const.EVENT_CODE_SHARE_FIXTURES)
+							new EventData(Const.EVENT_CODE_SHARE_FIXTURES_LIST)
+									.setLeague(mLeague)
 									.setFixturesList(mAdapter.getList())
 					);
 				}

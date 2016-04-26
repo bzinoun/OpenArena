@@ -130,7 +130,7 @@ public class FragmentScores extends AbstractFragment
 			case R.id.action_share:
 				if (mAdapter != null && !mAdapter.getList().isEmpty()) {
 					mEventListener.onEvent(
-							new EventData(Const.EVENT_CODE_SHARE_SCORES)
+							new EventData(Const.EVENT_CODE_SHARE_SCORES_TABLE)
 									.setLeague(mLeague)
 									.setScoresList(mAdapter.getList())
 					);

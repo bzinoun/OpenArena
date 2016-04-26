@@ -30,7 +30,7 @@ public class Const {
 	public static final int EVENT_CODE_SHOW_SETTINGS = 18;
 	public static final int EVENT_CODE_SHOW_ABOUT = 19;
 	public static final int EVENT_CODE_SHARE_FIXTURE = 110;
-	public static final int EVENT_CODE_SHARE_FIXTURES = 111;
-	public static final int EVENT_CODE_SHARE_SCORES = 112;
+	public static final int EVENT_CODE_SHARE_FIXTURES_LIST = 111;
+	public static final int EVENT_CODE_SHARE_SCORES_TABLE = 112;
 
 }

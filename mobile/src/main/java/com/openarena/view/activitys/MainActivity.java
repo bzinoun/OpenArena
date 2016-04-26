@@ -204,28 +204,29 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 				}
 				break;
 
-			case Const.EVENT_CODE_SHARE_FIXTURES:
+			case Const.EVENT_CODE_SHARE_FIXTURES_LIST:
 				ArrayList<Fixture> fixturesList = event.getFixturesList();
-				if (fixturesList != null && !fixturesList.isEmpty()) {
+				League league1 = event.getLeague();
+				if (league1 != null && fixturesList != null && !fixturesList.isEmpty()) {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
 					sendIntent.setType("text/plain");
 					sendIntent.putExtra(
 							Intent.EXTRA_TEXT,
-							SharingManager.getShareFixturesList(getResources(), fixturesList)
+							SharingManager.getShareFixturesList(getResources(), league1, fixturesList)
 					);
 					startActivity(sendIntent);
 				}
 				break;
 
-			case Const.EVENT_CODE_SHARE_SCORES:
+			case Const.EVENT_CODE_SHARE_SCORES_TABLE:
 				ArrayList<Scores> scoresList = event.getScoresList();
-				League league = event.getLeague();
-				if (league != null && scoresList != null) {
+				League league2 = event.getLeague();
+				if (league2 != null && scoresList != null) {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
 					sendIntent.setType("text/plain");
 					sendIntent.putExtra(
 							Intent.EXTRA_TEXT,
-							SharingManager.getShareScoresTable(getResources(), league, scoresList));
+							SharingManager.getShareScoresTable(getResources(), league2, scoresList));
 					startActivity(sendIntent);
 				}
 				break;
