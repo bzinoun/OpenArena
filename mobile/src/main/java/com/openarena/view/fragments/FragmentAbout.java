@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.openarena.BuildConfig;
 import com.openarena.R;
 import com.openarena.model.abstractions.AbstractFragment;
@@ -30,6 +34,7 @@ public class FragmentAbout extends AbstractFragment
 	private ListView mListView;
 	private TextView mVersion;
 	private LinksAdapter mAdapter;
+	private AdView mAdView;
 
 	public static FragmentAbout getInstance(@Nullable Bundle data) {
 		FragmentAbout fragment = new FragmentAbout();
@@ -52,6 +57,7 @@ public class FragmentAbout extends AbstractFragment
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (mVersion != null) mVersion = null;
+		if (mAdView != null) mAdView = null;
 	}
 
 	@Override
@@ -89,12 +95,25 @@ public class FragmentAbout extends AbstractFragment
 		mListView.setOnItemClickListener(this);
 		view.findViewById(R.id.api_site).setOnClickListener(this);
 		mVersion = (TextView) view.findViewById(R.id.version);
+		mAdView = (AdView) view.findViewById(R.id.ad_view);
 	}
 
 	private void showContent() {
 		if (mAdapter == null) mAdapter = getAdapter();
 		mListView.setAdapter(mAdapter);
 		mVersion.setText(BuildConfig.VERSION_NAME);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.setAdListener(new AdListener() {
+			@Override
+			public void onAdOpened() {
+				Toast.makeText(
+						getActivity(),
+						getString(R.string.about_toast_action_with_ad),
+						Toast.LENGTH_LONG)
+						.show();
+			}
+		});
+		mAdView.loadAd(adRequest);
 	}
 
 	private LinksAdapter getAdapter() {

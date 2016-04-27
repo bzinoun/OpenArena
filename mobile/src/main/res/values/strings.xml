@@ -37,8 +37,9 @@
 	<string name="team_button_players">Players</string>
 
 	<string name="about_title">About</string>
-	<string name="about_entry">Hello, my name is Taras, this application used the <b>Open football API</b></string>
-	<string name="about_links">And this has links on my profiles</string>
+	<string name="about_entry">Hello! I am Taras, this application used the <b>Open football API</b></string>
+	<string name="about_links">And this has links on my profiles, good luck</string>
+	<string name="about_toast_action_with_ad">Thanks for coffee (:</string>
 	<string name="about_version">Build</string>
 
 	<string name="option_settings">Settings</string>
@@ -100,7 +101,7 @@
 	<string name="api_response_control_mini">minified</string>
 	<string name="api_response_control_full">full</string>
 
-	<string name="facebook_app_id">1697905660483111</string>
+	<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 	<string name="about_linkedin">LinkedIn</string>
 	<string name="about_github">GitHub</string>

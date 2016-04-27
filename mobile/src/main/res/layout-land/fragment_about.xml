@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+	xmlns:ads="http://schemas.android.com/apk/res-auto"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -24,10 +25,10 @@
 			android:id="@+id/entry"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginLeft="8dp"
 			android:layout_marginEnd="8dp"
+			android:layout_marginLeft="8dp"
 			android:layout_marginRight="8dp"
+			android:layout_marginStart="8dp"
 			android:layout_weight="1"
 			android:gravity="center_vertical|start"
 			android:text="@string/about_entry"
@@ -38,28 +39,40 @@
 
 	<TextView
 		android:id="@+id/links"
-		android:textColor="@color/about_text"
-		android:text="@string/about_links"
 		android:layout_width="@dimen/about_list_width"
-		android:layout_alignParentRight="true"
+		android:layout_height="wrap_content"
 		android:layout_alignParentEnd="true"
-		android:layout_height="wrap_content"/>
+		android:layout_alignParentRight="true"
+		android:text="@string/about_links"
+		android:textColor="@color/about_text"/>
 
 	<ListView
 		android:id="@+id/list_view"
-		android:layout_below="@+id/links"
 		android:layout_width="@dimen/about_list_width"
 		android:layout_height="match_parent"
 		android:layout_alignParentEnd="true"
 		android:layout_alignParentRight="true"
+		android:layout_below="@+id/links"
 		android:paddingBottom="8dp"
 		android:paddingTop="8dp"/>
+
+	<com.google.android.gms.ads.AdView
+		android:id="@+id/ad_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/version_layout"
+		android:layout_centerHorizontal="true"
+		android:layout_toLeftOf="@+id/list_view"
+		android:layout_toStartOf="@+id/list_view"
+		ads:adSize="BANNER"
+		ads:adUnitId="@string/banner_ad_unit_id"/>
 
 	<LinearLayout
 		android:id="@+id/version_layout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
+		android:layout_marginTop="16dp"
 		android:layout_toLeftOf="@+id/list_view"
 		android:layout_toStartOf="@+id/list_view"
 		android:gravity="center_horizontal"
