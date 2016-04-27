@@ -22,7 +22,7 @@
 			android:gravity="center_vertical|start"
 			android:text="@string/about_entry"
 			android:textColor="@color/about_text"
-			android:textSize="16sp"/>
+			android:textSize="18sp"/>
 
 		<ImageView
 			android:id="@+id/api_site"
@@ -33,12 +33,24 @@
 
 	</LinearLayout>
 
+	<TextView
+		android:id="@+id/links"
+		android:layout_marginTop="16dp"
+		android:textSize="16sp"
+		android:layout_below="@+id/entry_layout"
+		android:textColor="@color/about_text"
+		android:text="@string/about_links"
+		android:layout_width="match_parent"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		android:layout_height="wrap_content"/>
+
 	<ListView
 		android:id="@+id/list_view"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_above="@+id/version_layout"
-		android:layout_below="@id/entry_layout"
+		android:layout_below="@id/links"
 		android:paddingBottom="8dp"
 		android:paddingTop="8dp"/>
 

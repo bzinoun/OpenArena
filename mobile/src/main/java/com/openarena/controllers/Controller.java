@@ -64,18 +64,12 @@ public class Controller {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				final ArrayList<League> dbList = DBManager.getLeaguesList();
-				if (dbList != null) mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onSuccess(dbList);
-					}
-				});
-				int year = Calendar.getInstance().get(Calendar.YEAR);
-				String resultCurrent,
-						resultLast = null;
-				resultCurrent= Api.getLeagueByYear(context, year);
-				if (resultCurrent != null) resultLast = Api.getLeagueByYear(context, year - 1);
+				String resultCurrent = null, resultLast = null;
+				if (canUpdateLeaguesList(context)) {
+					int year = Calendar.getInstance().get(Calendar.YEAR);
+					resultCurrent= Api.getLeagueByYear(context, year);
+					if (resultCurrent != null) resultLast = Api.getLeagueByYear(context, year - 1);
+				}
 				if (resultCurrent != null && resultLast != null) {
 					try {
 						JSONArray currentArray = new JSONArray(resultCurrent);
@@ -83,6 +77,10 @@ public class Controller {
 						final ArrayList<League> list = League.parseArray(currentArray);
 						list.addAll(League.parseArray(lastArray));
 						if (!list.isEmpty()) {
+							PreferencesManager.from(context).setLong(
+									Const.PREF_LAST_UPDATE_LEAGUES,
+									System.currentTimeMillis())
+									.commit();
 							DBManager.setLeaguesList(list);
 							mHandler.post(new Runnable() {
 								@Override
@@ -108,12 +106,21 @@ public class Controller {
 						});
 					}
 				}
-				else mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onError(Const.ERROR_CODE_RESULT_NULL);
-					}
-				});
+				else {
+					final ArrayList<League> dbList = DBManager.getLeaguesList();
+					if (dbList != null) mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onSuccess(dbList);
+						}
+					});
+					else mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onError(Const.ERROR_CODE_RESULT_NULL);
+						}
+					});
+				}
 			}
 		});
 	}
@@ -124,12 +131,19 @@ public class Controller {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				String result = Api.getFixturesByMatchday(context, soccerseasonId, matchday);
+				String result = null;
+				if (canUpdateFixturesList(context, soccerseasonId, matchday)) {
+					result = Api.getFixturesByMatchday(context, soccerseasonId, matchday);
+				}
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
 						final ArrayList<Fixture> list = Fixture.parseArray(array);
 						if (list != null && !list.isEmpty()) {
+							PreferencesManager.from(context).setLong(
+									getFixturesPref(soccerseasonId, matchday),
+									System.currentTimeMillis())
+									.commit();
 							ComparatorFixtures.sortByDate(list);
 							DBManager.setFixturesList(list);
 							final ArrayList<Fixture> dbList = DBManager.getFixturesListByMatchday(
@@ -196,22 +210,19 @@ public class Controller {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				final ArrayList<Scores> dbList = DBManager.getScoresList(soccerSeasonId);
-				if (dbList != null) {
-					ComparatorScores.sortByPoints(dbList);
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.onSuccess(dbList);
-						}
-					});
+				String result = null;
+				if (canUpdateScoresTable(context, soccerSeasonId)) {
+					result = Api.getScores(context, soccerSeasonId);
 				}
-				String result = Api.getScores(context, soccerSeasonId);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("standing");
 						final ArrayList<Scores> list = Scores.parseArray(soccerSeasonId, array);
 						if (list != null && !list.isEmpty()) {
+							PreferencesManager.from(context).setLong(
+									getScoresPref(soccerSeasonId),
+									System.currentTimeMillis())
+									.commit();
 							ComparatorScores.sortByPoints(list);
 							DBManager.setScoresList(list);
 							mHandler.post(new Runnable() {
@@ -237,12 +248,24 @@ public class Controller {
 						});
 					}
 				}
-				else mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onError(Const.ERROR_CODE_RESULT_NULL);
+				else {
+					final ArrayList<Scores> dbList = DBManager.getScoresList(soccerSeasonId);
+					if (dbList != null) {
+						ComparatorScores.sortByPoints(dbList);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onSuccess(dbList);
+							}
+						});
 					}
-				});
+					else mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onError(Const.ERROR_CODE_RESULT_NULL);
+						}
+					});
+				}
 			}
 		});
 	}
@@ -306,19 +329,19 @@ public class Controller {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				final Team dbTeam = DBManager.getTeam(teamId);
-				if (dbTeam != null) mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onSuccess(dbTeam);
-					}
-				});
-				String result = Api.getTeam(context, teamId);
+				String result = null;
+				if (canUpdateTeam(context, teamId)) {
+					result = Api.getTeam(context, teamId);
+				}
 				if (result != null) {
 					try {
 						JSONObject object = new JSONObject(result);
 						final Team team = Team.parse(object);
 						if (team != null) {
+							PreferencesManager.from(context).setLong(
+									getTeamPref(teamId),
+									System.currentTimeMillis())
+									.commit();
 							DBManager.setTeam(team);
 							mHandler.post(new Runnable() {
 								@Override
@@ -343,12 +366,21 @@ public class Controller {
 						});
 					}
 				}
-				else mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onError(Const.ERROR_CODE_RESULT_NULL);
-					}
-				});
+				else {
+					final Team dbTeam = DBManager.getTeam(teamId);
+					if (dbTeam != null) mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onSuccess(dbTeam);
+						}
+					});
+					else mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onError(Const.ERROR_CODE_RESULT_NULL);
+						}
+					});
+				}
 			}
 		});
 	}
@@ -358,17 +390,10 @@ public class Controller {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				final ArrayList<Player> dbList = DBManager.getPlayerList(teamId);
-				if (dbList != null) {
-					ComparatorPlayers.sortByJerseyNumber(dbList);
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							callback.onSuccess(dbList);
-						}
-					});
+				String result = null;
+				if (canUpdatePlayersList(context, teamId)) {
+					result = Api.getTeamPlayers(context, teamId);
 				}
-				String result = Api.getTeamPlayers(context, teamId);
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("players");
@@ -399,12 +424,24 @@ public class Controller {
 						});
 					}
 				}
-				else mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						callback.onError(Const.ERROR_CODE_RESULT_NULL);
+				else {
+					final ArrayList<Player> dbList = DBManager.getPlayerList(teamId);
+					if (dbList != null) {
+						ComparatorPlayers.sortByJerseyNumber(dbList);
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								callback.onSuccess(dbList);
+							}
+						});
 					}
-				});
+					else mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							callback.onError(Const.ERROR_CODE_RESULT_NULL);
+						}
+					});
+				}
 			}
 		});
 	}
@@ -415,7 +452,10 @@ public class Controller {
 		mExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				String result = Api.getTeamFixtures(context, teamId);
+				String result = null;
+				if (canUpdateTeamFixturesList(context, soccerseasonId, teamId)) {
+					result = Api.getTeamFixtures(context, teamId);
+				}
 				if (result != null) {
 					try {
 						JSONArray array = new JSONObject(result).getJSONArray("fixtures");
@@ -505,6 +545,60 @@ public class Controller {
 				}
 			}
 		});
+	}
+
+	private String getFixturesPref(int soccerseasonId, int matchday) {
+		return Const.PREF_LAST_UPDATE_FIXTURES + "|" + soccerseasonId + "|" + matchday;
+	}
+
+	private String getScoresPref(int soccerseasonId) {
+		return Const.PREF_LAST_UPDATE_SCORES + "|" + soccerseasonId;
+	}
+
+	private String getTeamPref(int teamId) {
+		return Const.PREF_LAST_UPDATE_TEAM + "|" + teamId;
+	}
+
+	private String getPlayersPref(int teamId) {
+		return Const.PREF_LAST_UPDATE_PLAYERS + "|" + teamId;
+	}
+
+	private String getTeamFixturesPref(int soccerseasonId, int teamId) {
+		return Const.PREF_LAST_UPDATE_TEAM_FIXTURES + "|" + soccerseasonId + "|" + teamId;
+	}
+
+	private boolean canUpdateLeaguesList(Context context) {
+		long lastUpdate = PreferencesManager.from(context)
+				.getLong(Const.PREF_LAST_UPDATE_LEAGUES, 0);
+		return lastUpdate + Const.TIME_TO_UPDATE_LEAGUES < System.currentTimeMillis();
+	}
+
+	private boolean canUpdateFixturesList(Context context, int soccerseasonId, int matchday) {
+		long lastUpdate = PreferencesManager.from(context)
+				.getLong(getFixturesPref(soccerseasonId, matchday), 0);
+		return lastUpdate + Const.TIME_TO_UPDATE_FIXTURES < System.currentTimeMillis();
+	}
+
+	private boolean canUpdateScoresTable(Context context, int soccerseasonId) {
+		long lastUpdate = PreferencesManager.from(context)
+				.getLong(getScoresPref(soccerseasonId), 0);
+		return lastUpdate + Const.TIME_TO_UPDATE_SCORES < System.currentTimeMillis();
+	}
+
+	private boolean canUpdateTeam(Context context, int teamId) {
+		long lastUpdate = PreferencesManager.from(context).getLong(getTeamPref(teamId), 0);
+		return lastUpdate + Const.TIME_TO_UPDATE_TEAM < System.currentTimeMillis();
+	}
+
+	private boolean canUpdatePlayersList(Context context, int teamId) {
+		long lastUpdate = PreferencesManager.from(context).getLong(getPlayersPref(teamId), 0);
+		return lastUpdate + Const.TIME_TO_UPDATE_PLAYERS < System.currentTimeMillis();
+	}
+
+	private boolean canUpdateTeamFixturesList(Context context, int soccerseasonId, int teamId) {
+		long lastUpdate = PreferencesManager.from(context)
+				.getLong(getTeamFixturesPref(soccerseasonId, teamId), 0);
+		return lastUpdate + Const.TIME_TO_UPDATE_TEAM_FIXTURES < System.currentTimeMillis();
 	}
 
 	public interface OnGetLeagues extends OnResultListener<ArrayList<League>> {}

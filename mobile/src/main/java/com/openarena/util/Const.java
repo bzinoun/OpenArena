@@ -6,6 +6,21 @@ public class Const {
 	public static final String APP_TAG = "TAG";
 
 	//Other
+	public static final String PREF_LAST_UPDATE_LEAGUES = "last_update_leagues";
+	public static final String PREF_LAST_UPDATE_FIXTURES = "last_update_fixtures";
+	public static final String PREF_LAST_UPDATE_SCORES = "last_update_scores";
+	public static final String PREF_LAST_UPDATE_TEAM = "last_update_team";
+	public static final String PREF_LAST_UPDATE_PLAYERS = "last_update_players";
+	public static final String PREF_LAST_UPDATE_TEAM_FIXTURES = "last_update_teams_fixtures";
+
+	public static final long TIME_TO_EXIT = 400; //ms
+	public static final long TIME_TO_UPDATE_LEAGUES = 21600000; //6 hours
+	public static final long TIME_TO_UPDATE_FIXTURES = 3600000; //1 hours
+	public static final long TIME_TO_UPDATE_SCORES = 3600000; //1 hours
+	public static final long TIME_TO_UPDATE_TEAM = 43200000; //12 hours
+	public static final long TIME_TO_UPDATE_PLAYERS = 21600000; //6 hours
+	public static final long TIME_TO_UPDATE_TEAM_FIXTURES = 3600000; //1 hours
+
 	public static final String SUBMITTED = "submitted";
 	public static final String ACTION_NOTIFICATION_BROADCAST = ".model.receivers.NotificationBroadcastReceiver";
 
@@ -13,8 +28,6 @@ public class Const {
 
 	public static final int GROUP_FIXTURES = 1;
 	public static final int GROUP_MATCHDAYS = 2;
-
-	public static final int TIME_TO_EXIT = 400; //ms
 
 	public static final int ERROR_CODE_PARSE_ERROR = 1;
 	public static final int ERROR_CODE_RESULT_NULL = 2;

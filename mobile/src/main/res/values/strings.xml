@@ -37,9 +37,9 @@
 	<string name="team_button_players">Players</string>
 
 	<string name="about_title">About</string>
-	<string name="about_entry">Hello, this application used the <b>Open football API</b></string>
+	<string name="about_entry">Hello, my name is Taras, this application used the <b>Open football API</b></string>
+	<string name="about_links">And this has links on my profiles</string>
 	<string name="about_version">Build</string>
-	<string name="about_links">This has links on my profiles</string>
 
 	<string name="option_settings">Settings</string>
 	<string name="option_about">About</string>
