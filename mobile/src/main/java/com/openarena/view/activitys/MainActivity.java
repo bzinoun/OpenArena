@@ -235,13 +235,28 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 
 			case Const.EVENT_CODE_SHARE_PLAYERS_LIST:
 				ArrayList<Player> playersList = event.getPlayersList();
-				Team team = event.getTeam();
-				if (team != null && playersList != null) {
+				Team team1 = event.getTeam();
+				if (team1 != null && playersList != null) {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
 					sendIntent.setType("text/plain");
 					sendIntent.putExtra(
 							Intent.EXTRA_TEXT,
-							SharingManager.getSharePlayersList(getResources(), team, playersList));
+							SharingManager.getSharePlayersList(getResources(), team1, playersList));
+					startActivity(sendIntent);
+				}
+				break;
+
+			case Const.EVENT_CODE_SHARE_TEAM_FIXTURES_LIST:
+				ArrayList<Fixture> teamFixturesList = event.getFixturesList();
+				Team team2 = event.getTeam();
+				if (team2 != null && teamFixturesList != null) {
+					Intent sendIntent = new Intent(Intent.ACTION_SEND);
+					sendIntent.setType("text/plain");
+					sendIntent.putExtra(
+							Intent.EXTRA_TEXT,
+							SharingManager.getShareTeamFixturesList(
+									getResources(), team2, teamFixturesList)
+					);
 					startActivity(sendIntent);
 				}
 				break;

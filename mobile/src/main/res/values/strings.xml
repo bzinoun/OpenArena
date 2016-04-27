@@ -85,6 +85,9 @@
 	<string name="share_players_header">### %1$s (%2$s)\n## Players</string>
 	<string name="share_players_item">%1$d | %2$s</string>
 
+	<string name="share_team_fixtures_header">### %1$s (%2$s)\n## Upcoming</string>
+	<string name="share_team_fixtures_item">%1$s (%3$s) %2$s</string>
+
 	<!-- Tutorial -->
 	<string name="intro_page1_title">On pulse</string>
 	<string name="intro_page1_subtitle">Get information for upcoming events</string>

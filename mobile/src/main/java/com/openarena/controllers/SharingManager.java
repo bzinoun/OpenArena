@@ -170,4 +170,24 @@ public class SharingManager {
 		return builder.toString();
 	}
 
+	public static String getShareTeamFixturesList(
+			@NonNull Resources resources, @NonNull Team team, @NonNull ArrayList<Fixture> list) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(String.format(
+				resources.getString(R.string.share_team_fixtures_header),
+				team.getName(),
+				team.getShortName()))
+				.append("\n");
+		for (Fixture fixture: list) {
+			String dateStr = new SimpleDateFormat("HH:mm", Locale.getDefault())
+					.format(new Date(fixture.getDate()));
+			builder.append(String.format(resources.getString(R.string.share_team_fixtures_item),
+					fixture.getHomeTeamName(),
+					fixture.getAwayTeamName(),
+					dateStr))
+					.append("\n");
+		}
+		return builder.toString();
+	}
+
 }

@@ -127,6 +127,15 @@ public class FragmentFixturesTeam extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
+			case R.id.action_share:
+				if (mAdapter != null && !mAdapter.getList().isEmpty()) {
+					mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHARE_TEAM_FIXTURES_LIST)
+							.setTeam(mTeam)
+							.setFixturesList(mAdapter.getList())
+					);
+				}
+				break;
+
 			case R.id.action_settings:
 				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
 				break;

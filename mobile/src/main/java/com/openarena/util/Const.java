@@ -33,5 +33,6 @@ public class Const {
 	public static final int EVENT_CODE_SHARE_FIXTURES_LIST = 111;
 	public static final int EVENT_CODE_SHARE_SCORES_TABLE = 112;
 	public static final int EVENT_CODE_SHARE_PLAYERS_LIST = 113;
+	public static final int EVENT_CODE_SHARE_TEAM_FIXTURES_LIST = 114;
 
 }
