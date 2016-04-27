@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Open arena</string>
+
+	<string name="snackbar_result_null_text">Сервер не отвечает</string>
+	<string name="snackbar_result_null_action">Обновить</string>
+	<string name="error_content_text">Что-то пошло не так</string>
+	<string name="empty_content_text">Пусто</string>
+
+	<string name="intro_skip">Пропустить</string>
+	<string name="intro_next">Следующий</string>
+	<string name="intro_start">Начать</string>
+
+	<string name="leagues_title">Список</string>
+	<string name="leagues_subtitle">%1$d - %2$d</string>
+	<string name="leagues_list_item_matchday">%1$d/%2$d</string>
+
+	<string name="fixtures_matchday">День соревнований %1$d</string>
+	<string name="fixtures_list_item_result">%1$d : %2$d</string>
+	<string name="fixtures_list_item_header_today">Сегодня</string>
+	<string name="fixtures_list_item_header_tomorrow">Завтра</string>
+
+	<string name="fixture_details_title">Деталі</string>
+	<string name="fixture_details_result">%1$d : %2$d</string>
+	<string name="fixture_details_empty_result">- : -</string>
+	<string name="fixture_details_head2head">Head2head</string>
+
+	<string name="scores_against_difference">%1$d/%2$d</string>
+	<string name="scores_head_team">Команда</string>
+	<string name="scores_head_number">№</string>
+	<string name="scores_head_played_games">PG</string>
+	<string name="scores_head_goals">G</string>
+	<string name="scores_head_against_difference">A/D</string>
+	<string name="scores_head_points">P</string>
+	<string name="scores_sort_dialog_title">Сортировать по:</string>
+
+	<string name="team_button_fixtures">Вскоре</string>
+	<string name="team_button_players">Игроки</string>
+
+	<string name="about_title">От автора</string>
+	<string name="about_entry">Привет! Это приложение использует <b>Open football API</b></string>
+	<string name="about_links">А здесь ссылки на мои профили, спасибо за внимание, Тарас (:</string>
+	<string name="about_toast_action_with_ad">Спасибо за чашечку кофе (:</string>
+	<string name="about_version">Build</string>
+
+	<string name="option_settings">Настройка</string>
+	<string name="option_about">От автора</string>
+	<string name="option_share">Поделиться</string>
+	<string name="option_current">Текущий день соревнований</string>
+	<string name="option_notify">Напомнить</string>
+	<string name="option_sort">Сортировка</string>
+	<string name="option_score_table">Таблица результатов</string>
+
+	<string name="players_title">Игроки</string>
+	<string name="player_info_nationality"><b>Национальность:</b> %1$s</string>
+	<string name="player_info_position"><b>Роль:</b> %1$s</string>
+	<string name="player_info_market_value"><b>Стоимость:</b> %1$s</string>
+	<string name="player_info_contract_until"><b>Контракт действителен до:</b> %1$s</string>
+
+	<string name="context_head_select_matchday">Выберите день соревнований</string>
+	<string name="context_fixture_head">Выберите действие</string>
+	<string name="context_fixture_notification">Напоминание</string>
+
+	<string name="dialog_exit_title">Вы хотите выйти?</string>
+	<string name="dialog_exit_positive">Да</string>
+	<string name="dialog_exit_negative">Нет</string>
+
+	<string name="notification_fixture_ticker">Матч скоро начнется</string>
+	<string name="notification_fixture_title">Начало в %1$s</string>
+	<string name="notification_fixture_text">%1$s vs %2$s</string>
+
+	<string name="share_fixture_home_win">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - %2$s победитель</string>
+	<string name="share_fixture_away_win">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - %3$s победитель</string>
+	<string name="share_fixture_draw">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - ничья</string>
+	<string name="share_fixture_timed">\"%2$s vs %3$s\" начало в %1$s</string>
+
+	<string name="share_fixtures_header">### %1$s\n## День соревнований: %2$d</string>
+	<string name="share_fixtures_separator_today"># Сегодня</string>
+	<string name="share_fixtures_separator_tomorrow"># Завтра</string>
+	<string name="share_fixtures_separator_with_date"># %1$s</string>
+	<string name="share_fixtures_finished">%1$s [%3$d:%4$d] %2$s</string>
+	<string name="share_fixtures_timed">%1$s (%3$s) %2$s</string>
+
+	<string name="share_scores_header">### %1$s (%2$d)\nРанг|Очки|Команда</string>
+	<string name="share_scores_item">%1$d | %2$d | %3$s</string>
+
+	<string name="share_players_header">### %1$s (%2$s)\n## Игроки</string>
+	<string name="share_players_item">%1$d | %2$s</string>
+
+	<string name="share_team_fixtures_header">### %1$s (%2$s)\n## Вскоре</string>
+	<string name="share_team_fixtures_item">%1$s (%3$s) %2$s</string>
+
+	<!-- Tutorial -->
+	<string name="intro_page1_title">Будь в курсе</string>
+	<string name="intro_page1_subtitle">Получай информацию о предстоящих событиях</string>
+	<string name="intro_page2_title">Делись</string>
+	<string name="intro_page2_subtitle">Делись всем со своими друзьями</string>
+	<string name="intro_page3_title">Вперед!</string>
+
+	<!-- CONST resources -->
+	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>
+	<string name="api_response_control_mini">minified</string>
+	<string name="api_response_control_full">full</string>
+
+	<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+	<string name="about_linkedin">LinkedIn</string>
+	<string name="about_github">GitHub</string>
+	<string name="about_facebook">Facebook</string>
+	<string name="about_google_plus">Google+</string>
+	<string name="about_google_play">Google play</string>
+	<string name="link_football_api">http://api.football-data.org</string>
+	<string name="link_linkedin">https://www.linkedin.com/in/tarikw</string>
+	<string name="link_github">https://github.com/TarikW</string>
+	<string name="link_facebook">https://www.facebook.com/social.TarikW</string>
+	<string name="link_google_plus">https://plus.google.com/105322723020726409354</string>
+	<string name="link_google_play">https://play.google.com/store/apps/developer?id=TarikW</string>
+</resources>
