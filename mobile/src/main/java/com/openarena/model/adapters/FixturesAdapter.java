@@ -53,27 +53,40 @@ public class FixturesAdapter
 		Fixture item = mList.get(position);
 		holder.mHomeTeamName.setText(item.getHomeTeamName());
 		holder.mAwayTeamName.setText(item.getAwayTeamName());
-		if (item.getStatus() != Fixture.TIMED) {
+		int goalsHomeTeam = item.getGoalsHomeTeam();
+		int goalsAwayTeam = item.getGoalsAwayTeam();
+		if (goalsHomeTeam >= 0 && goalsAwayTeam >= 0) {
 			UI.hide(holder.mDate, holder.mBell);
 			UI.show(holder.mResult);
 			holder.mResult.setText(String.format(mResources.getString(
 					R.string.fixtures_list_item_result),
-					item.getGoalsHomeTeam(),
-					item.getGoalsAwayTeam()));
+					goalsHomeTeam,
+					goalsAwayTeam)
+			);
 			holder.mResult.setBackgroundResource(R.drawable.fixtures_list_item_result_background);
-			int goalsHomeTeam = item.getGoalsHomeTeam();
-			int goalsAwayTeam = item.getGoalsAwayTeam();
 			if (goalsHomeTeam > goalsAwayTeam) {
-				holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_win_name));
-				holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_lose_name));
+				holder.mHomeTeamName.setTextColor(
+						mResources.getColor(R.color.fixtures_list_item_win_name)
+				);
+				holder.mAwayTeamName.setTextColor(
+						mResources.getColor(R.color.fixtures_list_item_lose_name)
+				);
 			}
 			else if (goalsHomeTeam < goalsAwayTeam) {
-				holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_win_name));
-				holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_lose_name));
+				holder.mAwayTeamName.setTextColor(
+						mResources.getColor(R.color.fixtures_list_item_win_name)
+				);
+				holder.mHomeTeamName.setTextColor(
+						mResources.getColor(R.color.fixtures_list_item_lose_name)
+				);
 			}
 			else {
-				holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_draw_name));
-				holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_draw_name));
+				holder.mAwayTeamName.setTextColor(
+						mResources.getColor(R.color.fixtures_list_item_draw_name)
+				);
+				holder.mHomeTeamName.setTextColor(
+						mResources.getColor(R.color.fixtures_list_item_draw_name)
+				);
 			}
 		}
 		else {
@@ -82,8 +95,12 @@ public class FixturesAdapter
 			if (item.isNotified()) UI.show(holder.mBell);
 			DateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
 			holder.mDate.setText(format.format(new Date(item.getDate())));
-			holder.mAwayTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_name));
-			holder.mHomeTeamName.setTextColor(mResources.getColor(R.color.fixtures_list_item_name));
+			holder.mAwayTeamName.setTextColor(
+					mResources.getColor(R.color.fixtures_list_item_name)
+			);
+			holder.mHomeTeamName.setTextColor(
+					mResources.getColor(R.color.fixtures_list_item_name)
+			);
 		}
 
 		mDate.setTime(item.getDate());

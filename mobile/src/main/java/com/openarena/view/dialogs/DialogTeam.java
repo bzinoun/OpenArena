@@ -191,9 +191,11 @@ public class DialogTeam extends AppCompatDialogFragment implements Controller.On
 							.showImageOnFail(R.drawable.ic_player)
 							.build()
 			);
-			if (mTeam.getName() != null) mName.setText(mTeam.getName());
-			if (mTeam.getShortName() != null) mShortName.setText(mTeam.getShortName());
-			if (mTeam.getSquadMarketValue() != null) mSquadMarketValue.setText(mTeam.getSquadMarketValue());
+			if (!mTeam.getName().equals("null")) mName.setText(mTeam.getName());
+			if (!mTeam.getShortName().equals("null")) mShortName.setText(mTeam.getShortName());
+			if (!mTeam.getSquadMarketValue().equals("null")) {
+				mSquadMarketValue.setText(mTeam.getSquadMarketValue());
+			}
 		}
 	}
 
