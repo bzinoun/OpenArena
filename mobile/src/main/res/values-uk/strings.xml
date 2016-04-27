@@ -38,8 +38,8 @@
 	<string name="team_button_players">Гравці</string>
 
 	<string name="about_title">Від автора</string>
-	<string name="about_entry">Привіт! Я Тарас, цей додаток використовує <b>Open football API</b></string>
-	<string name="about_links">А це посилання на мої профілі, спасибі за увагу, щасти (:</string>
+	<string name="about_entry">Привіт! Цей додаток використовує <b>Open football API</b></string>
+	<string name="about_links">А тут посилання на мої профілі, спасибі за увагу, Тарас (:</string>
 	<string name="about_toast_action_with_ad">Спасибі за чашечку кави (:</string>
 	<string name="about_version">Build</string>
 

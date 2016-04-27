@@ -22,6 +22,7 @@ import com.openarena.R;
 import com.openarena.model.abstractions.AbstractFragment;
 import com.openarena.model.adapters.LinksAdapter;
 import com.openarena.model.objects.Link;
+import com.openarena.util.Const;
 import com.openarena.util.L;
 
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class FragmentAbout extends AbstractFragment
 						.show();
 			}
 		});
-		mAdView.loadAd(adRequest);
+		if (!Const.IS_DEBUG_MODE) mAdView.loadAd(adRequest);
 	}
 
 	private LinksAdapter getAdapter() {

@@ -120,9 +120,9 @@ public class FragmentLeagues extends AbstractFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.action_settings:
+			/*case R.id.action_settings:
 				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_SETTINGS));
-				break;
+				break;*/
 
 			case R.id.action_about:
 				mEventListener.onEvent(new EventData(Const.EVENT_CODE_SHOW_ABOUT));
