@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Open arena</string>
+
+	<string name="snackbar_result_null_text">Сервер не відповідає</string>
+	<string name="snackbar_result_null_action">Оновити</string>
+	<string name="error_content_text">Щось пішло не так</string>
+	<string name="empty_content_text">Пусто</string>
+
+	<string name="intro_skip">Пропустити</string>
+	<string name="intro_next">Наступний</string>
+	<string name="intro_start">Розпочати</string>
+
+	<string name="leagues_title">Список ліг</string>
+	<string name="leagues_subtitle">%1$d - %2$d</string>
+	<string name="leagues_list_item_matchday">%1$d/%2$d</string>
+
+	<string name="fixtures_matchday">День змагань %1$d</string>
+	<string name="fixtures_list_item_result">%1$d : %2$d</string>
+	<string name="fixtures_list_item_header_today">Сьогодні</string>
+	<string name="fixtures_list_item_header_tomorrow">Завтра</string>
+
+	<string name="fixture_details_title">Деталі</string>
+	<string name="fixture_details_result">%1$d : %2$d</string>
+	<string name="fixture_details_empty_result">- : -</string>
+	<string name="fixture_details_head2head">Head2head</string>
+
+	<string name="scores_against_difference">%1$d/%2$d</string>
+	<string name="scores_head_team">Команда</string>
+	<string name="scores_head_number">№</string>
+	<string name="scores_head_played_games">PG</string>
+	<string name="scores_head_goals">G</string>
+	<string name="scores_head_against_difference">A/D</string>
+	<string name="scores_head_points">P</string>
+	<string name="scores_sort_dialog_title">Сортувати по:</string>
+
+	<string name="team_button_fixtures">Майбутні матчі</string>
+	<string name="team_button_players">Гравці</string>
+
+	<string name="about_title">Від автора</string>
+	<string name="about_entry">Привіт! Я Тарас, цей додаток використовує <b>Open football API</b></string>
+	<string name="about_links">А це посилання на мої профілі, спасибі за увагу, щасти (:</string>
+	<string name="about_toast_action_with_ad">Спасибі за чашечку кави (:</string>
+	<string name="about_version">Build</string>
+
+	<string name="option_settings">Налаштування</string>
+	<string name="option_about">Від автора</string>
+	<string name="option_share">Поділитись</string>
+	<string name="option_current">Поточний matchday</string>
+	<string name="option_notify">Нагадати</string>
+	<string name="option_sort">Сортування</string>
+	<string name="option_score_table">Таблиця результатів</string>
+
+	<string name="players_title">Гравці</string>
+	<string name="player_info_nationality"><b>Національність:</b> %1$s</string>
+	<string name="player_info_position"><b>Роль:</b> %1$s</string>
+	<string name="player_info_market_value"><b>Ринкова вартість:</b> %1$s</string>
+	<string name="player_info_contract_until"><b>Контракт дійсний до:</b> %1$s</string>
+
+	<string name="context_head_select_matchday">Виберіть день змагань</string>
+	<string name="context_fixture_head">Виберіть дію</string>
+	<string name="context_fixture_notification">Нагадування</string>
+
+	<string name="dialog_exit_title">Ви хочете вийти?</string>
+	<string name="dialog_exit_positive">Так</string>
+	<string name="dialog_exit_negative">Ні</string>
+
+	<string name="notification_fixture_ticker">Матч скоро почнеться</string>
+	<string name="notification_fixture_title">Початок о %1$s</string>
+	<string name="notification_fixture_text">%1$s vs %2$s</string>
+
+	<string name="share_fixture_home_win">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - %2$s переможець</string>
+	<string name="share_fixture_away_win">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - %3$s переможець</string>
+	<string name="share_fixture_draw">(%1$s) \"%2$s [%4$d:%5$d] %3$s\" - нічия</string>
+	<string name="share_fixture_timed">\"%2$s vs %3$s\" початок о %1$s</string>
+
+	<string name="share_fixtures_header">### %1$s\n## День змагань: %2$d</string>
+	<string name="share_fixtures_separator_today"># Сьогодні</string>
+	<string name="share_fixtures_separator_tomorrow"># Завтра</string>
+	<string name="share_fixtures_separator_with_date"># %1$s</string>
+	<string name="share_fixtures_finished">%1$s [%3$d:%4$d] %2$s</string>
+	<string name="share_fixtures_timed">%1$s (%3$s) %2$s</string>
+
+	<string name="share_scores_header">### %1$s (%2$d)\nРанг|Очки|Команда</string>
+	<string name="share_scores_item">%1$d | %2$d | %3$s</string>
+
+	<string name="share_players_header">### %1$s (%2$s)\n## Гравці</string>
+	<string name="share_players_item">%1$d | %2$s</string>
+
+	<string name="share_team_fixtures_header">### %1$s (%2$s)\n## Незабаром</string>
+	<string name="share_team_fixtures_item">%1$s (%3$s) %2$s</string>
+
+	<!-- Tutorial -->
+	<string name="intro_page1_title">Будь в курсі</string>
+	<string name="intro_page1_subtitle">Отримуй інформацію про майбутні події</string>
+	<string name="intro_page2_title">Ділись</string>
+	<string name="intro_page2_subtitle">Ділись усім зі своїми друзями</string>
+	<string name="intro_page3_title">Вперед!</string>
+
+	<!-- CONST resources -->
+	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>
+	<string name="api_response_control_mini">minified</string>
+	<string name="api_response_control_full">full</string>
+
+	<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+	<string name="about_linkedin">LinkedIn</string>
+	<string name="about_github">GitHub</string>
+	<string name="about_facebook">Facebook</string>
+	<string name="about_google_plus">Google+</string>
+	<string name="about_google_play">Google play</string>
+	<string name="link_football_api">http://api.football-data.org</string>
+	<string name="link_linkedin">https://www.linkedin.com/in/tarikw</string>
+	<string name="link_github">https://github.com/TarikW</string>
+	<string name="link_facebook">https://www.facebook.com/social.TarikW</string>
+	<string name="link_google_plus">https://plus.google.com/105322723020726409354</string>
+	<string name="link_google_play">https://play.google.com/store/apps/developer?id=TarikW</string>
+</resources>
