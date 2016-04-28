@@ -43,12 +43,13 @@ public class FragmentFixtures extends AbstractFragment
 	private FrameLayout mProgressContent;
 	private LinearLayout mErrorContent;
 	private LinearLayout mEmptyContent;
-	private TextView mMatchday;
+	private TextView mMatchdayField;
 	private FixturesAdapter mAdapter;
 	private Controller mController;
 	private EventListener mEventListener;
 	private Snackbar mSnackbar;
 	private League mLeague;
+	private int mMatchday;
 	private boolean mIsShow;
 
 	public static FragmentFixtures getInstance(@Nullable Bundle data) {
@@ -65,7 +66,11 @@ public class FragmentFixtures extends AbstractFragment
 		if (savedInstanceState != null) {
 			ArrayList<Fixture> list = savedInstanceState.getParcelableArrayList("list");
 			if (list != null) mAdapter = new FixturesAdapter(getResources(), list);
+			int matchday = savedInstanceState.getInt("matchday", 0);
+			if (matchday > 0) mMatchday = matchday;
 		}
+		else if (mLeague != null) mMatchday = mLeague.getCurrentMatchday();
+
 	}
 
 	@Override
@@ -99,6 +104,7 @@ public class FragmentFixtures extends AbstractFragment
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		outState.putInt("matchday", mMatchday);
 		if (mAdapter != null) {
 			ArrayList<Fixture> list = mAdapter.getList();
 			if (!list.isEmpty()) outState.putParcelableArrayList("list", list);
@@ -109,7 +115,7 @@ public class FragmentFixtures extends AbstractFragment
 	public void onDestroy() {
 		super.onDestroy();
 		if (mEventListener != null) mEventListener = null;
-		if (mMatchday != null) mMatchday = null;
+		if (mMatchdayField != null) mMatchdayField = null;
 		if (mController != null) mController = null;
 		if (mAdapter != null) mAdapter = null;
 	}
@@ -134,7 +140,8 @@ public class FragmentFixtures extends AbstractFragment
 				break;
 
 			case R.id.action_current:
-				loadData(mLeague.getCurrentMatchday());
+				mMatchday = mLeague.getCurrentMatchday();
+				loadData(mMatchday);
 				break;
 
 			case R.id.action_scores_table:
@@ -179,7 +186,8 @@ public class FragmentFixtures extends AbstractFragment
 		int group = item.getGroupId();
 		switch (group) {
 			case Const.GROUP_MATCHDAYS:
-				loadData(item.getItemId());
+				mMatchday = item.getItemId();
+				loadData(mMatchday);
 				break;
 
 			case Const.GROUP_FIXTURES:
@@ -211,7 +219,7 @@ public class FragmentFixtures extends AbstractFragment
 								new View.OnClickListener() {
 									@Override
 									public void onClick(View v) {
-										loadData(mLeague.getCurrentMatchday());
+										loadData(mMatchday);
 									}
 								}
 						);
@@ -245,7 +253,8 @@ public class FragmentFixtures extends AbstractFragment
 	public void onItemLongClick(View view, int position) {
 		Fixture fixture = mAdapter.getItem(position);
 		if (fixture != null) {
-			if (fixture.getDate() > System.currentTimeMillis() + 1000 * 60 * 60 || fixture.isNotified()) { // one day
+			if (fixture.getDate() > System.currentTimeMillis() + 1000 * 60 * 60
+					|| fixture.isNotified()) { // one day
 				view.showContextMenu();
 			}
 		}
@@ -267,12 +276,12 @@ public class FragmentFixtures extends AbstractFragment
 				mRecyclerView,
 				this));
 		mRecyclerView.setHasFixedSize(true);
-		mMatchday = (TextView) view.findViewById(R.id.matchday);
-		mMatchday.setText(String.format(
+		mMatchdayField = (TextView) view.findViewById(R.id.matchday);
+		mMatchdayField.setText(String.format(
 				getString(R.string.fixtures_matchday),
-				mLeague.getCurrentMatchday()));
-		mMatchday.setOnCreateContextMenuListener(this);
-		mMatchday.setOnClickListener(new View.OnClickListener() {
+				mMatchday));
+		mMatchdayField.setOnCreateContextMenuListener(this);
+		mMatchdayField.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				getActivity().openContextMenu(v);
@@ -285,7 +294,7 @@ public class FragmentFixtures extends AbstractFragment
 	}
 
 	private void showContent() {
-		if (mAdapter == null) loadData(mLeague.getCurrentMatchday());
+		if (mAdapter == null) loadData(mMatchday);
 		else {
 			UI.hide(mEmptyContent, mErrorContent, mProgressContent);
 			UI.show(mRecyclerView);
@@ -297,9 +306,15 @@ public class FragmentFixtures extends AbstractFragment
 		UI.hide(mRecyclerView, mEmptyContent, mErrorContent);
 		UI.show(mProgressContent);
 		if (mAdapter != null) mAdapter = null;
-		mMatchday.setText(String.format(
-				getString(R.string.fixtures_matchday),
-				matchday));
+		setMatchday(matchday);
 		mController.getListOfFixtures(getActivity(), mLeague.getID(), matchday, this);
 	}
+
+	private void setMatchday(int matchday) {
+		mMatchdayField.setText(String.format(
+				getString(R.string.fixtures_matchday),
+				matchday)
+		);
+	}
+
 }

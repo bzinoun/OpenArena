@@ -15,16 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.openarena.R;
 import com.openarena.controllers.Controller;
 import com.openarena.controllers.DBManager;
 import com.openarena.model.abstractions.AbstractFragment;
-import com.openarena.model.listeners.RecyclerViewItemTouchListener;
 import com.openarena.model.adapters.FixturesAdapter;
 import com.openarena.model.interfaces.EventListener;
 import com.openarena.model.interfaces.OnItemClickListener;
+import com.openarena.model.listeners.RecyclerViewItemTouchListener;
 import com.openarena.model.objects.EventData;
 import com.openarena.model.objects.Fixture;
 import com.openarena.model.objects.Head2head;
@@ -48,7 +49,8 @@ public class FragmentFixtureInfo extends AbstractFragment
 	private TextView mHome;
 	private TextView mAway;
 	private TextView mResult;
-	private TextView mHeader;
+	private RelativeLayout mHeader;
+	private TextView mWinRait;
 	private Snackbar mSnackbar;
 	private EventListener mEventListener;
 	private FixturesAdapter mAdapter;
@@ -95,6 +97,7 @@ public class FragmentFixtureInfo extends AbstractFragment
 		if (mAway != null) mAway = null;
 		if (mResult != null) mResult = null;
 		if (mHeader != null) mHeader = null;
+		if (mWinRait != null) mWinRait = null;
 		if (mSnackbar != null) {
 			mSnackbar.dismiss();
 			mSnackbar = null;
@@ -200,6 +203,7 @@ public class FragmentFixtureInfo extends AbstractFragment
 			else {
 				UI.hide(mErrorContent, mEmptyContent, mProgressContent);
 				UI.show(mRecyclerView, mHeader);
+				calculateWinRait(data);
 				if (mAdapter == null) {
 					mAdapter = new FixturesAdapter(getResources(), data.getFixtures());
 					mRecyclerView.setAdapter(mAdapter);
@@ -213,7 +217,7 @@ public class FragmentFixtureInfo extends AbstractFragment
 	private void setupUI(View view) {
 		ActionBar toolbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 		if (toolbar != null) {
-			toolbar.setTitle(getString(R.string.fixture_details_title));
+			toolbar.setTitle(getString(R.string.fixture_info_title));
 			if (mFixture.getStatus() == Fixture.TIMED) {
 				toolbar.setSubtitle(
 						new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
@@ -233,11 +237,12 @@ public class FragmentFixtureInfo extends AbstractFragment
 		mHome = (TextView) view.findViewById(R.id.home);
 		mAway = (TextView) view.findViewById(R.id.away);
 		mResult = (TextView) view.findViewById(R.id.result);
-		mHeader = (TextView) view.findViewById(R.id.header);
+		mHeader = (RelativeLayout) view.findViewById(R.id.header);
+		mWinRait = (TextView) view.findViewById(R.id.winrait);
 		mProgressContent = (FrameLayout) view.findViewById(R.id.content_progress);
 		mEmptyContent = (LinearLayout) view.findViewById(R.id.content_empty);
 		mErrorContent = (LinearLayout) view.findViewById(R.id.content_error);
-		UI.hide(mRecyclerView, mErrorContent, mEmptyContent, mProgressContent, mHeader);
+		UI.hide(mRecyclerView, mErrorContent, mEmptyContent, mProgressContent, mHeader, mWinRait);
 	}
 
 	private void showContent() {
@@ -255,12 +260,12 @@ public class FragmentFixtureInfo extends AbstractFragment
 		mAway.setText(fixture.getAwayTeamName());
 		if (fixture.getStatus() != Fixture.TIMED) {
 			mResult.setText(String.format(
-					getString(R.string.fixture_details_result),
+					getString(R.string.fixture_info_result),
 					fixture.getGoalsHomeTeam(),
 					fixture.getGoalsAwayTeam()));
 		}
 		else {
-			mResult.setText(getString(R.string.fixture_details_empty_result));
+			mResult.setText(getString(R.string.fixture_info_empty_result));
 		}
 	}
 
@@ -268,6 +273,39 @@ public class FragmentFixtureInfo extends AbstractFragment
 		UI.hide(mRecyclerView, mEmptyContent, mErrorContent, mHeader);
 		UI.show(mProgressContent);
 		mController.getFixtureDetails(getActivity(), mFixture.getID(), this);
+	}
+
+	private void calculateWinRait(Head2head data) {
+		if (mFixture.getGoalsHomeTeam() < 0 && mFixture.getGoalsAwayTeam() < 0) {
+			int homeWins = data.getHomeTeamWins();
+			int awayWins = data.getAwayTeamWins();
+			if (!(homeWins > 0)) {
+				homeWins++;
+				awayWins++;
+			}
+			if (!(awayWins > 0)) {
+				awayWins++;
+				homeWins++;
+			}
+			int goalsHome = 1, goalsAway = 1;
+			ArrayList<Fixture> list = data.getFixtures();
+			int i = 0;
+			if (mFixture.getGoalsHomeTeam() >= 0 && mFixture.getGoalsAwayTeam() >= 0) i = 1;
+			for (;i< list.size(); i++) {
+				goalsHome += list.get(i).getGoalsHomeTeam();
+				goalsAway += list.get(i).getGoalsAwayTeam();
+			}
+			int homeWinrait = 100 * (goalsHome / awayWins + homeWins)
+					/ (goalsHome / awayWins + goalsAway / homeWins + homeWins + awayWins);
+			int awayWinrait = 100 * (goalsAway / homeWins + awayWins)
+					/ (goalsHome / awayWins + goalsAway / homeWins + homeWins + awayWins);
+			mWinRait.setText(String.format(
+					getString(R.string.fixture_info_winrait),
+					homeWinrait,
+					awayWinrait)
+			);
+			UI.show(mWinRait);
+		}
 	}
 
 }

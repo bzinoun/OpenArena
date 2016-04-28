@@ -114,15 +114,13 @@ public class FixturesAdapter
 				!= mCalendarTmp.get(Calendar.DAY_OF_YEAR))) {
 			mDateTmp.setTime(System.currentTimeMillis());
 			mCalendarTmp.setTime(mDateTmp);
-			if (mCalendar.get(Calendar.YEAR)
-					== mCalendarTmp.get(Calendar.YEAR)
-					&&mCalendar.get(Calendar.DAY_OF_YEAR)
+			if (mCalendar.get(Calendar.YEAR) == mCalendarTmp.get(Calendar.YEAR)
+					&& mCalendar.get(Calendar.DAY_OF_YEAR)
 					== mCalendarTmp.get(Calendar.DAY_OF_YEAR)) {
 				holder.mHeader.setText(
 						mResources.getString(R.string.fixtures_list_item_header_today));
 			}
-			else if (mCalendar.get(Calendar.YEAR)
-					== mCalendarTmp.get(Calendar.YEAR)
+			else if (mCalendar.get(Calendar.YEAR) == mCalendarTmp.get(Calendar.YEAR)
 					&& mCalendar.get(Calendar.DAY_OF_YEAR)
 					== mCalendarTmp.get(Calendar.DAY_OF_YEAR) + 1) {
 				holder.mHeader.setText(
@@ -138,7 +136,8 @@ public class FixturesAdapter
 		else UI.hide(holder.mHeader);
 	}
 
-	public static class FixturesViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+	public static class FixturesViewHolder extends RecyclerView.ViewHolder
+			implements View.OnCreateContextMenuListener {
 
 		private TextView mHomeTeamName,
 				mAwayTeamName,
