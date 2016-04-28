@@ -24,6 +24,7 @@
 	<string name="fixture_info_result">%1$d : %2$d</string>
 	<string name="fixture_info_empty_result">- : -</string>
 	<string name="fixture_info_head2head">Head2head</string>
+	<string name="fixture_info_winrait">%1$d%% / %2$d%%</string>
 
 	<string name="scores_against_difference">%1$d/%2$d</string>
 	<string name="scores_head_team">Команда</string>
