@@ -18,6 +18,7 @@ import com.openarena.model.objects.League;
 import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
+import com.openarena.util.Configs;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 import com.openarena.view.dialogs.DialogPlayerInfo;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements EventListener {
 
 	@Override
 	public void onBackPressed() {
-		if (mLastBack + Const.TIME_TO_EXIT > System.currentTimeMillis()) {
+		if (mLastBack + Configs.TIME_TO_EXIT > System.currentTimeMillis()) {
 			showFinishDialog();
 		}
 		else if (!mFragmentManager.popBackStackImmediate())	showFinishDialog();

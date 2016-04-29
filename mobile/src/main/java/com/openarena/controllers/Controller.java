@@ -15,6 +15,7 @@ import com.openarena.model.objects.Player;
 import com.openarena.model.objects.Scores;
 import com.openarena.model.objects.Team;
 import com.openarena.model.receivers.NotificationBroadcastReceiver;
+import com.openarena.util.Configs;
 import com.openarena.util.Const;
 import com.openarena.util.L;
 
@@ -570,35 +571,35 @@ public class Controller {
 	private boolean canUpdateLeaguesList(Context context) {
 		long lastUpdate = PreferencesManager.from(context)
 				.getLong(Const.PREF_LAST_UPDATE_LEAGUES, 0);
-		return lastUpdate + Const.TIME_TO_UPDATE_LEAGUES < System.currentTimeMillis();
+		return lastUpdate + Configs.TIME_TO_UPDATE_LEAGUES < System.currentTimeMillis();
 	}
 
 	private boolean canUpdateFixturesList(Context context, int soccerseasonId, int matchday) {
 		long lastUpdate = PreferencesManager.from(context)
 				.getLong(getFixturesPref(soccerseasonId, matchday), 0);
-		return lastUpdate + Const.TIME_TO_UPDATE_FIXTURES < System.currentTimeMillis();
+		return lastUpdate + Configs.TIME_TO_UPDATE_FIXTURES < System.currentTimeMillis();
 	}
 
 	private boolean canUpdateScoresTable(Context context, int soccerseasonId) {
 		long lastUpdate = PreferencesManager.from(context)
 				.getLong(getScoresPref(soccerseasonId), 0);
-		return lastUpdate + Const.TIME_TO_UPDATE_SCORES < System.currentTimeMillis();
+		return lastUpdate + Configs.TIME_TO_UPDATE_SCORES < System.currentTimeMillis();
 	}
 
 	private boolean canUpdateTeam(Context context, int teamId) {
 		long lastUpdate = PreferencesManager.from(context).getLong(getTeamPref(teamId), 0);
-		return lastUpdate + Const.TIME_TO_UPDATE_TEAM < System.currentTimeMillis();
+		return lastUpdate + Configs.TIME_TO_UPDATE_TEAM < System.currentTimeMillis();
 	}
 
 	private boolean canUpdatePlayersList(Context context, int teamId) {
 		long lastUpdate = PreferencesManager.from(context).getLong(getPlayersPref(teamId), 0);
-		return lastUpdate + Const.TIME_TO_UPDATE_PLAYERS < System.currentTimeMillis();
+		return lastUpdate + Configs.TIME_TO_UPDATE_PLAYERS < System.currentTimeMillis();
 	}
 
 	private boolean canUpdateTeamFixturesList(Context context, int soccerseasonId, int teamId) {
 		long lastUpdate = PreferencesManager.from(context)
 				.getLong(getTeamFixturesPref(soccerseasonId, teamId), 0);
-		return lastUpdate + Const.TIME_TO_UPDATE_TEAM_FIXTURES < System.currentTimeMillis();
+		return lastUpdate + Configs.TIME_TO_UPDATE_TEAM_FIXTURES < System.currentTimeMillis();
 	}
 
 	public interface OnGetLeagues extends OnResultListener<ArrayList<League>> {}

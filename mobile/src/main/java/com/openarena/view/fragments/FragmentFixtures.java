@@ -311,10 +311,7 @@ public class FragmentFixtures extends AbstractFragment
 	}
 
 	private void setMatchday(int matchday) {
-		mMatchdayField.setText(String.format(
-				getString(R.string.fixtures_matchday),
-				matchday)
-		);
+		mMatchdayField.setText(String.format(getString(R.string.fixtures_matchday), matchday));
 	}
 
 }
