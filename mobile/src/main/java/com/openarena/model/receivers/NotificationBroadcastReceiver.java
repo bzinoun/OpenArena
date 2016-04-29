@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +16,7 @@ import com.openarena.R;
 import com.openarena.controllers.DBManager;
 import com.openarena.model.objects.Fixture;
 import com.openarena.util.Const;
+import com.openarena.util.Rand;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,17 +66,23 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 		if (fixture != null) {
 			Intent intent = new Intent(Const.ACTION_NOTIFICATION_BROADCAST);
 			intent.putExtra(FIXTURE, fixture);
+			Uri data = Uri.withAppendedPath(Uri.parse("data://fixture"), String.valueOf(fixture.getID()));
+			intent.setData(data);
 			if (canNotified) {
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						context, Const.REQUEST_CODE_NOTIFIED_FIXTURE, intent,
-						PendingIntent.FLAG_CANCEL_CURRENT
+						PendingIntent.FLAG_UPDATE_CURRENT
 				);
-				setAlarm(context, fixture.getDate() - 1000 * 60 * 60, pendingIntent);
+				setAlarm(
+						context,
+						fixture.getDate() - 1000 * 60 * 60 + Rand.next(0, 1000),
+						pendingIntent
+				);
 			}
 			else {
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(
 						context, Const.REQUEST_CODE_NOTIFIED_FIXTURE, intent,
-						PendingIntent.FLAG_CANCEL_CURRENT
+						PendingIntent.FLAG_UPDATE_CURRENT
 				);
 				cancelAlarm(context, pendingIntent);
 			}
@@ -87,7 +95,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 	}
 
 	private void cancelAlarm(Context context, PendingIntent pendingIntent) {
-		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.cancel(pendingIntent);
 	}
 
