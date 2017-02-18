@@ -37,22 +37,12 @@
 
 	</LinearLayout>
 
-	<TextView
-		android:id="@+id/links"
-		android:layout_width="@dimen/about_list_width"
-		android:layout_height="wrap_content"
-		android:layout_alignParentEnd="true"
-		android:layout_alignParentRight="true"
-		android:text="@string/about_links"
-		android:textColor="@color/about_text"/>
-
 	<ListView
 		android:id="@+id/list_view"
 		android:layout_width="@dimen/about_list_width"
 		android:layout_height="match_parent"
 		android:layout_alignParentEnd="true"
 		android:layout_alignParentRight="true"
-		android:layout_below="@+id/links"
 		android:paddingBottom="8dp"
 		android:paddingTop="8dp"/>
 

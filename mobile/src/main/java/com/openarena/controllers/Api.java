@@ -142,7 +142,7 @@ public class Api {
 	 */
 	private static Connection getConnection(Context context) {
 		return new Connection.Creator()
-				.putHeader("X-Auth-Token", context.getString(R.string.api_key))
+//				.putHeader("X-Auth-Token", context.getString(R.string.api_key))
 				.putHeader("X-Response-Control", context.getString(R.string.api_response_control_mini))
 				.create();
 	}

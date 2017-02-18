@@ -39,8 +39,9 @@
 	<string name="team_button_players">Piłkarzy</string>
 
 	<string name="about_title">Od autora</string>
-	<string name="about_entry">Witam serdecznie! Ta aplikacja korzysta z <b>Open football API</b></string>
-	<string name="about_links">A tu linki na moje profili, dziękuję, Taras.</string>
+	<string name="about_entry">Cześć, ta aplikacja korzysta z <b>Open Football API</b>\n
+		<b>Uwaga:</b> Ten kod jest <b>nieaktualny</b>,
+		Actualna wersja jest przeniesiona w inny reposytoryj</string>
 	<string name="about_toast_action_with_ad">Dziękuję za kawę (:</string>
 	<string name="about_version">Build</string>
 
@@ -99,21 +100,17 @@
 	<string name="intro_page3_title">Rozpoczynaj!</string>
 
 	<!-- CONST resources -->
-	<string name="api_key">16c130d43d5543bfac04ffef8b3da068</string>
+	<string name="api_key">token</string>
 	<string name="api_response_control_mini">minified</string>
 	<string name="api_response_control_full">full</string>
 
-	<string name="banner_ad_unit_id">s</string>
+	<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 	<string name="about_linkedin">LinkedIn</string>
 	<string name="about_github">GitHub</string>
-	<string name="about_facebook">Facebook</string>
-	<string name="about_google_plus">Google+</string>
 	<string name="about_google_play">Google play</string>
 	<string name="link_football_api">http://api.football-data.org</string>
 	<string name="link_linkedin">https://www.linkedin.com/in/tarikw</string>
 	<string name="link_github">https://github.com/TarikW</string>
-	<string name="link_facebook">https://www.facebook.com/social.TarikW</string>
-	<string name="link_google_plus">https://plus.google.com/105322723020726409354</string>
 	<string name="link_google_play">https://play.google.com/store/apps/developer?id=TarikW</string>
 </resources>

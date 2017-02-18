@@ -125,20 +125,10 @@ public class FragmentAbout extends AbstractFragment
 				getString(R.string.link_linkedin))
 		);
 		list.add(new Link(
-				R.drawable.ic_facebook_box,
-				getString(R.string.about_facebook),
-				getString(R.string.link_facebook))
-		);
-		/*list.add(new Link(
-				R.drawable.ic_google_plus_box,
-				getString(R.string.about_google_plus),
-				getString(R.string.link_google_plus))
-		);*/
-		/*list.add(new Link(
 				R.drawable.ic_github_box,
 				getString(R.string.about_github),
 				getString(R.string.link_github))
-		);*/
+		);
 		list.add(new Link(
 				R.drawable.ic_google_play,
 				getString(R.string.about_google_play),

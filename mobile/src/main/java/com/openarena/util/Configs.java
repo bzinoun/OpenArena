@@ -10,7 +10,7 @@ import com.openarena.R;
 
 public class Configs {
 
-	public static final boolean IS_DEBUG_MODE = true;
+	public static final boolean IS_DEBUG_MODE = false;
 	public static final String APP_TAG = "TAG";
 
 	public static final long TIME_TO_EXIT = 400; //ms
